@@ -52,7 +52,7 @@ function App() {
     setIsEditable(false);
   }
 
-  //----------Handle Delete-------------------------------------
+  //----------Handle Delete--------------------------------------
   const [indexToRemove, setIndexToRemove] = useState(-1);
   const handleDelete = (i) => {
     const idx = passwordArray.findIndex(item => item.site === i.site);
