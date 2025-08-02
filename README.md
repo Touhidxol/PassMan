@@ -12,10 +12,6 @@ PassMan is a full-stack password manager application built with React.js, Tailwi
 - 🔐 Delete confirmation popup with UI feedback (shake animation)
 - 🎯 Modular React components and context-based state management
 
-## 🖼️ Preview
-
-![App Screenshot](https://your-screenshot-url-if-any)
-
 ## 📦 Tech Stack
 
 ### Frontend:
