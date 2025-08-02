@@ -100,7 +100,6 @@ Your app should now be running at:
 | PUT    | `/`      | Update existing password      |
 | DELETE | `/`      | Delete password by site name  |
 
----
 
 ## ✅ Validations
 
@@ -108,7 +107,6 @@ Your app should now be running at:
 - ❌ No duplicate site names allowed
 - 📝 Required fields: `site` and `password`
 
----
 
 ## 🧹 Future Improvements
 
