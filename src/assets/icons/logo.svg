@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" height="200px" viewBox="0 -960 960 960" width="200px">
+  <defs>
+    <!-- Glow filter -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Gradients -->
+    <linearGradient id="gradGray" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#dcdcdc; stop-opacity:1"/>
+        <stop offset="100%" style="stop-color:#808080; stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="gradRed" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff7b7b; stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#ff0000; stop-opacity:1"/>
+    </linearGradient>
+
+    <linearGradient id="gradBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#87cefa; stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#0077ff; stop-opacity:1"/>
+    </linearGradient>
+
+    <linearGradient id="gradGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8effc1; stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#00cc66; stop-opacity:1"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Bottom bar -->
+  <path d="M80-200v-80h800v80H80Z" fill="url(#gradGray)"/>
+
+  <!-- Left star -->
+  <path d="M126-442l-52-30 34-60H40v-60h68l-34-58 52-30 34 58 34-58 52 30-34 58h68v60h-68l34 60-52 30-34-60-34 60Z" fill="url(#gradRed)" filter="url(#glow)"/>
+
+  <!-- Middle star -->
+  <path d="M446-442l-52-30 34-60h-68v-60h68l-34-58 52-30 34 58 34-58 52 30-34 58h68v60h-68l34 60-52 30-34-60-34 60Z" fill="url(#gradBlue)" filter="url(#glow)"/>
+
+  <!-- Right star -->
+  <path d="M766-442l-52-30 34-60h-68v-60h68l-34-58 52-30 34 58 34-58 52 30-34 58h68v60h-68l34 60-52 30-34-60-34 60Z" fill="url(#gradGreen)" filter="url(#glow)"/>
+</svg>
