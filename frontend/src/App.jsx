@@ -98,7 +98,7 @@ function App() {
   };
 
   //---------------load password on render of add button--------------
-  //----(so that when we save a password it requies the laod again)---
+  //----(so that when we save a password it requies the load again)---
   const getpasswords = async () => {
     try {
       let res = await fetch("http://localhost:3000/");
