@@ -3,7 +3,6 @@ import Navbar from "./components/Navbar";
 import AddWindow from "./components/AddWindow";
 import "./App.css";
 import { useAddWindow } from "./context/AddWindowContext";
-import { ToastContainer, toast } from 'react-toastify';
 
 import webico from "./assets/icons/webico.svg";
 import more from "./assets/icons/more.svg";
