@@ -14,8 +14,9 @@
   --font-inktrap: "Bricolage Grotesque", sans-serif;
 }
 
-
-
+html {
+  scroll-behavior: smooth;
+}
 
 a {
   font-weight: 500;
