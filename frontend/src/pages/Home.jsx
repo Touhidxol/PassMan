@@ -45,7 +45,7 @@ const Home = () => {
             {["Features", "How It Works", "Security", "Tech Stack"].map((item) => (
               <a
                 key={item}
-                href={`#${item.toLowerCase()}`}
+                href={`#${item.toLowerCase().replace(/\s+/g, '')}`}
                 className="!text-white/75 hover:!text-white font-medium transition-colors no-underline"
               >
                 {item}
@@ -81,12 +81,33 @@ const Home = () => {
         </main>
 
       </div>
+
       <Section
         id="features"
         title="Features"
-        description="Everything you need to manage passwords securely."
+        description="PassMan provides everything you need to store and manage your passwords safely. From secure vault storage to quick search and autofill, the platform is designed to make password management simple, fast, and reliable. Access your credentials anytime while keeping them protected with strong encryption."
       >
+      </Section>
 
+      <Section
+        id="howitworks"
+        title="How It Works"
+        description="PassMan encrypts your passwords before they are stored, ensuring only you can access them. After logging in, you can add, organize, and retrieve your credentials from a secure vault. The system handles encryption, authentication, and secure access seamlessly so you can focus on productivity."
+      >
+      </Section>
+
+      <Section
+        id="security"
+        title="Security"
+        description="Security is the foundation of PassMan. All stored credentials are protected using modern encryption techniques and secure authentication systems. Your data remains private, encrypted, and accessible only to you, giving you complete control over your digital security."
+      >
+      </Section>
+
+      <Section
+        id="techstack"
+        title="Tech Stack"
+        description="PassMan is built using a modern and scalable technology stack. The frontend is powered by React and Tailwind CSS for a fast and responsive interface, while the backend ensures secure authentication, encrypted storage, and reliable performance across devices."
+      >
       </Section>
     </>
   );

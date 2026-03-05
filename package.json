@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/Touhidxol/PassMan/issues"
   },
-  "homepage": "https://github.com/Touhidxol/PassMan#readme"
+  "homepage": "https://github.com/Touhidxol/PassMan#readme",
+  "dependencies": {
+    "mongoose": "^9.2.4"
+  }
 }
