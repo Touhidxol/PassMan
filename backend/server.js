@@ -1,14 +1,21 @@
-const express = require('express')
-const dotenv = require('dotenv')
-const { MongoClient } = require('mongodb')
-const bodyparser = require('body-parser')
-const cors = require('cors')
-const app = express()
-const port = 3000
+import express from "express";
+import dotenv from "dotenv";
+import { MongoClient } from "mongodb";
+import mongoose from "mongoose";
+import bodyParser from "body-parser";
+import cors from "cors";
+import userRoutes from "./routes/userRoutes.js";
 
-app.use(bodyparser.json())
-app.use(cors())
-dotenv.config()
+
+const app = express();
+const port = 3000;
+
+app.use(bodyParser.json());
+app.use(cors());
+dotenv.config();
+
+
+mongoose.connect("mongodb://localhost:27017/passman");
 
 // Connection URL
 const url = 'mongodb://localhost:27017';
@@ -17,6 +24,11 @@ client.connect();
 
 // Database Name
 const dbName = 'passman';
+
+// routes
+app.use("/api/users", userRoutes);
+
+
 
 //Get all the passwords
 app.get('/', async (req, res) => {
