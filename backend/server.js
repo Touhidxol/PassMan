@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import cors from "cors";
 import userRoutes from "./routes/userRoutes.js";
+import requireAuth from './middlewares/requireAuth.js'
 
 
 const app = express();
@@ -12,6 +13,7 @@ const port = 3000;
 
 app.use(bodyParser.json());
 app.use(cors());
+app.use(requireAuth);
 dotenv.config();
 
 
@@ -27,7 +29,6 @@ const dbName = 'passman';
 
 // routes
 app.use("/api/users", userRoutes);
-
 
 
 //Get all the passwords
