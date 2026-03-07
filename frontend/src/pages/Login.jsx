@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import InputTemplate from "../components/InputTemplate";
+import ProfileShort from "../components/ProfileShort";
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -7,6 +8,32 @@ const Login = () => {
 
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
+
+    const [user, setUser] = useState(null);
+    //------------check if any account is already logged in------------
+    useEffect(() => {
+        const checkUser = async () => {
+            const token = localStorage.getItem("token");
+
+            if (!token) return;
+
+            try {
+                const res = await fetch("http://localhost:3000/api/users/me", {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+
+                const data = await res.json();
+                setUser(data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
+        checkUser();
+    }, []);
+    //-----------------------------------------------------------------
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -33,12 +60,15 @@ const Login = () => {
             if (!res.ok) {
                 setError(data.message || "Registration failed");
             } else {
-                console.log("User registered:", data);
+                console.log("User LoggedIn:", data);
 
                 // store token if returned
                 if (data.token) {
                     localStorage.setItem("token", data.token);
                 }
+                setEmail("");
+                setPassword("");
+                window.location.reload();
             }
         } catch (err) {
             setError("Something went wrong");
@@ -49,6 +79,13 @@ const Login = () => {
 
     return (
         <div className="min-h-screen w-screen flex items-center justify-center bg-[#002e22] sm:bg-gradient-to-br from-emerald-800 to-emerald-950">
+            {user ? (
+                <ProfileShort user={user}>
+                </ProfileShort>
+            ) : (
+                <div>
+                </div>
+            )}
 
             <div className="bg-[#002e22] text-white p-8 sm:rounded-xl sm:shadow-xl w-full sm:max-w-md">
 
@@ -56,7 +93,7 @@ const Login = () => {
                     Login to your Account
                 </h2>
                 <p className="text-center text-gray-200 px-8 mb-10">
-                    Create a secure account to store and manage all your passwords in one place.
+                    Sign in to securely access your stored passwords.
                 </p>
 
                 <form onSubmit={handleSubmit} className="">
@@ -89,7 +126,7 @@ const Login = () => {
                         disabled={loading}
                         className="w-full bg-green-600 text-white p-3 rounded-lg hover:bg-green-700 transition my-5"
                     >
-                        {loading ? "Creating account..." : "Login"}
+                        {loading ? "Please wait..." : "Login"}
                     </button>
 
                     {error && (

@@ -37,11 +37,13 @@ const Register = () => {
                 setError(data.message || "Registration failed");
             } else {
                 console.log("User registered:", data);
-
                 // store token if returned
                 if (data.token) {
                     localStorage.setItem("token", data.token);
                 }
+                setEmail("");
+                setPassword("");
+                setUsername("");
             }
         } catch (err) {
             setError("Something went wrong");
