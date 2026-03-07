@@ -108,4 +108,14 @@ const loginuser = async (req, res) => {
     }
 };
 
-export { registeruser, loginuser };
+const loggedin = async (req, res) => {
+    try {
+        const user = await user.findById(req.user._id).select("name email");
+
+        res.json(user);
+    } catch (err) {
+        res.status(500).json({ error: "Failed to fetch user info" });
+    }
+}
+
+export { registeruser, loginuser, loggedin};
