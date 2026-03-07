@@ -1,7 +1,10 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
-
 @import "tailwindcss";
+
+@tailwind utilities;
+
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   color-scheme: light dark;
@@ -63,6 +66,12 @@ button:focus-visible {
   }
   button {
     background-color: #f9f9f9;
+  }
+}
+
+@layer {
+  .input-template {
+    @apply w-full border border-gray-600 rounded-md px-3 pt-3 pb-3 text-sm focus:outline-none focus:border-lime-300;
   }
 }
 
