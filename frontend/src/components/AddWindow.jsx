@@ -3,6 +3,7 @@ import { useAddWindow } from "../context/AddWindowContext";
 import show from "../assets/icons/show.svg";
 import hiide from "../assets/icons/hide.svg";
 import { useRef, useState, useEffect } from "react";
+import { getPasswords } from "../api/passwords";
 
 const AddWindow = () => {
     const { closeWindow } = useAddWindow();
@@ -15,18 +16,8 @@ const AddWindow = () => {
         note: "",
     });
 
-    const getpasswords = async () => {
-        try {
-            let res = await fetch("http://localhost:3000/");
-            let password = await res.json();
-            setpasswordArray(password);
-            console.log(password);
-        } catch (err) {
-            console.error("Error fetching passwords:", err);
-        }
-    }
     useEffect(() => {
-        getpasswords();
+        getPasswords();
     }, []);
 
 
@@ -47,7 +38,7 @@ const AddWindow = () => {
         }
     };
 
-    const savepassword = async() => {
+    const savepassword = async () => {
         const { site, password } = form;
 
         // Regex for simple domain validation (e.g., example.com, sub.example.org)
@@ -68,7 +59,18 @@ const AddWindow = () => {
             return;
         }
 
-        let res = await fetch("http://localhost:3000/",{method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(form)});
+
+        const token = localStorage.getItem("token");
+        if (!token) return;
+
+        let res = await fetch("http://localhost:3000/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify(form)
+        });
         // localStorage.setItem("passwords", JSON.stringify(updatedPasswords));
         closeWindow();
     };
