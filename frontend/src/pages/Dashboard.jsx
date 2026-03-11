@@ -5,6 +5,7 @@ import AddWindow from "../components/AddWindow";
 import "../App.css";
 import { useAddWindow } from "../context/AddWindowContext";
 import PasswordCard from '../components/PasswordCard';
+import { getPasswords } from '../api/passwords';
 
 
 import done from "../assets/icons/done.svg"

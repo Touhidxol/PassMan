@@ -68,7 +68,7 @@ const Login = () => {
                 }
                 setEmail("");
                 setPassword("");
-                window.location.reload();
+                navigate("/dashboard");
             }
         } catch (err) {
             setError("Something went wrong");

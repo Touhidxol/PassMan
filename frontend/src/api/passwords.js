@@ -1,4 +1,3 @@
-
 export const getPasswords = async () => {
     const token = localStorage.getItem("token");
     if (!token) return;
@@ -11,9 +10,15 @@ export const getPasswords = async () => {
 };
 
 export const updatePassword = async (data) => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
     const res = await fetch("http://localhost:3000/", {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        },
         body: JSON.stringify(data),
     });
     return res.json();
