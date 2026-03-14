@@ -14,7 +14,6 @@ export const usePasswords = () => {
             setError(null);
         } catch (err) {
             setError(err.message);
-            navigate("/login");
         } finally {
             setLoading(false);
         }
