@@ -1,13 +1,13 @@
 import React from "react";
 import { useAddSiteModal } from "../hooks/useAddSiteModal";
+import { usePasswords } from "../hooks/usePasswords";
 import show from "../assets/icons/show.svg";
 import hiide from "../assets/icons/hide.svg";
-import { useRef, useState, useEffect } from "react";
-import { getPasswords } from "../api/passwords";
+import { useRef, useState } from "react";
 
 const AddSiteModal = () => {
     const { closeWindow } = useAddSiteModal();
-    const [passwordArray, setpasswordArray] = useState([]);
+    const { passwords, loadPasswords } = usePasswords();
     const [showError, setshowError] = useState("");
     const [form, setform] = useState({
         site: "",
@@ -15,11 +15,6 @@ const AddSiteModal = () => {
         password: "",
         note: "",
     });
-
-    useEffect(() => {
-        getPasswords();
-    }, []);
-
 
     const handleChange = (e) => {
         setform({ ...form, [e.target.name]: e.target.value });
@@ -54,16 +49,15 @@ const AddSiteModal = () => {
             return;
         }
 
-        if (passwordArray.some((item) => item.site === site)) {
+        if (passwords.some((item) => item.site === site)) {
             setshowError("This site name already exists.");
             return;
         }
 
-
         const token = localStorage.getItem("token");
         if (!token) return;
 
-        let res = await fetch("http://localhost:3000/", {
+        await fetch("http://localhost:3000/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -71,8 +65,9 @@ const AddSiteModal = () => {
             },
             body: JSON.stringify(form)
         });
-        // localStorage.setItem("passwords", JSON.stringify(updatedPasswords));
+
         closeWindow();
+        await loadPasswords();
     };
 
     return (

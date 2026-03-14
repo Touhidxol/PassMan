@@ -1,69 +1,56 @@
 import React from 'react'
-import react, { useRef, useState, useEffect } from "react";
+import react, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import AddSiteModal from "../components/AddSiteModal";
 import "../App.css";
 import { useAddSiteModal } from '../hooks/useAddSiteModal';
+import { usePasswords } from "../hooks/usePasswords";
 import PasswordCard from '../components/PasswordCard';
-import { getPasswords } from '../api/passwords';
-
 
 import done from "../assets/icons/done.svg"
 import error from "../assets/icons/error.svg"
 
 const Dashboard = () => {
+    const navigate = useNavigate();
     const { isOpen, openWindow } = useAddSiteModal();
+    const { passwords, loadPasswords, loading, error } = usePasswords();
 
     const [showDeleteConfirm, setshowDeleteConfirm] = useState(false)
     const [copyStatus, setCopyStatus] = useState(null);
-    const [passwordArray, setpasswordArray] = useState([]);
 
-    const [formediting, setformediting] = useState({
-        site: "",
-        username: "",
-        password: "",
-        note: "",
-    })
-
-    const handleEdit = (i) => {
-        const index = passwordArray.findIndex(item => item.site === i.site);
-        setformediting(passwordArray[index]);
-    }
-
-    const handleEditChange = (e) => {
-        setformediting({ ...formediting, [e.target.name]: e.target.value });
-    }
-
-    const handlesave = async () => {
-        const index = passwordArray.findIndex(item => item.site === formediting.site);
-        if (index === -1) return;
-
-        const res = await fetch("http://localhost:3000/", { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(formediting) });
-        getpasswords();
-        setIsEditable(false);
-    }
-
-    //----------Handle Delete--------------------------------------
     const [indexToRemove, setIndexToRemove] = useState(-1);
-    const handleDelete = (i) => {
-        const idx = passwordArray.findIndex(item => item.site === i.site);
-        setIndexToRemove(idx);
+
+    const handleDelete = async (site) => {
+        setIndexToRemove(passwords.findIndex(item => item.site === site));
         setshowDeleteConfirm(true);
-    }
+    };
+
     const confirmDelete = async () => {
         if (indexToRemove === -1) return;
-        const updatedArray = passwordArray.filter((_, index) => index !== indexToRemove);
-        setpasswordArray(updatedArray);
-
-        let res = await fetch("http://localhost:3000/", { method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ site: passwordArray[indexToRemove].site }) });
-        getpasswords();
+        const itemToDelete = passwords[indexToRemove];
+        if (!itemToDelete) return;
+        await fetch("http://localhost:3000/", {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ site: itemToDelete.site }),
+        });
+        await loadPasswords();
         setshowDeleteConfirm(false);
         setIndexToRemove(-1);
-    }
+    };
+
     const cancelDelete = () => {
         setshowDeleteConfirm(false);
         setIndexToRemove(-1);
-    }
+    };
+
+    useEffect(() => {
+        if (error) {
+            navigate('/login');
+        }
+    }, [error, navigate]);
+
     //-------while deleting background shouldnt scrollable-----------
     useEffect(() => {
         if (showDeleteConfirm) {
@@ -91,28 +78,11 @@ const Dashboard = () => {
 
     //---------------load password on render of add button--------------
     //----(so that when we save a password it requies the load again)---
-    const getpasswords = async () => {
-        try {
-            const token = localStorage.getItem("token");
-
-            if (!token) return;
-
-            const res = await fetch("http://localhost:3000/", {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            const password = await res.json();
-            setpasswordArray(password);
-            console.log(password);
-        } catch (err) {
-            console.error("Error fetching passwords:", err);
-        }
-    }
     useEffect(() => {
-        getpasswords();
-    }, [isOpen]);
+        if (!isOpen) {
+                loadPasswords();
+        }
+    }, [isOpen, loadPasswords]);
 
 
     // for better ux only, not mandatory-----------------------------
@@ -178,14 +148,13 @@ const Dashboard = () => {
                     </p>
                     <div className="flex-1">
                         <ul className="cards p-5">
-                            {passwordArray.map((item) => {
+                            {passwords.map((item) => {
                                 return (
                                     <PasswordCard
                                         key={item.site}
                                         item={item}
                                         onDelete={handleDelete}
-                                        onEdit={handleEdit}
-                                        onCopy={copyText}
+                                        refreshPasswords={loadPasswords}
                                     />
                                 );
                             })}
