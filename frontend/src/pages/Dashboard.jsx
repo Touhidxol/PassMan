@@ -1,12 +1,11 @@
-import React from 'react'
-import react, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import "../App.css";
 import Navbar from "../components/Navbar";
 import AddSiteModal from "../components/AddSiteModal";
-import "../App.css";
+import PasswordCard from '../components/PasswordCard';
 import { useAddSiteModal } from '../hooks/useAddSiteModal';
 import { usePasswords } from "../hooks/usePasswords";
-import PasswordCard from '../components/PasswordCard';
 
 import done from "../assets/icons/done.svg"
 import error from "../assets/icons/error.svg"
@@ -14,8 +13,9 @@ import error from "../assets/icons/error.svg"
 const Dashboard = () => {
     const navigate = useNavigate();
     const { isOpen, openWindow } = useAddSiteModal();
-    const { passwords, loadPasswords, loading, error } = usePasswords();
+    const { passwords, loadPasswords, loading, error, removePassword } = usePasswords();
 
+    const [cardOpen, setCardOpen] = useState(null);
     const [showDeleteConfirm, setshowDeleteConfirm] = useState(false)
     const [copyStatus, setCopyStatus] = useState(null);
 
@@ -29,13 +29,7 @@ const Dashboard = () => {
     const confirmDelete = async () => {
         if (indexToRemove === -1) return;
         const itemToDelete = passwords[indexToRemove];
-        if (!itemToDelete) return;
-        await fetch("http://localhost:3000/", {
-            method: "DELETE",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ site: itemToDelete.site }),
-        });
-        await loadPasswords();
+        removePassword(itemToDelete.site)
         setshowDeleteConfirm(false);
         setIndexToRemove(-1);
     };
@@ -53,12 +47,12 @@ const Dashboard = () => {
 
     //-------while deleting background shouldnt scrollable-----------
     useEffect(() => {
-        if (showDeleteConfirm) {
+        if (showDeleteConfirm || cardOpen) {
             document.body.style.overflow = "hidden";
         } else {
             document.body.style.overflow = "auto";
         }
-    }, [showDeleteConfirm]);
+    }, [showDeleteConfirm, cardOpen]);
     //-------------------------------------------------------------
 
     const copyText = async (text) => {
@@ -80,7 +74,7 @@ const Dashboard = () => {
     //----(so that when we save a password it requies the load again)---
     useEffect(() => {
         if (!isOpen) {
-                loadPasswords();
+            loadPasswords();
         }
     }, [isOpen, loadPasswords]);
 
@@ -101,11 +95,17 @@ const Dashboard = () => {
 
     return (
         <>
-            {/*  -----------------------Custom allert for copied------------------------- */}
-            <div className={`flex items-center justify-center gap-1 px-4 py-2 rounded-full absolute bottom-10 left-1/2 transform -translate-x-1/2 ${copyStatus == "Copied" ? "bg-green-400" : "bg-red-500"}  text-black transition-opacity duration-300 ${iscopied ? "opacity-100" : "opacity-0"} `} > <img src={copyStatus == "Copied" ? done : error} alt="" /><p>{copyStatus}</p> </div>
-            {/* ------------------------------------------------------------------------- */}
+            {isOpen && <AddSiteModal />}
+            {cardOpen && (
+                <PasswordCard
+                    item={cardOpen}
+                    onDelete={handleDelete}
+                    onClose={() => setCardOpen(null)}
+                />
+            )}
+
             {/*  -----------------------Poppup to confirm delete------------------------- */}
-            <div className={`z-10 w-8/10 max-w-md p-6 flex flex-col items-center justify-center gap-6 rounded-xl fixed left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#1a1a1a] text-white border border-gray-700 transition-opacity duration-300 shadow-xl shadow-black/50 ${showDeleteConfirm ? "opacity-100" : "opacity-0 pointer-events-none"} ${shake ? 'shake' : ''}`}>
+            <div className={`z-100 w-8/10 max-w-md p-6 flex flex-col items-center justify-center gap-6 rounded-xl fixed left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#1a1a1a] text-white border border-gray-700 transition-opacity duration-300 shadow-xl shadow-black/50 ${showDeleteConfirm ? "opacity-100" : "opacity-0 pointer-events-none"} ${shake ? 'shake' : ''}`}>
                 <div className="text-left w-full"><p className="text-lg font-semibold">Are you sure you want to delete this?</p><p className="text-sm text-gray-400 mt-1">This action cannot be undone.</p></div>
                 <div className="flex gap-4 mt-2 justify-end items-centre w-full">
                     <button
@@ -125,7 +125,6 @@ const Dashboard = () => {
 
             {/* ------------------------------------------------------------------------- */}
 
-            {isOpen && <AddSiteModal />}
 
             <div className="w-screen min-h-screen items-center flex flex-col">
                 <div className="navv w-full sm:w-2/3 h-20 px-2 flex items-center justify-center">
@@ -150,12 +149,28 @@ const Dashboard = () => {
                         <ul className="cards p-5">
                             {passwords.map((item) => {
                                 return (
-                                    <PasswordCard
+                                    <li
                                         key={item.site}
-                                        item={item}
-                                        onDelete={handleDelete}
-                                        refreshPasswords={loadPasswords}
-                                    />
+                                        onClick={() => setCardOpen(item)}
+                                        className="password-list"
+                                    >
+                                        <div className="flex items-center gap-3 w-full">
+
+                                            {/* Site Icon */}
+                                            <div className="w-9 h-9 flex items-center justify-center rounded-md bg-[#3a3a3a] text-sm font-semibold text-gray-300">
+                                                {item.site.charAt(0).toUpperCase()}
+                                            </div>
+
+                                            {/* Site Name */}
+                                            <p className="text-gray-200 text-sm font-medium truncate">
+                                                {item.site}
+                                            </p>
+
+                                            {/* Arrow */}
+                                            <div className="flex-1"></div>
+                                            <span className="text-gray-500 text-lg">›</span>
+                                        </div>
+                                    </li>
                                 );
                             })}
                         </ul>

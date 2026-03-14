@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { getPasswords } from "../api/passwords";
+import { getPasswords, updatePassword, deletePassword } from "../api/passwords";
 
 export const usePasswords = () => {
     const [passwords, setPasswords] = useState([]);
@@ -23,10 +23,22 @@ export const usePasswords = () => {
         loadPasswords();
     }, [loadPasswords]);
 
+    const editPassword = async (data) => {
+        await updatePassword(data);
+        await loadPasswords();
+    };
+
+    const removePassword = async (site) => {
+        await deletePassword(site);
+        await loadPasswords();
+    };
+    
+
     return {
         passwords,
         setPasswords,
         loadPasswords,
+        removePassword,
         loading,
         error,
     };
