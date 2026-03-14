@@ -1,12 +1,12 @@
 import React from "react";
-import { useAddWindow } from "../context/AddWindowContext";
+import { useAddSiteModal } from "../hooks/useAddSiteModal";
 import show from "../assets/icons/show.svg";
 import hiide from "../assets/icons/hide.svg";
 import { useRef, useState, useEffect } from "react";
 import { getPasswords } from "../api/passwords";
 
-const AddWindow = () => {
-    const { closeWindow } = useAddWindow();
+const AddSiteModal = () => {
+    const { closeWindow } = useAddSiteModal();
     const [passwordArray, setpasswordArray] = useState([]);
     const [showError, setshowError] = useState("");
     const [form, setform] = useState({
@@ -169,4 +169,4 @@ const AddWindow = () => {
     );
 };
 
-export default AddWindow;
+export default AddSiteModal;

@@ -1,9 +1,9 @@
 import React from 'react'
 import react, { useRef, useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
-import AddWindow from "../components/AddWindow";
+import AddSiteModal from "../components/AddSiteModal";
 import "../App.css";
-import { useAddWindow } from "../context/AddWindowContext";
+import { useAddSiteModal } from '../hooks/useAddSiteModal';
 import PasswordCard from '../components/PasswordCard';
 import { getPasswords } from '../api/passwords';
 
@@ -12,7 +12,7 @@ import done from "../assets/icons/done.svg"
 import error from "../assets/icons/error.svg"
 
 const Dashboard = () => {
-    const { isOpen, openWindow } = useAddWindow();
+    const { isOpen, openWindow } = useAddSiteModal();
 
     const [showDeleteConfirm, setshowDeleteConfirm] = useState(false)
     const [copyStatus, setCopyStatus] = useState(null);
@@ -155,7 +155,7 @@ const Dashboard = () => {
 
             {/* ------------------------------------------------------------------------- */}
 
-            {isOpen && <AddWindow />}
+            {isOpen && <AddSiteModal />}
 
             <div className="w-screen min-h-screen items-center flex flex-col">
                 <div className="navv w-full sm:w-2/3 h-20 px-2 flex items-center justify-center">
