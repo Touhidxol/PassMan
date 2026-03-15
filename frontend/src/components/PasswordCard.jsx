@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 import webico from "../assets/icons/webico.svg";
 import edit from "../assets/icons/edit.svg";
@@ -9,10 +9,17 @@ import copy from "../assets/icons/copy.svg";
 import show from "../assets/icons/outlineeye.svg";
 import hiide from "../assets/icons/oulinecrosseye.svg";
 
-const PasswordCard = ({ item, onDelete, onClose }) => {
+const PasswordCard = ({ item, onDelete, onClose, onChange }) => {
+
     const [isEditable, setIsEditable] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState(item);
+
+    const handleSave = () => {
+        setIsEditable(false);
+        onChange(formData);
+        onClose();
+    };
 
 
     const copyText = async (text) => {
@@ -22,10 +29,8 @@ const PasswordCard = ({ item, onDelete, onClose }) => {
 
     return (
         <>
-            <Toaster position="top-center" />
-
             {/* MODAL */}
-            <div className="fixed inset-0 flex items-center justify-center bg-white/10 z-50">
+            <div className="z-20 fixed inset-0 flex items-center justify-centerbg-[#00000035] backdrop-blur-xs">
 
                 <div className="w-[90%] max-w-lg bg-[#1e1e1e] rounded-xl p-6 shadow-xl">
 
@@ -122,7 +127,7 @@ const PasswordCard = ({ item, onDelete, onClose }) => {
 
                         {isEditable && (
                             <button
-                                onClick={() => setIsEditable(false)}
+                                onClick={handleSave}
                                 className="flex items-center gap-1 px-3 py-1 rounded hover:bg-[#333]"
                             >
                                 <img src={save} className="w-4" />

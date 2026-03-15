@@ -39,6 +39,7 @@ export const usePasswords = () => {
         setPasswords,
         loadPasswords,
         removePassword,
+        editPassword,
         loading,
         error,
     };
