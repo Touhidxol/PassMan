@@ -136,7 +136,7 @@ const PasswordCard = ({ item, onDelete, onClose, onChange }) => {
                         )}
 
                         <button
-                            onClick={() => onDelete(item.site)}
+                            onClick={() => onDelete(item._id)}
                             className="flex items-center gap-1 px-3 py-1 rounded hover:bg-[#333]"
                         >
                             <img src={del} className="w-4" />

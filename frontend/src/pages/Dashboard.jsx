@@ -25,15 +25,15 @@ const Dashboard = () => {
     // Delete a password---------------------------------------------------
     const [indexToRemove, setIndexToRemove] = useState(-1);
 
-    const handleDelete = async (site) => {
-        setIndexToRemove(passwords.findIndex(item => item.site === site));
+    const handleDelete = async (id) => {
+        setIndexToRemove(passwords.findIndex(item => item._id === id));
         setshowDeleteConfirm(true);
     };
 
     const confirmDelete = async () => {
         if (indexToRemove === -1) return;
         const itemToDelete = passwords[indexToRemove];
-        removePassword(itemToDelete.site)
+        await removePassword(itemToDelete._id);
         setshowDeleteConfirm(false);
         setIndexToRemove(-1);
         setCardOpen(null);
@@ -129,7 +129,7 @@ const Dashboard = () => {
                             {passwords.map((item) => {
                                 return (
                                     <li
-                                        key={item.site}
+                                        key={item._id}
                                         onClick={() => setCardOpen(item)}
                                         className="password-list"
                                     >

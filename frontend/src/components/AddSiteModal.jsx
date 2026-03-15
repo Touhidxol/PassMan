@@ -1,6 +1,7 @@
 import React from "react";
 import { useAddSiteModal } from "../hooks/useAddSiteModal";
 import { usePasswords } from "../hooks/usePasswords";
+import { createPassword } from "../api/passwords";
 import show from "../assets/icons/show.svg";
 import hiide from "../assets/icons/hide.svg";
 import { useRef, useState } from "react";
@@ -55,16 +56,7 @@ const AddSiteModal = () => {
         }
 
         const token = localStorage.getItem("token");
-        if (!token) return;
-
-        await fetch("http://localhost:3000/", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`
-            },
-            body: JSON.stringify(form)
-        });
+        await createPassword(form);
 
         closeWindow();
         await loadPasswords();

@@ -10,10 +10,10 @@ export const usePasswords = () => {
         setLoading(true);
         try {
             const data = await getPasswords();
-            setPasswords(data);
+            setPasswords(data || []);
             setError(null);
         } catch (err) {
-            setError(err.message);
+            setError(err.message || "Unable to load passwords");
         } finally {
             setLoading(false);
         }
@@ -24,12 +24,14 @@ export const usePasswords = () => {
     }, [loadPasswords]);
 
     const editPassword = async (data) => {
-        await updatePassword(data);
+        if (!data?._id) return;
+        await updatePassword(data._id, data);
         await loadPasswords();
     };
 
-    const removePassword = async (site) => {
-        await deletePassword(site);
+    const removePassword = async (id) => {
+        if (!id) return;
+        await deletePassword(id);
         await loadPasswords();
     };
     
