@@ -30,7 +30,7 @@ const PasswordCard = ({ item, onDelete, onClose, onChange }) => {
     return (
         <>
             {/* MODAL */}
-            <div className="z-20 fixed inset-0 flex items-center justify-centerbg-[#00000035] backdrop-blur-xs">
+            <div className="z-20 fixed inset-0 flex items-center justify-center bg-[#00000035] backdrop-blur-xs">
 
                 <div className="w-[90%] max-w-lg bg-[#1e1e1e] rounded-xl p-6 shadow-xl">
 

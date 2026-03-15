@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../App.css";
 import toast from "react-hot-toast";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/DashboardNavbar";
 import AddSiteModal from "../components/AddSiteModal";
 import PasswordCard from '../components/PasswordCard';
 import { useAddSiteModal } from '../hooks/useAddSiteModal';
@@ -36,6 +36,7 @@ const Dashboard = () => {
         removePassword(itemToDelete.site)
         setshowDeleteConfirm(false);
         setIndexToRemove(-1);
+        setCardOpen(null);
     };
 
     const cancelDelete = () => {
@@ -105,7 +106,7 @@ const Dashboard = () => {
 
 
             <div className="w-screen min-h-screen items-center flex flex-col">
-                <div className="navv w-full sm:w-2/3 h-20 px-2 flex items-center justify-center">
+                <div className="navv w-full sm:w-2/3 h-20 px-4 flex items-center justify-center">
                     <Navbar />
                 </div>
                 <div className="conthainer flex-1 flex flex-col w-full sm:w-2/3 rounded-xl">
