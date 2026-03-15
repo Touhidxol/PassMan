@@ -57,10 +57,12 @@ mongod
 ### 2. Start the Backend Server
 
 ```
-node server.js
+cd backend
+npx nodemon server.js
 ```
 ### 3. Start the React App
 ```
+cd frontend
 npm run dev
 ```
 Your app should now be running at:
@@ -81,10 +83,11 @@ Your app should now be running at:
   /assets
     /icons
   /components
-    Navbar.jsx
-    AddWindow.jsx
+    .
+    .
   /context
-    AddWindowContext.jsx
+    .
+    .
   App.jsx
   App.css
   index.css
