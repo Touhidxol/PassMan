@@ -98,10 +98,10 @@ Your app should now be running at:
 
 | Method | Endpoint | Description                   |
 |--------|----------|-------------------------------|
-| GET    | `/`      | Fetch all saved passwords     |
-| POST   | `/`      | Add a new password            |
-| PUT    | `/`      | Update existing password      |
-| DELETE | `/`      | Delete password by site name  |
+| GET    | `/api/passwords`      | Fetch all saved passwords     |
+| POST   | `/api/passwords`      | Add a new password            |
+| PUT    | `/api/passwords/:id`      | Update existing password      |
+| DELETE | `/api/passwords/:id`      | Delete password by site name  |
 
 
 ## ✅ Validations
