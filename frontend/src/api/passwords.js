@@ -8,6 +8,12 @@ export const getPasswords = async () => {
             Authorization: `Bearer ${token}`,
         },
     });
+
+    if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.message || `Request failed: ${res.status}`);
+    }
+    
     return res.json();
 };
 

@@ -24,7 +24,7 @@ const requireAuth = async (req, res, next) => {
 
         req.user = await user.findOne({ _id }).select("_id");
 
-        console.log("user is authenticated");
+        console.log(req.user + " is authenticated");
         next();
     } catch (error) {
         console.log("Error while authenticating :", error);
