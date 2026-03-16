@@ -4,7 +4,10 @@
   "description": "PassMan is a full-stack password manager application built with React.js, Tailwind CSS, Node.js, and MongoDB. It allows users to securely store, view, update, and delete their login credentials in a clean, responsive UI.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "backend": "npx nodemon backend/server.js",
+    "frontend": "npm run dev --prefix frontend",
+    "dev": "start cmd /k \"npm run backend\" && start cmd /k \"npm run frontend\""
   },
   "repository": {
     "type": "git",
@@ -23,5 +26,8 @@
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.2.4",
     "validator": "^13.15.26"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
   }
 }
