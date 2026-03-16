@@ -25,7 +25,6 @@ const ProfileShort = ({ user }) => {
       >
         Logout
       </button>
-
     </div>
   )
 }

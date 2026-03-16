@@ -118,4 +118,4 @@ const loggedin = async (req, res) => {
     }
 };
 
-export { registeruser, loginuser, loggedin};
+export { registeruser, loginuser, loggedin };

@@ -26,6 +26,12 @@ const Login = () => {
                     }
                 });
 
+                if (!res.ok) {
+                    const errData = await res.json();
+                    console.log("Auth error:", errData);
+                    return;
+                }
+
                 const data = await res.json();
                 setUser(data);
             } catch (err) {
@@ -81,13 +87,7 @@ const Login = () => {
 
     return (
         <div className="min-h-screen w-screen flex items-center justify-center bg-[#002e22] sm:bg-gradient-to-br from-emerald-800 to-emerald-950">
-            {user ? (
-                <ProfileShort user={user}>
-                </ProfileShort>
-            ) : (
-                <div>
-                </div>
-            )}
+            {user && <ProfileShort user={user} />}
 
             <div className="bg-[#002e22] text-white p-8 sm:rounded-xl sm:shadow-xl w-full sm:max-w-md">
 
