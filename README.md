@@ -57,10 +57,12 @@ mongod
 ### 2. Start the Backend Server
 
 ```
-node server.js
+cd backend
+npx nodemon server.js
 ```
 ### 3. Start the React App
 ```
+cd frontend
 npm run dev
 ```
 Your app should now be running at:
@@ -81,10 +83,11 @@ Your app should now be running at:
   /assets
     /icons
   /components
-    Navbar.jsx
-    AddWindow.jsx
+    .
+    .
   /context
-    AddWindowContext.jsx
+    .
+    .
   App.jsx
   App.css
   index.css
@@ -95,10 +98,10 @@ Your app should now be running at:
 
 | Method | Endpoint | Description                   |
 |--------|----------|-------------------------------|
-| GET    | `/`      | Fetch all saved passwords     |
-| POST   | `/`      | Add a new password            |
-| PUT    | `/`      | Update existing password      |
-| DELETE | `/`      | Delete password by site name  |
+| GET    | `/api/passwords`      | Fetch all saved passwords     |
+| POST   | `/api/passwords`      | Add a new password            |
+| PUT    | `/api/passwords/:id`      | Update existing password      |
+| DELETE | `/api/passwords/:id`      | Delete password by site name  |
 
 
 ## ✅ Validations
