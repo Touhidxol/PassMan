@@ -79,19 +79,22 @@ Your app should now be running at:
     .
     .
   server.js
-/src
-  /assets
-    /icons
-  /components
-    .
-    .
-  /context
-    .
-    .
-  App.jsx
-  App.css
-  index.css
-  main.jsx
+.frontend
+  /src
+    /assets
+      /icons
+    /components
+      .
+      .
+    /context
+      .
+      .
+    App.jsx
+    App.css
+    index.css
+    main.jsx
+package.json
+README.md
 ```
 
 ## 🌐 API Endpoints
