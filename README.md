@@ -79,7 +79,7 @@ Your app should now be running at:
     .
     .
   server.js
-.frontend
+/frontend
   /src
     /assets
       /icons
