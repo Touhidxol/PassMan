@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 import { ArrowRight } from 'lucide-react';
 import logo from '../assets/icons/logo.svg';
 import Section from "../components/Section";
@@ -53,12 +54,12 @@ const Home = () => {
             ))}
           </div>
 
-          <button className="flex items-center gap-2 border border-white/40 text-white px-6 py-2 rounded-full hover:bg-white/10 transition-all font-medium min-w-0 max-w-[160px]">
+          <Link to="/login" className="flex items-center gap-2 border border-white/40 !text-white px-6 py-2 rounded-full hover:bg-white/10 transition-all font-medium min-w-0 max-w-[160px]">
             <p className="truncate">
               Login Now
             </p>
             <ArrowRight size={18} className="shrink-0" />
-          </button>
+          </Link>
         </nav>
 
         {/* --- Hero Content --- */}
@@ -74,9 +75,9 @@ const Home = () => {
               and seamless access across devices.
             </p>
 
-            <button className="bg-[#bef264] hover:bg-[#a3e635] text-emerald-950 font-bold px-10 py-4 rounded-full text-lg transition-transform hover:scale-105 active:scale-95 shadow-xl shadow-lime-900/20">
+            <Link to="/dashboard" className="bg-[#bef264] hover:bg-[#a3e635] !text-emerald-950 font-bold px-10 py-4 rounded-full text-lg transition-transform hover:scale-105 active:scale-95 shadow-xl shadow-lime-900/20">
               Get Started Securely
-            </button>
+            </Link>
           </div>
         </main>
 
