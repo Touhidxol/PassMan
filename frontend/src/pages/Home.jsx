@@ -76,7 +76,7 @@ const Home = () => {
             </p>
 
             <Link to="/dashboard" className="bg-[#bef264] hover:bg-[#a3e635] !text-emerald-950 font-bold px-10 py-4 rounded-full text-lg transition-transform hover:scale-105 active:scale-95 shadow-xl shadow-lime-900/20">
-              Get Started Securely
+              Get Started
             </Link>
           </div>
         </main>
