@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "backend": "npx nodemon backend/server.js",
+    "backend": "cd backend && npx nodemon server.js",
     "frontend": "npm run dev --prefix frontend",
     "dev": "start cmd /k \"npm run backend\" && start cmd /k \"npm run frontend\""
   },

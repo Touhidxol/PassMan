@@ -64,7 +64,7 @@ const AddSiteModal = () => {
 
     return (
         <div className="z-10 h-screen w-screen flex items-center justify-center absolute bg-[#00000035] backdrop-blur-xs">
-            <div className="bg-[#131313] min-w-full sm:min-w-[380px] sm:w-2/5 w-full rounded-xl shadow-lg flex flex-col">
+            <div className="bg-[#2a2a2a] min-w-full sm:min-w-[380px] sm:w-2/5 w-full rounded-xl border border-white/20 shadow-lg flex flex-col">
                 <div className="flex-1 p-4 px-6">
                     <div className="h-10">Add new password</div>
                     <div className="w-full flex flex-col">
@@ -81,7 +81,7 @@ const AddSiteModal = () => {
                             name="site"
                             id="site"
                             placeholder="example.com"
-                            className={`w-full h-10 px-4 text-sm text-white placeholder-gray-400 bg-[#2C2C2C] rounded-t-lg border-b-2 focus:outline-none focus:border-b-2 focus:border-b-blue-500 ${showError ? "border-red-300" : "border-b-[#444]"
+                            className={`w-full h-10 px-4 text-sm text-white placeholder-gray-400 bg-[#202020] rounded-t-lg border-b-2 focus:outline-none focus:border-b-2 focus:border-b-blue-500 ${showError ? "border-red-300" : "border-b-[#444]"
                                 }`}
                         />
                     </div>
@@ -95,7 +95,7 @@ const AddSiteModal = () => {
                             name="username"
                             id="username"
                             placeholder=""
-                            className="w-full h-10 px-4 text-sm text-white placeholder-gray-400 bg-[#2C2C2C] rounded-t-lg border-b-2 border-b-[#444] focus:outline-none focus:border-b-2 focus:border-b-blue-500"
+                            className="w-full h-10 px-4 text-sm text-white placeholder-gray-400 bg-[#202020] rounded-t-lg border-b-2 border-b-[#444] focus:outline-none focus:border-b-2 focus:border-b-blue-500"
                         />
                     </div>
                     <div className="w-full flex flex-col relative">
@@ -109,7 +109,7 @@ const AddSiteModal = () => {
                             name="password"
                             id="password"
                             placeholder=""
-                            className="w-full h-10 px-4 text-sm text-white placeholder-gray-400 bg-[#2C2C2C] rounded-t-lg border-b-2 border-b-[#444] focus:outline-none focus:border-b-2 focus:border-b-blue-500"
+                            className="w-full h-10 px-4 text-sm text-white placeholder-gray-400 bg-[#202020] rounded-t-lg border-b-2 border-b-[#444] focus:outline-none focus:border-b-2 focus:border-b-blue-500"
                         />
                         <img
                             ref={eyeref}
@@ -132,7 +132,7 @@ const AddSiteModal = () => {
                             name="note"
                             id="note"
                             placeholder=""
-                            className="w-full h-[90px] px-4 py-2 text-sm text-white placeholder-gray-400 bg-[#2C2C2C] rounded-t-lg border-b-2 border-b-[#444] focus:outline-none focus:border-b-2 focus:border-b-blue-500 resize-none"
+                            className="w-full h-[90px] px-4 py-2 text-sm text-white placeholder-gray-400 bg-[#202020] rounded-t-lg border-b-2 border-b-[#444] focus:outline-none focus:border-b-2 focus:border-b-blue-500 resize-none"
                         />
                     </div>
                 </div>

@@ -32,7 +32,7 @@ const PasswordCard = ({ item, onDelete, onClose, onChange }) => {
             {/* MODAL */}
             <div className="z-20 fixed inset-0 flex items-center justify-center bg-[#00000035] backdrop-blur-xs">
 
-                <div className="w-[90%] max-w-lg bg-[#1e1e1e] rounded-xl p-6 shadow-xl">
+                <div className="w-[90%] max-w-lg bg-[#2a2a2a] border border-white/20 rounded-xl p-6 shadow-xl">
 
                     {/* HEADER */}
                     <div className="flex items-center mb-4">
@@ -59,7 +59,7 @@ const PasswordCard = ({ item, onDelete, onClose, onChange }) => {
                             onChange={(e) =>
                                 setFormData({ ...formData, username: e.target.value })
                             }
-                            className={`w-full p-2 rounded bg-[#2a2a2a] outline-none ${isEditable ? "bg-[#222]" : ""
+                            className={`w-full p-2 rounded bg-[#222] outline-none ${isEditable ? "bg-[#222]" : ""
                                 }`}
                         />
 
@@ -81,7 +81,7 @@ const PasswordCard = ({ item, onDelete, onClose, onChange }) => {
                                 setFormData({ ...formData, password: e.target.value })
                             }
                             disabled={!isEditable}
-                            className={`w-full p-2 rounded bg-[#2a2a2a] outline-none ${isEditable ? "bg-[#222]" : ""
+                            className={`w-full p-2 rounded bg-[#222] outline-none ${isEditable ? "bg-[#222]" : ""
                                 }`}
                         />
 
@@ -108,7 +108,7 @@ const PasswordCard = ({ item, onDelete, onClose, onChange }) => {
                                 setFormData({ ...formData, note: e.target.value })
                             }
                             disabled={!isEditable}
-                            className="w-full p-2 rounded bg-[#2a2a2a] outline-none resize-none h-[90px]"
+                            className="w-full p-2 rounded bg-[#222] outline-none resize-none h-[90px]"
                         />
                     </div>
 
