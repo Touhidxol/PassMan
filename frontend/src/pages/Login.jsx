@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import InputTemplate from "../components/InputTemplate";
 import ProfileShort from "../components/ProfileShort";
+import toast from 'react-hot-toast';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -67,6 +68,7 @@ const Login = () => {
 
             if (!res.ok) {
                 setError(data.message || "Registration failed");
+                toast.error(data.message || "Registration failed");
             } else {
                 console.log("User LoggedIn:", data);
 
@@ -80,6 +82,7 @@ const Login = () => {
             }
         } catch (err) {
             setError("Something went wrong");
+            toast.error("Something went wrong");
         }
 
         setLoading(false);
@@ -131,9 +134,9 @@ const Login = () => {
                         {loading ? "Please wait..." : "Login"}
                     </button>
 
-                    {error && (
-                        <p className="text-red-500 text-sm text-center">{error}</p>
-                    )}
+                    {/* {error && (
+                        <p className="text-red-300 text-sm text-center">{error}</p>
+                    )} */}
 
                 </form>
 
