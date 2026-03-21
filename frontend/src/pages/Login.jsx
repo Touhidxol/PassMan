@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import InputTemplate from "../components/InputTemplate";
 import ProfileShort from "../components/ProfileShort";
 import toast from 'react-hot-toast';
+import { Link } from "react-router-dom";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -129,16 +130,30 @@ const Login = () => {
 
                     <button
                         disabled={loading}
-                        className="w-full bg-green-600 text-white p-3 rounded-lg hover:bg-green-700 transition my-5"
+                        className="w-full bg-green-600 text-white p-3 rounded-lg hover:bg-green-700 transition my-3"
                     >
-                        {loading ? "Please wait..." : "Login"}
+                        {loading ? "Please wait..." : (user ? "Login to another Account" : "Login")}
                     </button>
 
                     {/* {error && (
                         <p className="text-red-300 text-sm text-center">{error}</p>
-                    )} */}
+                        )} */}
 
                 </form>
+
+                {user && (
+                    <>
+                        <p className="text-center">or</p>
+                        <Link to="/dashboard" >
+                            <button
+                                disabled={loading}
+                                className="w-full bg-orange-600 text-white p-3 rounded-lg hover:bg-orange-700 transition my-3"
+                            >
+                                Continue as {user.name}
+                            </button>
+                        </Link>
+                    </>
+                )}
 
                 <p className="text-center text-sm mt-4">
                     Don't have an account?{" "}

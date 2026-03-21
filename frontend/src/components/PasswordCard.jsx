@@ -59,14 +59,14 @@ const PasswordCard = ({ item, onDelete, onClose, onChange }) => {
                             onChange={(e) =>
                                 setFormData({ ...formData, username: e.target.value })
                             }
-                            className={`w-full p-2 rounded bg-[#222] outline-none ${isEditable ? "bg-[#222]" : ""
+                            className={`w-full p-3 rounded-xl bg-[#222] outline-none ${isEditable ? "bg-[#222]" : ""
                                 }`}
                         />
 
                         <img
                             src={copy}
                             onClick={() => copyText(formData.username)}
-                            className="w-5 absolute right-2 top-7 cursor-pointer"
+                            className="w-5 absolute right-3 top-8.5 cursor-pointer"
                         />
                     </div>
 
@@ -81,20 +81,20 @@ const PasswordCard = ({ item, onDelete, onClose, onChange }) => {
                                 setFormData({ ...formData, password: e.target.value })
                             }
                             disabled={!isEditable}
-                            className={`w-full p-2 rounded bg-[#222] outline-none ${isEditable ? "bg-[#222]" : ""
+                            className={`w-full p-3 rounded-xl bg-[#222] outline-none ${isEditable ? "bg-[#222]" : ""
                                 }`}
                         />
 
                         <img
                             src={showPassword ? show : hiide}
                             onClick={() => setShowPassword(!showPassword)}
-                            className="w-5 absolute right-8 top-7 cursor-pointer"
+                            className="w-5 absolute right-10 top-8.5 cursor-pointer"
                         />
 
                         <img
                             src={copy}
                             onClick={() => copyText(formData.password)}
-                            className="w-5 absolute right-2 top-7 cursor-pointer"
+                            className="w-5 absolute right-3 top-8.5 cursor-pointer"
                         />
                     </div>
 
@@ -108,7 +108,7 @@ const PasswordCard = ({ item, onDelete, onClose, onChange }) => {
                                 setFormData({ ...formData, note: e.target.value })
                             }
                             disabled={!isEditable}
-                            className="w-full p-2 rounded bg-[#222] outline-none resize-none h-[90px]"
+                            className="w-full p-3 rounded-xl bg-[#222] outline-none resize-none h-[90px]"
                         />
                     </div>
 
@@ -118,7 +118,7 @@ const PasswordCard = ({ item, onDelete, onClose, onChange }) => {
                         {!isEditable && (
                             <button
                                 onClick={() => setIsEditable(true)}
-                                className="flex items-center gap-1 px-3 py-1 rounded hover:bg-[#333]"
+                                className="flex items-center gap-1 px-3 py-2 rounded-full border border-white hover:bg-[#333]"
                             >
                                 <img src={edit} className="w-4" />
                                 Edit
@@ -128,7 +128,7 @@ const PasswordCard = ({ item, onDelete, onClose, onChange }) => {
                         {isEditable && (
                             <button
                                 onClick={handleSave}
-                                className="flex items-center gap-1 px-3 py-1 rounded hover:bg-[#333]"
+                                className="flex items-center gap-1 px-3 py-2 rounded-full border border-white hover:bg-[#333]"
                             >
                                 <img src={save} className="w-4" />
                                 Save
@@ -137,7 +137,7 @@ const PasswordCard = ({ item, onDelete, onClose, onChange }) => {
 
                         <button
                             onClick={() => onDelete(item._id)}
-                            className="flex items-center gap-1 px-3 py-1 rounded hover:bg-[#333]"
+                            className="flex items-center gap-1 px-3 py-1 rounded-full border border-red-900 bg-red-700 hover:bg-red-800"
                         >
                             <img src={del} className="w-4" />
                             Delete
