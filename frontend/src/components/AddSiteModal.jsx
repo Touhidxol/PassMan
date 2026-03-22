@@ -55,7 +55,6 @@ const AddSiteModal = () => {
             return;
         }
 
-        const token = localStorage.getItem("token");
         await createPassword(form);
 
         closeWindow();

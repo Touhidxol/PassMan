@@ -5,7 +5,6 @@ export const checkLoggedin = async () => {
     if (!token) return;
 
     const res = await fetch(`${base}/me`, {
-        method: "GET",
         headers: {
             Authorization: `Bearer ${token}`
         }
@@ -19,3 +18,4 @@ export const checkLoggedin = async () => {
 
     return res.json();
 };
+

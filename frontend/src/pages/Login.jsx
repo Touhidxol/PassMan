@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { checkLoggedin } from "../api/users";
 import InputTemplate from "../components/InputTemplate";
 import ProfileShort from "../components/ProfileShort";
 import toast from 'react-hot-toast';
-import { Link } from "react-router-dom";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -17,24 +17,9 @@ const Login = () => {
     //------------check if any account is already logged in------------
     useEffect(() => {
         const checkUser = async () => {
-            const token = localStorage.getItem("token");
-
-            if (!token) return;
 
             try {
-                const res = await fetch("http://localhost:3000/api/users/me", {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-
-                if (!res.ok) {
-                    const errData = await res.json();
-                    console.log("Auth error:", errData);
-                    return;
-                }
-
-                const data = await res.json();
+                const data = await checkLoggedin();
                 setUser(data);
             } catch (err) {
                 console.log(err);
@@ -91,7 +76,9 @@ const Login = () => {
 
     return (
         <div className="min-h-screen w-screen flex items-center justify-center bg-[#002e22] sm:bg-gradient-to-br from-emerald-800 to-emerald-950">
-            {user && <ProfileShort user={user} />}
+            {user && <div className="[@media(max-height:725px)]:hidden">
+                <ProfileShort user={user} />
+            </div>}
 
             <div className="bg-[#002e22] text-white p-8 sm:rounded-xl sm:shadow-xl w-full sm:max-w-md">
 
