@@ -47,7 +47,7 @@ export const login = async (credentials) => {
     return data;
 }
 
-export const Register = async (credentials) => {
+export const register = async (credentials) => {
 
     const res = await fetch("http://localhost:3000/api/users/register", {
         method: "POST",

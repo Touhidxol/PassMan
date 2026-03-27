@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { checkLoggedin } from "../api/users";
+import { checkLoggedin, login } from "../api/users";
 import InputTemplate from "../components/InputTemplate";
 import ProfileShort from "../components/ProfileShort";
 import toast from 'react-hot-toast';
@@ -37,20 +37,12 @@ const Login = () => {
         setError(null);
 
         try {
-            const raw = JSON.stringify({
+            const credentials = JSON.stringify({
                 "email": email,
                 "password": password
             });
-            const res = await fetch("http://localhost:3000/api/users/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: raw,
-                redirect: "follow"
-            });
 
-            const data = await res.json();
+            const data = await login(credentials);
 
             if (!res.ok) {
                 setError(data.message || "Registration failed");
