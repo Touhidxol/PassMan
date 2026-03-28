@@ -33,7 +33,7 @@ export const login = async (credentials) => {
     const data = await res.json();
 
     if (!res.ok) {
-        console.log(data.message || "Registration failed");
+        console.log(data.message || "Login failed");
     } else {
         console.log("User LoggedIn:", data);
 

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { register } from "../api/users";
 import InputTemplate from "../components/InputTemplate";
 
 const Register = () => {
@@ -17,30 +18,19 @@ const Register = () => {
         setError(null);
 
         try {
-            const raw = JSON.stringify({
+            const credentials = JSON.stringify({
                 "name": username,
                 "email": email,
                 "password": password
             });
-            const res = await fetch("http://localhost:3000/api/users/register", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: raw,
-                redirect: "follow"
-            });
 
-            const data = await res.json();
+            const data = await register(credentials);
 
-            if (!res.ok) {
+            if (!data.token) {
                 setError(data.message || "Registration failed");
             } else {
                 console.log("User registered:", data);
-                // store token if returned
-                if (data.token) {
-                    localStorage.setItem("token", data.token);
-                }
+                
                 setEmail("");
                 setPassword("");
                 setUsername("");
