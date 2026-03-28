@@ -1,8 +1,12 @@
 import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { register } from "../api/users";
+import toast from "react-hot-toast";
 import InputTemplate from "../components/InputTemplate";
 
 const Register = () => {
+    const navigate = useNavigate();
+
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -13,6 +17,12 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (password !== confirmPassword) {
+            setError("Passwords do not match");
+            toast.error("Passwords do not match");
+            return; // stop execution
+        }
 
         setLoading(true);
         setError(null);
@@ -28,15 +38,19 @@ const Register = () => {
 
             if (!data.token) {
                 setError(data.message || "Registration failed");
+                toast.error(data.message || "Registration failed");
             } else {
-                console.log("User registered:", data);
-                
+
                 setEmail("");
                 setPassword("");
+                setConfirmPassword("");
                 setUsername("");
+                toast.success(data.message || "Successfully Registered");
+                navigate("/dashboard");
             }
         } catch (err) {
             setError("Something went wrong");
+            toast.error("Something went wrong");
         }
 
         setLoading(false);

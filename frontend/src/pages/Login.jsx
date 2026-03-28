@@ -45,13 +45,13 @@ const Login = () => {
             const data = await login(credentials);
 
             if (!data.token) {
-                setError(data.message || "Registration failed");
-                toast.error(data.message || "Registration failed");
+                setError(data.message || "Login failed");
+                toast.error(data.message || "Login failed");
             } else {
-                console.log("User LoggedIn:", data);
 
                 setEmail("");
                 setPassword("");
+                toast.success(data.message || "Successfully Logged in");
                 navigate("/dashboard");
             }
         } catch (err) {
