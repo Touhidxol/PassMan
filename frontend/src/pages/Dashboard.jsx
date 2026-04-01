@@ -115,7 +115,7 @@ const Dashboard = () => {
                         <div className="flex-1"></div>
                         <button
                             onClick={openWindow}
-                            className="py-[0.6em] px-[1.2em] bg-transparent border-2 border-blue-500 rounded-full text-sm hover:bg-[#1c244785]"
+                            className="py-[0.6em] px-[1.2em] bg-transparent border-2 border-blue-300 rounded-full text-sm hover:bg-[#1c244785]"
                         >
                             Add
                         </button>
