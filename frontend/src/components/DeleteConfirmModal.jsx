@@ -1,11 +1,9 @@
 import React from "react";
 
-const DeleteConfirmModal = ({ isOpen, onCancel, onConfirm }) => {
+const DeleteConfirmModal = ({ onCancel, onConfirm }) => {
     return (
         <div
-            className={`z-30 w-8/10 max-w-md p-6 flex flex-col items-center justify-center gap-6 rounded-xl fixed left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#1a1a1a] text-white border border-gray-700 transition-opacity duration-300 shadow-xl shadow-black/50 ${
-                isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-            }`}
+            className={`z-30 w-8/10 max-w-md p-6 flex flex-col items-center justify-center gap-6 rounded-xl fixed left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#1a1a1a] text-white border border-gray-700 transition-opacity duration-300 shadow-xl shadow-black/50`}
         >
             <div className="text-left w-full">
                 <p className="text-lg font-semibold">
