@@ -7,6 +7,7 @@ const PasswordSchema = new Schema(
     username: { type: String, default: "" },
     password: { type: String, required: true },
     note: { type: String, default: "" },
+    favorite: { type: Boolean, default: false },
   },
   {
     timestamps: true,

@@ -25,7 +25,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/passwords", passwordRoutes);
 
 app.get("/", (req, res) => {
-  res.json({ success: true, message: "Passmanager API is running." });
+  res.json({ success: true, message: "Passman API is running." });
 });
 
 app.listen(port, () => {
