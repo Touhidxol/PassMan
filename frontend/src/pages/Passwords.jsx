@@ -96,7 +96,7 @@ const Passwords = () => {
             {/* ------------------------------------------------------------------------- */}
 
 
-            <div className="conthainer flex-1 flex flex-col w-full sm:w-2/3 rounded-xl">
+            <div className="conthainer flex-1 flex flex-col w-full rounded-xl">
                 <div className="flex px-5 my-3 items-center">
                     <p className="text-xl">Passwords</p>
                     <div className="flex-1"></div>
