@@ -24,7 +24,7 @@ const Favorites = () => {
 
             <div className="flex flex-col">
                 <div className="flex px-5 my-3 items-center">
-                    <p className="text-xl">⭐ Favorites</p>
+                    <h1 className="text-2xl font-semibold mb-6">Favorites</h1>
                 </div>
 
                 {favoritePasswords.length === 0 ? (

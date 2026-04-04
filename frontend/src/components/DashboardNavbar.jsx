@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
-import logo from '../assets/icons/logo.svg';
+import hamburger from "../assets/icons/hamburger.svg";
 
 
 const Navbar = ({openSidebar}) => {
@@ -32,7 +32,7 @@ const Navbar = ({openSidebar}) => {
         <>
             <div className="navv w-full h-20 px-4 flex items-center justify-center">
                 <div className='flex items-center gap-2 w-full'>
-                    {/* <img onClick={openSidebar} src={logo} className="w-10" alt="logo" /> */}
+                    <img onClick={openSidebar} src={hamburger} className="md:hidden w-6 cursor-pointer" alt="logo" />
                     <div className='font-semibold text-2xl text-left'>
                         PassMan
                     </div>

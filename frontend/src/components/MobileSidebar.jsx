@@ -1,4 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
+
 import dashboard from "../assets/icons/dashboard.svg";
 import passwords from "../assets/icons/passwords.svg";
 import favorites from "../assets/icons/favorite.svg";
@@ -8,10 +10,10 @@ import logo from '../assets/icons/logo.svg';
 
 const MobileSidebar = ({ closeSidebar, sidebarOpen }) => {
     const menuItems = [
-        { icon: passwords, label: "All Passwords" },
-        { icon: dashboard, label: "Dashboard" },
-        { icon: favorites, label: "Favorites" },
-        { icon: settings, label: "Settings" },
+        { icon: passwords, label: "All Passwords", path: "/dashboard/passwords" },
+        { icon: dashboard, label: "Statistics", path: "/dashboard/stats" },
+        { icon: favorites, label: "Favorites", path: "/dashboard/favorites" },
+        { icon: settings, label: "Settings", path: "/dashboard/settings" },
     ];
 
     return (
@@ -44,13 +46,16 @@ const MobileSidebar = ({ closeSidebar, sidebarOpen }) => {
 
                 <ul className="p-3 space-y-2 text-sm">
                     {menuItems.map((item, index) => (
-                        <li
+                        <NavLink
                             key={index}
-                            className="flex items-center gap-3 hover:bg-white/10 p-2 h-12 rounded-md cursor-pointer transition-all"
+                            to={item.path}
+                            className={({ isActive }) =>
+                                `flex items-center gap-3 p-3 h-12 !text-white/90 rounded-md cursor-pointer transition-all ${isActive ? "bg-[#52ff361a] !text-white" : "hover:bg-white/10"}`
+                            }
                         >
                             <img src={item.icon} alt={item.label} className="w-6 h-6" />
                             <p>{item.label}</p>
-                        </li>
+                        </NavLink>
                     ))}
                 </ul>
             </div>

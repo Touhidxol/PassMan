@@ -98,7 +98,7 @@ const Passwords = () => {
 
             <div className="conthainer flex-1 flex flex-col w-full rounded-xl">
                 <div className="flex px-5 my-3 items-center">
-                    <p className="text-xl">Passwords</p>
+                    <h1 className="text-2xl font-semibold">Passwords</h1>
                     <div className="flex-1"></div>
                     <button
                         onClick={openWindow}
@@ -107,7 +107,7 @@ const Passwords = () => {
                         Add
                     </button>
                 </div>
-                <p className="px-5 text-sm">
+                <p className="px-5 text-sm my-4">
                     Create, save, and manage your passwords so you can easily sign in to
                     sites and apps.
                 </p>

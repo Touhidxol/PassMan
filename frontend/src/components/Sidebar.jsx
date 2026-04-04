@@ -12,7 +12,7 @@ import logo from '../assets/icons/logo.svg';
 const Sidebar = () => {
     const menuItems = [
         { icon: passwords, label: "All Passwords", path: "/dashboard/passwords" },
-        { icon: dashboard, label: "Dashboard", path: "/dashboard/stats" },
+        { icon: dashboard, label: "Statistics", path: "/dashboard/stats" },
         { icon: favorites, label: "Favorites", path: "/dashboard/favorites" },
         { icon: settings, label: "Settings", path: "/dashboard/settings" },
     ];
@@ -36,7 +36,7 @@ const Sidebar = () => {
                             key={index}
                             to={item.path}
                             className={({ isActive }) =>
-                                `flex items-center justify-center lg:justify-normal gap-3 p-0 lg:p-3 h-12 !text-white/90 rounded-md cursor-pointer transition-all ${isActive ? "bg-white/20 !text-white" : "hover:bg-white/10"}`
+                                `flex items-center justify-center lg:justify-normal gap-3 p-0 lg:p-3 h-12 !text-white/90 rounded-md cursor-pointer transition-all ${isActive ? "bg-[#52ff361a] !text-white" : "hover:bg-white/10"}`
                             }
                         >
                             <img src={item.icon} alt={item.label} className="w-6 h-6" />

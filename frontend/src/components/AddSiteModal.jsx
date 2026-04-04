@@ -69,7 +69,7 @@ const AddSiteModal = () => {
                 onClick={closeWindow}
             ></div>
 
-            <div className="relative bg-[#1a1a1a] min-w-full sm:min-w-[380px] sm:w-2/5 w-full rounded-xl border border-white/20 shadow-lg flex flex-col z-[1000]">
+            <div className="relative bg-[#1a1a1a] w-full max-w-[550px] rounded-xl border border-white/20 shadow-lg flex flex-col z-[1000]">
                 <div className="flex-1 p-4 px-6">
                     <div className="h-10">Add new password</div>
                     <div className="w-full flex flex-col">
