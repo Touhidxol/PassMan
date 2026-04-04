@@ -62,8 +62,14 @@ const AddSiteModal = () => {
     };
 
     return (
-        <div className="z-10 h-screen w-screen flex items-center justify-center absolute bg-[#00000035] backdrop-blur-xs">
-            <div className="bg-[#2a2a2a] min-w-full sm:min-w-[380px] sm:w-2/5 w-full rounded-xl border border-white/20 shadow-lg flex flex-col">
+        <div className="fixed inset-0 z-[999] flex items-center justify-center p-2">
+            {/* Background Overlay */}
+            <div
+                className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+                onClick={closeWindow}
+            ></div>
+
+            <div className="relative bg-[#1a1a1a] min-w-full sm:min-w-[380px] sm:w-2/5 w-full rounded-xl border border-white/20 shadow-lg flex flex-col z-[1000]">
                 <div className="flex-1 p-4 px-6">
                     <div className="h-10">Add new password</div>
                     <div className="w-full flex flex-col">

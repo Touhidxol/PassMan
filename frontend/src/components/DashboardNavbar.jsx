@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import logo from '../assets/icons/logo.svg';
 
 
-const Navbar = () => {
+const Navbar = ({openSidebar}) => {
     const [user, setUser] = useState(null);
     useEffect(() => {
         const checkUser = async () => {
@@ -30,9 +30,9 @@ const Navbar = () => {
 
     return (
         <>
-            <div className="navv w-full sm:w-2/3 h-20 px-4 flex items-center justify-center">
+            <div className="navv w-full h-20 px-4 flex items-center justify-center">
                 <div className='flex items-center gap-2 w-full'>
-                    <img src={logo} className="w-10" alt="logo" />
+                    {/* <img onClick={openSidebar} src={logo} className="w-10" alt="logo" /> */}
                     <div className='font-semibold text-2xl text-left'>
                         PassMan
                     </div>
