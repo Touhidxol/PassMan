@@ -14,8 +14,6 @@ const registeruser = async (req, res) => {
     const body = req.body;
 
     try {
-        const exists = await user.findOne({ email: body.email });
-
         if (!body.name || !body.email || !body.password) {
             throw Error("Please fill all the fields");
         }
@@ -27,6 +25,8 @@ const registeruser = async (req, res) => {
         if (!validator.isStrongPassword(body.password)) {
             throw Error("Password is not strong enough");
         }
+
+        const exists = await user.findOne({ email: body.email });
 
         if (exists) {
             throw Error("Email already exists");
