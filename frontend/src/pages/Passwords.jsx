@@ -7,6 +7,8 @@ import PasswordCard from '../components/PasswordCard';
 import DeleteConfirmModal from "../components/DeleteConfirmModal";
 import { useAddSiteModal } from '../hooks/useAddSiteModal';
 import { usePasswords } from "../hooks/usePasswords";
+import { motion } from "framer-motion";
+import { Fade, Scale, PresenceWrapper } from "../animations";
 
 const Passwords = () => {
     const navigate = useNavigate();
@@ -74,25 +76,45 @@ const Passwords = () => {
 
     return (
         <>
-            {isOpen && <AddSiteModal />}
-            {cardOpen && (
-                <PasswordCard
-                    item={cardOpen}
-                    onDelete={handleDelete}
-                    onClose={() => setCardOpen(null)}
-                    onChange={handleUpdate}
-                />
-            )}
+            <PresenceWrapper>
+                {isOpen && (
+                    <Fade>
+                        <AddSiteModal />
+                    </Fade>
+                )}
+            </PresenceWrapper>
+
+            <PresenceWrapper>
+                {cardOpen && (
+                    <Fade>
+                        <PasswordCard
+                            item={cardOpen}
+                            onDelete={handleDelete}
+                            onClose={() => setCardOpen(null)}
+                            onChange={handleUpdate}
+                        />
+                    </Fade>
+                )}
+            </PresenceWrapper>
 
             {/*  -----------------------Poppup to confirm delete------------------------- */}
-            {showDeleteConfirm && (
-                <DeleteConfirmModal
-                    onCancel={cancelDelete}
-                    onConfirm={confirmDelete}
-                />
-            )
-            }
-
+            <PresenceWrapper>
+                {showDeleteConfirm && (
+                    <>
+                        <motion.div
+                            className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            onClick={cancelDelete} // optional: click outside to close
+                        />
+                        <DeleteConfirmModal
+                            onCancel={cancelDelete}
+                            onConfirm={confirmDelete}
+                        />
+                    </>
+                )}
+            </PresenceWrapper>
             {/* ------------------------------------------------------------------------- */}
 
 

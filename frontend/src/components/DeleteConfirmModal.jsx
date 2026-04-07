@@ -1,9 +1,14 @@
 import React from "react";
+import { motion } from "framer-motion";
 
-const DeleteConfirmModal = ({ onCancel, onConfirm }) => {
+const DeleteConfirmModal = ({ onCancel, onConfirm}) => {
     return (
-        <div
-            className={`z-30 w-8/10 max-w-md p-6 flex flex-col items-center justify-center gap-6 rounded-xl fixed left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#1a1a1a] text-white border border-gray-700 transition-opacity duration-300 shadow-xl shadow-black/50`}
+        <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 0 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 0 }}
+            transition={{ duration: 0.2 }}
+            className="z-50 w-8/10 max-w-md p-6 flex flex-col items-center justify-center gap-6 rounded-xl fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#1a1a1a] text-white border border-gray-700 shadow-xl shadow-black/50"
         >
             <div className="text-left w-full">
                 <p className="text-lg font-semibold">
@@ -29,7 +34,7 @@ const DeleteConfirmModal = ({ onCancel, onConfirm }) => {
                     Delete
                 </button>
             </div>
-        </div>
+        </motion.div>
     );
 };
 

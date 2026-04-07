@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 import Navbar from "../components/DashboardNavbar";
 import Sidebar from "../components/Sidebar";
 import MobileSidebar from "../components/MobileSidebar";
+import { Fade, SlideLeft, PresenceWrapper } from "../animations";
 
 const DashboardLayout = () => {
     const [sidebarOpen, setsidebarOpen] = useState(false);
@@ -22,11 +24,20 @@ const DashboardLayout = () => {
             </div>
 
             {/* Mobile Sidebar */}
-            {sidebarOpen && (
-                <div className="md:hidden fixed inset-0 z-50 bg-black/50">
-                    <MobileSidebar closeSidebar={closeSidebar} sidebarOpen={sidebarOpen} />
-                </div>
-            )}
+            <PresenceWrapper>
+                {sidebarOpen && (
+                    <Fade>
+                        <div
+                            onClick={closeSidebar}
+                            className="md:hidden fixed inset-0 z-50 bg-black/50"
+                        >
+                            <SlideLeft>
+                                <MobileSidebar closeSidebar={closeSidebar} sidebarOpen={sidebarOpen} />
+                            </SlideLeft>
+                        </div>
+                    </Fade>
+                )}
+            </PresenceWrapper>
 
             {/* Main */}
             <div className="flex-1 flex flex-col h-screen overflow-hidden">

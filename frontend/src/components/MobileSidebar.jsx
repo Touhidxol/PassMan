@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import dashboard from "../assets/icons/dashboard.svg";
@@ -16,10 +16,14 @@ const MobileSidebar = ({ closeSidebar, sidebarOpen }) => {
         { icon: settings, label: "Settings", path: "/dashboard/settings" },
     ];
 
+
     return (
         <>
             {/* ---------------- LEFT MobileSIDEBAR ---------------- */}
-            <div className={`top-0 left-0 h-screen w-full max-w-80 bg-[#242424] transform ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0 transition-transform duration-300 z-50`}>
+            <div
+                onClick={(e) => e.stopPropagation()}
+                className={`top-0 left-0 h-screen w-full max-w-80 bg-[#242424] transform ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0 transition-transform duration-300 z-50`}
+            >
 
                 {/* Header */}
                 <div className="px-5 pt-6 pb-5 border-b border-white/10">
@@ -30,12 +34,6 @@ const MobileSidebar = ({ closeSidebar, sidebarOpen }) => {
 
                         <div className="flex-1"></div>
 
-                        <button
-                            onClick={closeSidebar}
-                            className="text-xl hover:scale-110 transition"
-                        >
-                            ✖
-                        </button>
                     </div>
 
                     {/* Optional subtitle / spacing */}
@@ -49,6 +47,7 @@ const MobileSidebar = ({ closeSidebar, sidebarOpen }) => {
                         <NavLink
                             key={index}
                             to={item.path}
+                            onClick={closeSidebar}
                             className={({ isActive }) =>
                                 `flex items-center gap-3 p-3 h-12 !text-white/90 rounded-md cursor-pointer transition-all ${isActive ? "bg-[#52ff361a] !text-white" : "hover:bg-white/10"}`
                             }
