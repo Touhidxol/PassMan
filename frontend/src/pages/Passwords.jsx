@@ -120,7 +120,7 @@ const Passwords = () => {
 
             <div className="conthainer flex-1 flex flex-col w-full rounded-xl">
                 <div className="flex px-5 my-3 items-center">
-                    <h1 className="text-2xl font-semibold">Passwords</h1>
+                    <h1 className="sm:!text-5xl !text-3xl font-semibold">Passwords</h1>
                     <div className="flex-1"></div>
                     <button
                         onClick={openWindow}

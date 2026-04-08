@@ -19,7 +19,6 @@ const MobileSidebar = ({ closeSidebar, sidebarOpen }) => {
 
     return (
         <>
-            {/* ---------------- LEFT MobileSIDEBAR ---------------- */}
             <div
                 onClick={(e) => e.stopPropagation()}
                 className={`top-0 left-0 h-screen w-full max-w-80 bg-[#242424] transform ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0 transition-transform duration-300 z-50`}

@@ -33,15 +33,11 @@ export const login = async (credentials) => {
     const data = await res.json();
 
     if (!res.ok) {
-        console.log(data.message || "Login failed");
-    } else {
-        console.log("User LoggedIn:", data);
-
-        // store token if returned
-        if (data.token) {
-            localStorage.setItem("token", data.token);
-        }
-
+        throw new Error(data.message || "Login failed");
+    }
+    
+    if (data.token) {
+        localStorage.setItem("token", data.token);
     }
 
     return data;

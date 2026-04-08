@@ -1,10 +1,18 @@
 import Password from "../models/password.js";
+import { encrypt, decrypt } from "../utils/crypto.js";
 
 export const getPasswords = async (req, res) => {
     try {
         const userId = req.user._id;
         const passwords = await Password.find({ user: userId }).sort({ updatedAt: -1 });
-        res.status(200).json(passwords);
+
+        // Decrypt encrypted passwords got from DataBase and send plain text to frontend
+        const decrypted = passwords.map((p) => ({
+            ...p.toObject(),
+            password: decrypt(p.password),
+        }));
+
+        res.status(200).json(decrypted);
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false, message: "Failed to load passwords." });
@@ -29,11 +37,12 @@ export const createPassword = async (req, res) => {
             user: userId,
             site,
             username: username || "",
-            password,
+            password: encrypt(password),
             note: note || "",
         });
 
-        res.status(201).json(newPassword);
+        res.status(201).json({ ...newPassword.toObject(), password: decrypt(newPassword.password) });
+
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false, message: "Could not save password." });
@@ -57,11 +66,11 @@ export const updatePassword = async (req, res) => {
 
         passwordItem.site = payload.site ?? passwordItem.site;
         passwordItem.username = payload.username ?? passwordItem.username;
-        passwordItem.password = payload.password ?? passwordItem.password;
+        passwordItem.password = payload.password ? encrypt(payload.password) : passwordItem.password;
         passwordItem.note = payload.note ?? passwordItem.note;
 
         await passwordItem.save();
-        res.status(200).json(passwordItem);
+        res.status(200).json({ ...passwordItem.toObject(), password: decrypt(passwordItem.password) });
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false, message: "Could not update password." });

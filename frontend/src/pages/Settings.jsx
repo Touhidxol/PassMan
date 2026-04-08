@@ -7,10 +7,12 @@ const Settings = () => {
     return (
         <div className="p-6 text-white max-w-4xl mx-auto">
 
-            <h1 className="text-2xl font-semibold mb-6">Settings</h1>
+            <div className="flex px-5 my-3 items-center">
+                <h1 className="sm:!text-5xl !text-3xl font-semibold">Settings</h1>
+            </div>
 
             {/* ---------------- ACCOUNT ---------------- */}
-            <div className="bg-[#1f1f1f] p-5 rounded-xl mb-6 border border-white/10">
+            <div className="bg-[#1f1f1f] p-5 rounded-xl my-6 border border-white/10">
                 <h2 className="text-lg font-medium mb-4">Account</h2>
 
                 <div className="space-y-4">
