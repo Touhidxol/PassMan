@@ -68,6 +68,7 @@ export const updatePassword = async (req, res) => {
         passwordItem.username = payload.username ?? passwordItem.username;
         passwordItem.password = payload.password ? encrypt(payload.password) : passwordItem.password;
         passwordItem.note = payload.note ?? passwordItem.note;
+        passwordItem.favorite = payload.favorite ?? passwordItem.favorite;
 
         await passwordItem.save();
         res.status(200).json({ ...passwordItem.toObject(), password: decrypt(passwordItem.password) });

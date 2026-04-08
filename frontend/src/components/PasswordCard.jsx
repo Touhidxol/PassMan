@@ -8,17 +8,31 @@ import save from "../assets/icons/save.svg";
 import copy from "../assets/icons/copy.svg";
 import show from "../assets/icons/outlineeye.svg";
 import hiide from "../assets/icons/oulinecrosseye.svg";
+import favoriteButton from "../assets/icons/favoriteButton.svg";
+import nonFavoriteButton from "../assets/icons/non_favoriteButton.svg"
 
 const PasswordCard = ({ item, onDelete, onClose, onChange }) => {
 
     const [isEditable, setIsEditable] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const [isFavorite, setIsFavorite] = useState(item.favorite || false);
     const [formData, setFormData] = useState(item);
 
     const handleSave = () => {
         setIsEditable(false);
         onChange(formData);
         onClose();
+    };
+
+    const handleToggleFavorite = async () => {
+        const newValue = !isFavorite;
+        setIsFavorite(newValue);
+        try {
+            await onChange({ ...formData, favorite: newValue });
+        } catch {
+            setIsFavorite(!newValue); // revert on failure
+            toast.error("Failed to update favorite.");
+        }
     };
 
 
@@ -38,6 +52,26 @@ const PasswordCard = ({ item, onDelete, onClose, onChange }) => {
                     <div className="flex items-center mb-4">
                         <img src={webico} className="w-6 mr-3" />
                         <p className="text-lg font-semibold">{item.site}</p>
+
+                        {/* ⭐ FAVORITE BUTTON */}
+                        <button
+                            onClick={handleToggleFavorite}
+                            title={isFavorite ? "Remove from favorites" : "Add to favorites"}
+                            className="mx-2 p-2 rounded-full hover:bg-white/10 transition-colors"
+                        >
+                            {/* <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                className="w-5 h-5 transition-colors"
+                                fill={isFavorite ? "#facc15" : "none"}
+                                stroke={isFavorite ? "#facc15" : "#9ca3af"}
+                                strokeWidth="2"
+                            >
+                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                            </svg> */}
+                            <img src={isFavorite ? favoriteButton : nonFavoriteButton} alt="isFavorite" className="w-6" />
+                        </button>
+
                         <div className="flex-1"></div>
 
                         <button

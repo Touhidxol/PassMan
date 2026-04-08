@@ -1,26 +1,60 @@
 import React, { useEffect, useState } from "react";
 import { usePasswords } from "../hooks/usePasswords";
+import { usePasswordCard } from "../hooks/usePasswordCard";
 import PasswordCard from "../components/PasswordCard";
+import { PresenceWrapper, Fade } from "../animations";
 
 const Favorites = () => {
-    const { passwords, loadPasswords } = usePasswords();
-    const [cardOpen, setCardOpen] = useState(null);
+    const { passwords, loadPasswords, loading, error, removePassword, editPassword } = usePasswords();
+
+    const {
+        cardOpen, setCardOpen,
+        showDeleteConfirm,
+        handleDelete, confirmDelete, cancelDelete,
+        handleUpdate,
+    } = usePasswordCard({ passwords, removePassword, editPassword });
 
     useEffect(() => {
         loadPasswords();
     }, [loadPasswords]);
 
-    // const favoritePasswords = passwords.filter(item => item.isFavorite);
-    const favoritePasswords = passwords;
+    const favoritePasswords = passwords.filter(item => item.favorite);
+    // const favoritePasswords = passwords;
 
     return (
         <>
-            {cardOpen && (
-                <PasswordCard
-                    item={cardOpen}
-                    onClose={() => setCardOpen(null)}
-                />
-            )}
+            <PresenceWrapper>
+                {cardOpen && (
+                    <Fade>
+                        <PasswordCard
+                            item={cardOpen}
+                            onDelete={handleDelete}
+                            onClose={() => setCardOpen(null)}
+                            onChange={handleUpdate}
+                        />
+                    </Fade>
+                )}
+            </PresenceWrapper>
+
+            {/*  -----------------------Poppup to confirm delete------------------------- */}
+            <PresenceWrapper>
+                {showDeleteConfirm && (
+                    <>
+                        <motion.div
+                            className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            onClick={cancelDelete} // optional: click outside to close
+                        />
+                        <DeleteConfirmModal
+                            onCancel={cancelDelete}
+                            onConfirm={confirmDelete}
+                        />
+                    </>
+                )}
+            </PresenceWrapper>
+            {/* ------------------------------------------------------------------------- */}
 
             <div className="flex flex-col">
                 <div className="flex px-5 my-3 items-center">

@@ -7,6 +7,7 @@ import PasswordCard from '../components/PasswordCard';
 import DeleteConfirmModal from "../components/DeleteConfirmModal";
 import { useAddSiteModal } from '../hooks/useAddSiteModal';
 import { usePasswords } from "../hooks/usePasswords";
+import { usePasswordCard } from "../hooks/usePasswordCard";
 import { motion } from "framer-motion";
 import { Fade, Scale, PresenceWrapper } from "../animations";
 
@@ -15,8 +16,12 @@ const Passwords = () => {
     const { isOpen, openWindow } = useAddSiteModal();
     const { passwords, loadPasswords, loading, error, removePassword, editPassword } = usePasswords();
 
-    const [cardOpen, setCardOpen] = useState(null);
-    const [showDeleteConfirm, setshowDeleteConfirm] = useState(false)
+    const {
+        cardOpen, setCardOpen,
+        showDeleteConfirm,
+        handleDelete, confirmDelete, cancelDelete,
+        handleUpdate,
+    } = usePasswordCard({ passwords, removePassword, editPassword });
 
     useEffect(() => {
         if (error) {
@@ -25,45 +30,35 @@ const Passwords = () => {
     }, [error, navigate]);
 
     // Delete a password---------------------------------------------------
-    const [indexToRemove, setIndexToRemove] = useState(-1);
+    // const [indexToRemove, setIndexToRemove] = useState(-1);
 
-    const handleDelete = async (id) => {
-        setIndexToRemove(passwords.findIndex(item => item._id === id));
-        setshowDeleteConfirm(true);
-    };
+    // const handleDelete = async (id) => {
+    //     setIndexToRemove(passwords.findIndex(item => item._id === id));
+    //     setshowDeleteConfirm(true);
+    // };
 
-    const confirmDelete = async () => {
-        if (indexToRemove === -1) return;
-        const itemToDelete = passwords[indexToRemove];
-        await removePassword(itemToDelete._id);
-        setshowDeleteConfirm(false);
-        setIndexToRemove(-1);
-        setCardOpen(null);
-        toast.success("Password Deleted!");
-    };
+    // const confirmDelete = async () => {
+    //     if (indexToRemove === -1) return;
+    //     const itemToDelete = passwords[indexToRemove];
+    //     await removePassword(itemToDelete._id);
+    //     setshowDeleteConfirm(false);
+    //     setIndexToRemove(-1);
+    //     setCardOpen(null);
+    //     toast.success("Password Deleted!");
+    // };
 
-    const cancelDelete = () => {
-        setshowDeleteConfirm(false);
-        setIndexToRemove(-1);
-    };
+    // const cancelDelete = () => {
+    //     setshowDeleteConfirm(false);
+    //     setIndexToRemove(-1);
+    // };
     // -------------------------------------------------------------
 
-    //-------while deleting background shouldnt scrollable----------
-    useEffect(() => {
-        if (showDeleteConfirm || cardOpen) {
-            document.body.style.overflow = "hidden";
-        } else {
-            document.body.style.overflow = "auto";
-        }
-    }, [showDeleteConfirm, cardOpen]);
-    //-------------------------------------------------------------
-
     // Edit a Password---------------------------------------------
-    const handleUpdate = async (updatedPassword) => {
-        await editPassword(updatedPassword);
+    // const handleUpdate = async (updatedPassword) => {
+    //     await editPassword(updatedPassword);
 
-        toast.success("Password updated!");
-    };
+    //     toast.success("Password updated!");
+    // };
 
 
     //---------------load password---------------------------------
