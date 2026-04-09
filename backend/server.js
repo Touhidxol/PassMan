@@ -8,6 +8,7 @@ import rateLimit from "express-rate-limit";
 
 import userRoutes from "./routes/userRoutes.js";
 import passwordRoutes from "./routes/passwordRoutes.js";
+import otpRoutes from "./routes/otpRoutes.js";
 import requireAuth from './middlewares/requireAuth.js';
 
 dotenv.config();
@@ -34,6 +35,7 @@ app.use(requireAuth);
 
 app.use("/api/users", userRoutes);
 app.use("/api/passwords", passwordRoutes);
+app.use("/api/auth",otpRoutes)
 
 app.get("/", (req, res) => {
   res.json({ success: true, message: "Passman API is running." });

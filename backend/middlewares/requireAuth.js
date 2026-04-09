@@ -4,7 +4,7 @@ import user from "../models/user.js";
 // requireAuth middleware is applied to all routes except /login and /register
 // to prevent unauthenticated users from accessing protected routes
 const requireAuth = async (req, res, next) => {
-    if (req.path === "/api/users/register" || req.path === "/api/users/login") {
+    if (req.path === "/api/users/register" || req.path === "/api/users/login" || req.path === "/api/auth/forgot-password" || req.path === "/api/auth/reset-password") {
         return next();
     }
 
