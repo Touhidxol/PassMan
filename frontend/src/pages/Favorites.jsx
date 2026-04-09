@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { usePasswords } from "../hooks/usePasswords";
 import { usePasswordCard } from "../hooks/usePasswordCard";
 import PasswordCard from "../components/PasswordCard";
+import DeleteConfirmModal from "../components/DeleteConfirmModal"
 import { PresenceWrapper, Fade } from "../animations";
+import { motion } from "framer-motion";
 
 const Favorites = () => {
     const { passwords, loadPasswords, loading, error, removePassword, editPassword } = usePasswords();

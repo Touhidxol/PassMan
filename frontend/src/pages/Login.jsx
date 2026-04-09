@@ -14,6 +14,11 @@ const Login = () => {
     const [loading, setLoading] = useState(false);
 
     const [user, setUser] = useState(null);
+
+    const logout = () => {
+        localStorage.removeItem("token");
+        window.location.reload();
+    };
     //------------check if any account is already logged in------------
     useEffect(() => {
         const checkUser = async () => {
@@ -61,7 +66,6 @@ const Login = () => {
             setLoading(false);
         }
 
-
     };
 
     return (
@@ -79,48 +83,18 @@ const Login = () => {
                     Sign in to securely access your stored passwords.
                 </p>
 
-                <form onSubmit={handleSubmit} className="">
-
-                    <InputTemplate title="Email" id='email'>
-                        <input
-                            type="email"
-                            id="email"
-                            placeholder=" "
-                            className="input-template peer"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
-                    </InputTemplate>
-
-                    <InputTemplate title="Password" id='password'>
-                        <input
-                            type="password"
-                            id="password"
-                            placeholder=" "
-                            className="input-template peer"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                        />
-                    </InputTemplate>
-
-                    <button
-                        disabled={loading}
-                        className="w-full bg-green-600 text-white p-3 rounded-lg hover:bg-green-700 transition my-3"
-                    >
-                        {loading ? "Please wait..." : (user ? "Login to another Account" : "Login")}
-                    </button>
-
-                    {/* {error && (
-                        <p className="text-red-300 text-sm text-center">{error}</p>
-                        )} */}
-
-                </form>
-
-                {user && (
+                {user ? (
                     <>
+                        <button
+                        onClick={logout}
+                            disabled={loading}
+                            className="w-full bg-green-600 text-white p-3 rounded-lg hover:bg-green-700 transition my-3"
+                        >
+                            {loading ? "Please wait..." : "Login to another Account"}
+                        </button>
+
                         <p className="text-center">or</p>
+
                         <Link to="/dashboard" >
                             <button
                                 disabled={loading}
@@ -130,7 +104,46 @@ const Login = () => {
                             </button>
                         </Link>
                     </>
-                )}
+                ) : (
+
+                    <form onSubmit={handleSubmit} className="relative">
+
+                        <InputTemplate title="Email" id='email'>
+                            <input
+                                type="email"
+                                id="email"
+                                placeholder=" "
+                                className="input-template peer"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                            />
+                        </InputTemplate>
+
+                        <InputTemplate title="Password" id='password'>
+                            <input
+                                type="password"
+                                id="password"
+                                placeholder=" "
+                                className="input-template peer"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                            />
+                        </InputTemplate>
+
+                        <Link className="!text-white/70 text-right text-xs absolute right-2 -translate-y-4" to="/forgot-password">Forgot password?</Link>
+
+                        <button
+                            disabled={loading}
+                            className="w-full bg-green-600 text-white p-3 rounded-lg hover:bg-green-700 transition my-3"
+                        >
+                            {loading ? "Please wait..." : "Login"}
+                        </button>
+
+                    </form>
+                )
+                }
 
                 <p className="text-center text-sm mt-4">
                     Don't have an account?{" "}

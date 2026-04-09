@@ -9,6 +9,7 @@ import { useRef, useState } from "react";
 const AddSiteModal = () => {
     const { closeWindow } = useAddSiteModal();
     const { passwords, loadPasswords } = usePasswords();
+    const [showPassword, setShowPassword] = useState(false);
 
     const [errors, setErrors] = useState({});
     const [form, setform] = useState({
@@ -23,16 +24,9 @@ const AddSiteModal = () => {
         setErrors((prev) => ({ ...prev, [e.target.name]: "" }));
     };
 
-    const eyeref = useRef();
     const passwordInputRef = useRef();
     const toogleshowpassword = () => {
-        if (eyeref.current.src.includes("hide")) {
-            passwordInputRef.current.type = "text";
-            eyeref.current.src = show;
-        } else {
-            passwordInputRef.current.type = "password";
-            eyeref.current.src = hiide;
-        }
+        setShowPassword((prev) => !prev);
     };
 
     const savepassword = async () => {
@@ -121,15 +115,14 @@ const AddSiteModal = () => {
                         <input
                             ref={passwordInputRef}
                             onChange={handleChange}
-                            type="password"
+                            type={showPassword ? "text" : "password"}
                             name="password"
                             id="password"
                             className={`w-full h-10 px-4 text-sm text-white placeholder-gray-400 bg-[#202020] rounded-t-lg border-b-2 focus:outline-none focus:border-b-blue-500 ${errors.password ? "border-red-400" : "border-b-[#444]"
                                 }`}
                         />
                         <img
-                            ref={eyeref}
-                            src={hiide}
+                            src={showPassword ? show : hiide}
                             onClick={toogleshowpassword}
                             alt=""
                             className="w-[20px] absolute right-2 bottom-2 cursor-pointer"
