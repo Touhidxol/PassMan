@@ -9,11 +9,10 @@ export const sendOTP = async (email) => {
         body: JSON.stringify({ email }),
     });
 
-    const data = await res.json();
+    const data = await res.json().catch(() => ({}));
 
     if (!res.ok) {
-        const errorData = await res.json().catch(() => ({}));
-        throw new Error(errorData.message || `Request failed: ${res.status}`);
+        throw new Error(data.message || `Request failed: ${res.status}`);
     }
 
     return data;
@@ -26,18 +25,17 @@ export const resetPassword = async ({ email, otp, newPassword }) => {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            email,
-            otp,
+            email: email.toLowerCase(),
+            otp: String(otp),
             newPassword,
-        }),
+        })
     });
 
-    if (!res.ok) {
-        const errorData = await res.json().catch(() => ({}));
-        throw new Error(errorData.message || `Request failed: ${res.status}`);
-    }
+    const data = await res.json().catch(() => ({}));
 
-    const data = await res.json();
+    if (!res.ok) {
+        throw new Error(data.message || `Request failed: ${res.status}`);
+    }
 
     return data;
 };

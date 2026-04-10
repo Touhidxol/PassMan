@@ -46,7 +46,7 @@ router.post('/reset-password', async (req, res) => {
         const user = await User.findOne({
             email,
             resetPasswordOTP: otp,
-            resetPasswordExpires: { $gt: new Date() }  // OTP not expired
+            resetPasswordExpires: { $gt: new Date(Date.now()) },
         });
 
         if (!user) {

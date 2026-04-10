@@ -39,12 +39,12 @@ export default function ForgotPassword() {
         setLoading(true);
 
         try {
-            const res = await resetPassword(email, otp, newPassword)
+            const res = await resetPassword({ email, otp, newPassword })
             toast.success(res.message || "Password reset successful");
 
             setTimeout(() => navigate('/login'), 1500);
         } catch (err) {
-            toast.error(err.response?.data?.message || 'Invalid or expired OTP');
+            toast.error(err.message || 'Invalid or expired OTP');
         } finally {
             setLoading(false);
         }
