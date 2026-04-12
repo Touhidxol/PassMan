@@ -34,26 +34,22 @@ const Register = () => {
                 "password": password
             });
 
-            const data = await register(credentials);
+            await register(credentials);
+            
+            setEmail("");
+            setPassword("");
+            setConfirmPassword("");
+            setUsername("");
+            toast.success("Successfully Registered");
+            navigate("/dashboard");
 
-            if (!data.token) {
-                setError(data.message || "Registration failed");
-                toast.error(data.message || "Registration failed");
-            } else {
-
-                setEmail("");
-                setPassword("");
-                setConfirmPassword("");
-                setUsername("");
-                toast.success(data.message || "Successfully Registered");
-                navigate("/dashboard");
-            }
         } catch (err) {
-            setError("Something went wrong");
-            toast.error("Something went wrong");
+            const message = err.message || "Something went wrong";
+            setError(message);
+            toast.error(message);
+        } finally {
+            setLoading(false);
         }
-
-        setLoading(false);
     };
 
     return (

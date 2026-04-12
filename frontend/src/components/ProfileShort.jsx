@@ -1,11 +1,6 @@
 import React from 'react'
 
-const ProfileShort = ({ user }) => {
-  
-  const logout = () => {
-    localStorage.removeItem("token");
-    window.location.reload();
-  };
+const ProfileShort = ({ user, onLogout }) => {
 
   return (
     <div className="absolute top-6 left-1/2 -translate-x-1/2 bg-emerald-900/80 backdrop-blur-md border border-emerald-700 rounded-xl px-4 py-3 shadow-lg flex items-center gap-4">
@@ -22,7 +17,7 @@ const ProfileShort = ({ user }) => {
 
       {/* Logout */}
       <button
-        onClick={logout}
+        onClick={onLogout}
         className="ml-4 bg-red-500 hover:bg-red-600 px-3 py-1.5 rounded-lg text-xs font-medium transition"
       >
         Logout

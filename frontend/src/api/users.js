@@ -1,33 +1,29 @@
 const base = "http://localhost:3000/api/users";
 
 export const checkLoggedin = async () => {
-    const token = localStorage.getItem("token");
-    if (!token) return;
 
     const res = await fetch(`${base}/me`, {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
+        credentials: "include",
     });
 
     if (!res.ok) {
-        const errData = await res.json();
-        console.log("Auth error:", errData);
-        return;
+        // const errData = await res.json();
+        // console.log("Auth error:", errData);
+        return null;
     }
 
     return res.json();
 };
 
-export const login = async (credentials) => {
+export const login = async (authData) => {
 
-    const res = await fetch("http://localhost:3000/api/users/login", {
+    const res = await fetch(`${base}/login`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: credentials,
-        redirect: "follow"
+        credentials: "include",
+        body: authData,
     });
 
     const data = await res.json();
@@ -35,41 +31,33 @@ export const login = async (credentials) => {
     if (!res.ok) {
         throw new Error(data.message || "Login failed");
     }
-    
-    if (data.token) {
-        localStorage.setItem("token", data.token);
-    }
 
     return data;
 }
 
-export const register = async (credentials) => {
+export const register = async (authData) => {
 
-    const res = await fetch("http://localhost:3000/api/users/register", {
+    const res = await fetch(`${base}/register`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: credentials,
-        redirect: "follow"
+        body: authData,
+        credentials: "include",
     });
 
     const data = await res.json();
 
     if (!res.ok) {
         console.log(data.message || "Registration failed");
-    } else {
-        console.log("User Registered:", data);
-
-        // store token if returned
-        if (data.token) {
-            localStorage.setItem("token", data.token);
-        }
-
     }
 
     return data;
 }
 
-
-
+export const logout = async () => {
+    await fetch(`${base}/logout`, {
+        method: "POST",
+        credentials: "include",
+    });
+};

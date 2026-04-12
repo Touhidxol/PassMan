@@ -6,6 +6,7 @@ export const sendOTP = async (email) => {
         headers: {
             "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({ email }),
     });
 
@@ -24,11 +25,12 @@ export const resetPassword = async ({ email, otp, newPassword }) => {
         headers: {
             "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({
             email: email.toLowerCase(),
             otp: String(otp),
             newPassword,
-        })
+        }),
     });
 
     const data = await res.json().catch(() => ({}));

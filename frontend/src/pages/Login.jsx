@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { checkLoggedin, login } from "../api/users";
+import { checkLoggedin, login, logout } from "../api/users";
 import InputTemplate from "../components/InputTemplate";
 import ProfileShort from "../components/ProfileShort";
 import toast from 'react-hot-toast';
@@ -15,9 +15,9 @@ const Login = () => {
 
     const [user, setUser] = useState(null);
 
-    const logout = () => {
-        localStorage.removeItem("token");
-        window.location.reload();
+    const handleLogout = async () => {
+        await logout();
+        setUser(null);
     };
     //------------check if any account is already logged in------------
     useEffect(() => {
@@ -25,7 +25,7 @@ const Login = () => {
 
             try {
                 const data = await checkLoggedin();
-                setUser(data);
+                setUser(data || null);
             } catch (err) {
                 console.log(err);
             }
@@ -49,19 +49,15 @@ const Login = () => {
 
             const data = await login(credentials);
 
-            if (!data.token) {
-                setError(data.message || "Login failed");
-                toast.error(data.message || "Login failed");
-            } else {
+            setEmail("");
+            setPassword("");
+            toast.success(data.message || "Successfully Logged in");
+            navigate("/dashboard");
 
-                setEmail("");
-                setPassword("");
-                toast.success(data.message || "Successfully Logged in");
-                navigate("/dashboard");
-            }
         } catch (err) {
-            setError("Something went wrong");
-            toast.error("Something went wrong");
+            const message = err.message || "Something went wrong";
+            setError(message);
+            toast.error(message);
         } finally {
             setLoading(false);
         }
@@ -71,7 +67,7 @@ const Login = () => {
     return (
         <div className="min-h-screen w-screen flex items-center justify-center bg-[#002e22] sm:bg-gradient-to-br from-emerald-800 to-emerald-950">
             {user && <div className="[@media(max-height:725px)]:hidden">
-                <ProfileShort user={user} />
+                <ProfileShort user={user} onLogout={handleLogout} />
             </div>}
 
             <div className="bg-[#002e22] text-white p-8 sm:rounded-xl sm:shadow-xl w-full sm:max-w-md">
@@ -86,7 +82,7 @@ const Login = () => {
                 {user ? (
                     <>
                         <button
-                        onClick={logout}
+                            onClick={handleLogout}
                             disabled={loading}
                             className="w-full bg-green-600 text-white p-3 rounded-lg hover:bg-green-700 transition my-3"
                         >
