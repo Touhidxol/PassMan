@@ -3,6 +3,16 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import validator from "validator";
 
+// Helper to set the auth cookie consistently
+const setAuthCookie = (res, token) => {
+    res.cookie("token", token, {
+        httpOnly: true,
+        secure: false,        // ⚠️ Set to true in production (requires HTTPS)
+        sameSite: "lax",
+        maxAge: 24 * 60 * 60 * 1000
+    });
+};
+
 // create token with user id
 const createtoken = (_id) => {
     return jwt.sign({ _id }, process.env.JWT_SECRET, { expiresIn: "1d" });
@@ -43,11 +53,12 @@ const registeruser = async (req, res) => {
 
         const newentry = await newuser.save();
         const token = createtoken(newentry._id);
+        setAuthCookie(res, token);
 
         res.status(201).json({
             name: newentry.name,
             email: newentry.email,
-            token: token,
+            // token: token,
         });
     } catch (error) {
         if (error instanceof Error) {
@@ -94,11 +105,12 @@ const loginuser = async (req, res) => {
         }
 
         const token = createtoken(login._id);
+        setAuthCookie(res, token);
 
         res.status(200).json({
             name: login.name,
             email: login.email,
-            token: token,
+            // token: token,
         });
     } catch (error) {
         res.status(500).json({
@@ -118,4 +130,13 @@ const loggedin = async (req, res) => {
     }
 };
 
-export { registeruser, loginuser, loggedin };
+const logoutuser = (req, res) => {
+    res.clearCookie("token", {
+        httpOnly: true,
+        secure: false,   // ⚠️ Set to true in production (requires HTTPS)
+        sameSite: "lax",
+    });
+    res.json({ message: "Logged out successfully" });
+};
+
+export { registeruser, loginuser, loggedin, logoutuser };

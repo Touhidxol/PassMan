@@ -4,18 +4,23 @@ import user from "../models/user.js";
 // requireAuth middleware is applied to all routes except /login and /register
 // to prevent unauthenticated users from accessing protected routes
 const requireAuth = async (req, res, next) => {
-    if (req.path === "/api/users/register" || req.path === "/api/users/login" || req.path === "/api/auth/forgot-password" || req.path === "/api/auth/reset-password") {
+
+    const publicPaths = [
+        "/api/users/register",
+        "/api/users/login",
+        "/api/auth/forgot-password",
+        "/api/auth/reset-password",
+    ];
+
+    if (publicPaths.includes(req.path)) {
         return next();
     }
 
-    // verify user is authenticated
-    const { authorization } = req.headers;
+    const token = req.cookies?.token;
 
-    if (!authorization) {
+    if (!token) {
         return res.status(401).json({ error: "Authorization token required" });
     }
-
-    const token = authorization.split(" ")[1];
 
     try {
         // verify token
@@ -23,6 +28,10 @@ const requireAuth = async (req, res, next) => {
         const { _id } = decodedToken;
 
         req.user = await user.findOne({ _id }).select("_id");
+
+        if (!req.user) {
+            return res.status(401).json({ error: "User not found" });
+        }
 
         console.log(req.user + " is authenticated");
         next();
