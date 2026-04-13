@@ -117,12 +117,11 @@ const AddSiteModal = () => {
                             id="password"
                             className={`w-full h-10 px-4 text-sm text-white placeholder-gray-400 bg-[#202020] rounded-t-lg border-b-2 focus:outline-none focus:border-b-blue-500 ${errors.password ? "border-red-400" : "border-b-[#444]"}`}
                         />
-
                         <img
                             src={showPassword ? show : hiide}
                             onClick={toogleshowpassword}
                             alt=""
-                            className="w-[20px] absolute right-2 top-2 cursor-pointer"
+                            className="w-[20px] absolute right-2 top-14 cursor-pointer"
                         />
 
                         {/* ── Strength bar ── */}

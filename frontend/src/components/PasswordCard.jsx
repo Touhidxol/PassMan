@@ -125,11 +125,11 @@ const PasswordCard = ({ item, onDelete, onClose, onChange }) => {
                 </div>
 
                 {/* ACTIONS */}
-                <div className="flex gap-3 justify-end">
+                <div className="flex gap-3">
                     {!isEditable && (
                         <button
                             onClick={() => setIsEditable(true)}
-                            className="flex items-center gap-1 px-3 py-2 rounded-full border border-white hover:bg-[#333]"
+                            className="flex items-center gap-1 px-5 py-2 rounded-full bg-white/5 hover:bg-[#0073ff5e]"
                         >
                             <img src={edit} className="w-4" />
                             Edit
@@ -138,7 +138,7 @@ const PasswordCard = ({ item, onDelete, onClose, onChange }) => {
                     {isEditable && (
                         <button
                             onClick={handleSave}
-                            className="flex items-center gap-1 px-3 py-2 rounded-full border border-white hover:bg-[#333]"
+                            className="flex items-center gap-1 px-5 py-2 rounded-full bg-white/5 hover:bg-[#00ff485e]"
                         >
                             <img src={save} className="w-4" />
                             Save
@@ -146,7 +146,7 @@ const PasswordCard = ({ item, onDelete, onClose, onChange }) => {
                     )}
                     <button
                         onClick={() => onDelete(item._id)}
-                        className="flex items-center gap-1 px-3 py-1 rounded-full border border-red-900 bg-red-700 hover:bg-red-800"
+                        className="flex items-center gap-1 px-5 py-1 rounded-full bg-white/5 hover:bg-[#ff000086] "
                     >
                         <img src={del} className="w-4" />
                         Delete

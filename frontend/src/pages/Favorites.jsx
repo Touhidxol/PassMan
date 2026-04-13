@@ -58,17 +58,17 @@ const Favorites = () => {
             </PresenceWrapper>
             {/* ------------------------------------------------------------------------- */}
 
-            <div className="conthainer flex-1 flex flex-col w-full max-w-4xl mx-auto">
-                <div className="flex px-5 my-3 items-center">
+            <div className="conthainer flex-1 flex flex-col w-full p-6 max-w-4xl mx-auto">
+                <div className="flex my-3 items-center">
                     <h1 className="sm:!text-5xl !text-3xl font-semibold">Favorites</h1>
                 </div>
 
                 {favoritePasswords.length === 0 ? (
-                    <p className="px-5 text-sm text-gray-400">
+                    <p className="text-sm text-gray-400">
                         No favorite passwords yet.
                     </p>
                 ) : (
-                    <ul className="cards p-5">
+                    <ul className="cards">
                         {favoritePasswords.map((item) => (
                             <li
                                 key={item._id}

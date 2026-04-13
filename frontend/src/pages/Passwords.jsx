@@ -29,38 +29,6 @@ const Passwords = () => {
         }
     }, [error, navigate]);
 
-    // Delete a password---------------------------------------------------
-    // const [indexToRemove, setIndexToRemove] = useState(-1);
-
-    // const handleDelete = async (id) => {
-    //     setIndexToRemove(passwords.findIndex(item => item._id === id));
-    //     setshowDeleteConfirm(true);
-    // };
-
-    // const confirmDelete = async () => {
-    //     if (indexToRemove === -1) return;
-    //     const itemToDelete = passwords[indexToRemove];
-    //     await removePassword(itemToDelete._id);
-    //     setshowDeleteConfirm(false);
-    //     setIndexToRemove(-1);
-    //     setCardOpen(null);
-    //     toast.success("Password Deleted!");
-    // };
-
-    // const cancelDelete = () => {
-    //     setshowDeleteConfirm(false);
-    //     setIndexToRemove(-1);
-    // };
-    // -------------------------------------------------------------
-
-    // Edit a Password---------------------------------------------
-    // const handleUpdate = async (updatedPassword) => {
-    //     await editPassword(updatedPassword);
-
-    //     toast.success("Password updated!");
-    // };
-
-
     //---------------load password---------------------------------
     useEffect(() => {
         if (!isOpen) {
@@ -113,8 +81,8 @@ const Passwords = () => {
             {/* ------------------------------------------------------------------------- */}
 
 
-            <div className="conthainer flex-1 flex flex-col w-full max-w-4xl mx-auto">
-                <div className="flex px-5 my-3 items-center">
+            <div className="conthainer flex-1 flex flex-col w-full p-6 max-w-4xl mx-auto">
+                <div className="flex my-3 items-center">
                     <h1 className="sm:!text-5xl !text-3xl font-semibold">Passwords</h1>
                     <div className="flex-1"></div>
                     <button
@@ -124,12 +92,12 @@ const Passwords = () => {
                         Add
                     </button>
                 </div>
-                <p className="px-5 text-sm my-4">
+                <p className=" text-sm my-4">
                     Create, save, and manage your passwords so you can easily sign in to
                     sites and apps.
                 </p>
                 <div className="flex-1">
-                    <ul className="cards p-5">
+                    <ul className="cards">
                         {passwords.map((item) => {
                             return (
                                 <li

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { usePasswords } from "../hooks/usePasswords";
-import { getPasswordStrength,STRENGTH_LEVELS,categoriseByStrength } from "../utils/passworStrength";
+import { getPasswordStrength, STRENGTH_LEVELS, categoriseByStrength } from "../utils/passworStrength";
 
 // ── Small bar used only in the stats breakdown ──────────────────────────────
 const StatBar = ({ color, count, total }) => {
