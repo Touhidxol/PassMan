@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { register } from "../api/users";
 import toast from "react-hot-toast";
 import InputTemplate from "../components/InputTemplate";
+import PasswordStrengthBar from "../components/PasswordStrengthBar";
 
 const Register = () => {
     const navigate = useNavigate();
@@ -35,7 +36,7 @@ const Register = () => {
             });
 
             await register(credentials);
-            
+
             setEmail("");
             setPassword("");
             setConfirmPassword("");
@@ -100,6 +101,13 @@ const Register = () => {
                             required
                         />
                     </InputTemplate>
+                    
+                    <PasswordStrengthBar
+                        password={password}
+                        showTips
+                        className="-mt-3 mb-4 px-1"
+                    />
+
 
                     <InputTemplate title="Confirm Password" id='confirmPassword'>
                         <input

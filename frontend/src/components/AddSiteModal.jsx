@@ -5,6 +5,7 @@ import { createPassword } from "../api/passwords";
 import show from "../assets/icons/show.svg";
 import hiide from "../assets/icons/hide.svg";
 import { useRef, useState } from "react";
+import PasswordStrengthBar from "./PasswordStrengthBar";
 
 const AddSiteModal = () => {
     const { closeWindow } = useAddSiteModal();
@@ -56,7 +57,6 @@ const AddSiteModal = () => {
         await loadPasswords();
     };
 
-    // Reusable label with inline error
     const FieldLabel = ({ name, label }) => (
         <label
             htmlFor={name}
@@ -66,8 +66,7 @@ const AddSiteModal = () => {
                 <span className="text-red-300">{errors[name]}</span>
             ) : (
                 <span className="text-white">{label}</span>
-            )
-            }
+            )}
         </label>
     );
 
@@ -91,8 +90,7 @@ const AddSiteModal = () => {
                             name="site"
                             id="site"
                             placeholder="example.com"
-                            className={`w-full h-10 px-4 text-sm text-white placeholder-gray-400 bg-[#202020] rounded-t-lg border-b-2 focus:outline-none focus:border-b-blue-500 ${errors.site ? "border-red-400" : "border-b-[#444]"
-                                }`}
+                            className={`w-full h-10 px-4 text-sm text-white placeholder-gray-400 bg-[#202020] rounded-t-lg border-b-2 focus:outline-none focus:border-b-blue-500 ${errors.site ? "border-red-400" : "border-b-[#444]"}`}
                         />
                     </div>
 
@@ -104,8 +102,7 @@ const AddSiteModal = () => {
                             type="text"
                             name="username"
                             id="username"
-                            className={`w-full h-10 px-4 text-sm text-white placeholder-gray-400 bg-[#202020] rounded-t-lg border-b-2 focus:outline-none focus:border-b-blue-500 ${errors.username ? "border-red-400" : "border-b-[#444]"
-                                }`}
+                            className={`w-full h-10 px-4 text-sm text-white placeholder-gray-400 bg-[#202020] rounded-t-lg border-b-2 focus:outline-none focus:border-b-blue-500 ${errors.username ? "border-red-400" : "border-b-[#444]"}`}
                         />
                     </div>
 
@@ -118,14 +115,20 @@ const AddSiteModal = () => {
                             type={showPassword ? "text" : "password"}
                             name="password"
                             id="password"
-                            className={`w-full h-10 px-4 text-sm text-white placeholder-gray-400 bg-[#202020] rounded-t-lg border-b-2 focus:outline-none focus:border-b-blue-500 ${errors.password ? "border-red-400" : "border-b-[#444]"
-                                }`}
+                            className={`w-full h-10 px-4 text-sm text-white placeholder-gray-400 bg-[#202020] rounded-t-lg border-b-2 focus:outline-none focus:border-b-blue-500 ${errors.password ? "border-red-400" : "border-b-[#444]"}`}
                         />
+
                         <img
                             src={showPassword ? show : hiide}
                             onClick={toogleshowpassword}
                             alt=""
-                            className="w-[20px] absolute right-2 bottom-2 cursor-pointer"
+                            className="w-[20px] absolute right-2 top-2 cursor-pointer"
+                        />
+
+                        {/* ── Strength bar ── */}
+                        <PasswordStrengthBar
+                            password={form.password}
+                            className="mt-2"
                         />
                     </div>
 
