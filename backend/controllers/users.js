@@ -1,4 +1,5 @@
 import user from "../models/user.js";
+import Password from "../models/password.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import validator from "validator";
@@ -58,7 +59,6 @@ const registeruser = async (req, res) => {
         res.status(201).json({
             name: newentry.name,
             email: newentry.email,
-            // token: token,
         });
     } catch (error) {
         if (error instanceof Error) {
@@ -110,7 +110,6 @@ const loginuser = async (req, res) => {
         res.status(200).json({
             name: login.name,
             email: login.email,
-            // token: token,
         });
     } catch (error) {
         res.status(500).json({
@@ -122,8 +121,7 @@ const loginuser = async (req, res) => {
 
 const loggedin = async (req, res) => {
     try {
-        const foundUser = await user.findById(req.user._id).select("name email");
-
+        const foundUser = await user.findById(req.user._id).select("name email createdAt");
         res.json(foundUser);
     } catch (err) {
         res.status(500).json({ error: "Failed to fetch user info" });
@@ -139,4 +137,47 @@ const logoutuser = (req, res) => {
     res.json({ message: "Logged out successfully" });
 };
 
-export { registeruser, loginuser, loggedin, logoutuser };
+const updateName = async (req, res) => {
+    try {
+        const { name } = req.body;
+        if (!name?.trim()) return res.status(400).json({ message: "Name is required." });
+
+        const updated = await user.findById(req.user._id);
+        updated.name = name.trim();
+        await updated.save();
+
+        res.json(updated);
+    } catch { res.status(500).json({ message: "Failed to update name." }); }
+};
+
+const changePassword = async (req, res) => {
+    try {
+        const { currentPassword, newPassword } = req.body;
+        const foundUser = await user.findById(req.user._id);
+
+        const valid = await bcrypt.compare(currentPassword, foundUser.password);
+
+        if (!valid) return res.status(400).json({ message: "Current password is incorrect." });
+        if (!validator.isStrongPassword(newPassword))
+            return res.status(400).json({ message: "New password is not strong enough." });
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+        foundUser.password = hashedPassword;
+        await foundUser.save();
+        res.json({ message: "Password updated successfully." });
+    } catch { res.status(500).json({ message: "Failed to change password." }); }
+};
+
+const deleteAccount = async (req, res) => {
+    try {
+        const userId = req.user._id;
+        await Password.deleteMany({ user: userId });
+        await user.findByIdAndDelete(userId);
+        res.clearCookie("token", { httpOnly: true, secure: false, sameSite: "lax" });
+        res.json({ message: "Account deleted." });
+    } catch { res.status(500).json({ message: "Failed to delete account." }); }
+};
+
+export { registeruser, loginuser, loggedin, logoutuser, updateName, changePassword, deleteAccount };
