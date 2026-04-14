@@ -1,4 +1,5 @@
-const base = "http://localhost:3000/api/passwords";
+// const base = "http://localhost:3000/api/passwords";
+const base = `${import.meta.env.VITE_API_URL}/api/passwords`;
 
 export const getPasswords = async () => {
     const res = await fetch(base, {

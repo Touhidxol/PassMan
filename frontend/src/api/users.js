@@ -1,4 +1,5 @@
-const base = "http://localhost:3000/api/users";
+// const base = "http://localhost:3000/api/users";
+const base = `${import.meta.env.VITE_API_URL}/api/users`;
 
 export const checkLoggedin = async () => {
 

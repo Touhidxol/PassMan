@@ -42,7 +42,7 @@ const PasswordCard = ({ item, onDelete, onClose, onChange }) => {
 
     return (
         <div className="z-20 fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-            <div className="w-[90%] max-w-lg bg-[#2a2a2a] border border-white/20 rounded-xl p-6 shadow-xl">
+            <div className={`w-[90%] max-w-lg bg-[#2a2a2a] border ${isEditable ? "border-amber-500" : "border-white/20"} rounded-xl p-6 shadow-xl`}>
 
                 {/* HEADER */}
                 <div className="flex items-center mb-4">

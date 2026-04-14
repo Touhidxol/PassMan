@@ -140,7 +140,7 @@ const Settings = () => {
                             <span className="text-sm flex-1">{user?.name}</span>
                             <button className={editBtnCls} onClick={() => setEditingName(true)}>
                                 <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M11 2l3 3-8 8H3v-3l8-8z" /></svg>
-                                Edit
+                                <p className="hidden sm:block">Edit</p>
                             </button>
                         </div>
                     ) : (
@@ -170,8 +170,8 @@ const Settings = () => {
                 <div className="py-3 border-b border-white/10">
                     <div className="flex items-center justify-between gap-3">
                         <span className="text-sm text-gray-400 min-w-[140px]">Email</span>
-                        <span className="text-sm flex-1">{user?.email}</span>
-                        <span className="text-xs text-white/25 italic shrink-0">cannot be changed</span>
+                        <span className="text-sm fade-mask flex-1 text-white/50">{user?.email}</span>
+                        <span className="text-xs hidden sm:block text-white/25 italic shrink-0">cannot be changed</span>
                     </div>
                 </div>
 
@@ -190,10 +190,10 @@ const Settings = () => {
                     {!editingPw ? (
                         <div className="flex items-center justify-between gap-3">
                             <span className="text-sm text-gray-400 min-w-[140px]">Master password</span>
-                            <span className="text-sm tracking-widest text-white/40 flex-1">••••••••••</span>
+                            <span className="text-sm fade-mask tracking-widest text-white/40 flex-1">••••••••••</span>
                             <button className={editBtnCls} onClick={() => setEditingPw(true)}>
                                 <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M11 2l3 3-8 8H3v-3l8-8z" /></svg>
-                                Change
+                                <p className="hidden sm:block">Change</p>
                             </button>
                         </div>
                     ) : (
