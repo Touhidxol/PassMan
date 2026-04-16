@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import user from "../models/user.js";
 
-// requireAuth middleware is applied to all routes except /login and /register
+// requireAuth middleware is applied to all routes except /login , /register etc
 // to prevent unauthenticated users from accessing protected routes
 const requireAuth = async (req, res, next) => {
 
@@ -33,7 +33,7 @@ const requireAuth = async (req, res, next) => {
             return res.status(401).json({ error: "User not found" });
         }
 
-        console.log(req.user + " is authenticated");
+        // console.log(req.user + " is authenticated");
         next();
     } catch (error) {
         console.log("Error while authenticating :", error);

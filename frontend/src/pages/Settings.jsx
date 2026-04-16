@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import { checkLoggedin, updateName, changePassword, deleteAccount } from "../api/users";
 import { usePasswords } from "../hooks/usePasswords";
@@ -201,6 +201,7 @@ const Settings = () => {
                             <div>
                                 <label className="text-xs text-gray-400 mb-1 block">Current password</label>
                                 <input className={inputCls} type="password" placeholder="••••••••" value={currentPw} onChange={e => setCurrentPw(e.target.value)} autoFocus />
+                                <Link to="/forgot-password" className="text-xs p-2 !text-gray-400 !underline text-right w-full">Forgot Current Password</Link>
                             </div>
                             <div>
                                 <label className="text-xs text-gray-400 mb-1 block">New password</label>
