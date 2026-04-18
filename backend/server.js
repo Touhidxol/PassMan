@@ -7,12 +7,25 @@ import morgan from "morgan";
 import rateLimit from "express-rate-limit";
 import cookieParser from "cookie-parser";
 
+dotenv.config();
+
+const REQUIRED_ENV = [
+  "JWT_SECRET",
+  "ENCRYPTION_KEY",
+  "ENCRYPTION_SALT",
+  "MONGO_URI",
+];
+const missing = REQUIRED_ENV.filter((k) => !process.env[k]);
+if (missing.length) {
+  console.error(`[startup] Missing required environment variables: ${missing.join(", ")}`);
+  process.exit(1);
+}
+
 import userRoutes from "./routes/userRoutes.js";
 import passwordRoutes from "./routes/passwordRoutes.js";
 import otpRoutes from "./routes/otpRoutes.js";
 import requireAuth from './middlewares/requireAuth.js';
 
-dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -33,11 +46,12 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
-app.use(requireAuth);
+// Public routes — no auth needed
+app.use("/api/users", userRoutes);   // register, login, logout are public; /me is guarded inside the router
+app.use("/api/auth", otpRoutes);     // forgot-password, reset-password are public
 
-app.use("/api/users", userRoutes);
-app.use("/api/passwords", passwordRoutes);
-app.use("/api/auth", otpRoutes)
+// Protected routes — requireAuth runs before the router
+app.use("/api/passwords", requireAuth, passwordRoutes);
 
 app.get("/", (req, res) => {
   res.json({ success: true, message: "Passman API is running." });
