@@ -1,11 +1,16 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
-import { AddSiteModalProvider } from './context/AddSiteModalContext.jsx'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import App from "./App.jsx";
+import { AddSiteModalProvider } from "./context/AddSiteModalContext.jsx";
+import ErrorBoundary from "./components/ErrorBoundary.jsx";
 
-createRoot(document.getElementById('root')).render(
-    <AddSiteModalProvider>
-      <App />
-    </AddSiteModalProvider>
-)
+createRoot(document.getElementById("root")).render(
+  <StrictMode>
+    <ErrorBoundary>
+      <AddSiteModalProvider>
+        <App />
+      </AddSiteModalProvider>
+    </ErrorBoundary>
+  </StrictMode>
+);
