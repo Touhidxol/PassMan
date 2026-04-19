@@ -11,7 +11,7 @@ class ErrorBoundary extends Component {
     }
 
     componentDidCatch(error, info) {
-        // In production you'd send this to a service like Sentry
+        // In production send this to a service like Sentry
         console.error("ErrorBoundary caught:", error, info.componentStack);
     }
 
@@ -29,6 +29,7 @@ class ErrorBoundary extends Component {
             <div
                 style={{
                     minHeight: "100vh",
+                    minWidth: "100vw",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
