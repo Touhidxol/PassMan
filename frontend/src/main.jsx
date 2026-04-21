@@ -3,13 +3,16 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
 import { AddSiteModalProvider } from "./context/AddSiteModalContext.jsx";
+import { GeneratorModalProvider } from "./context/GeneratorModalContext.jsx";
 import ErrorBoundary from "./components/ErrorBoundary.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <ErrorBoundary>
       <AddSiteModalProvider>
-        <App />
+        <GeneratorModalProvider>
+          <App />
+        </GeneratorModalProvider>
       </AddSiteModalProvider>
     </ErrorBoundary>
   </StrictMode>
