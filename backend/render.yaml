@@ -1,28 +1,24 @@
-services:
-  - type: web
-    name: passman-api
-    runtime: node
-    rootDir: backend
-    buildCommand: npm install
-    startCommand: node server.js
-    envVars:
-      - key: NODE_ENV
-        value: production
-      - key: PORT
-        value: 3000
-      # Set these in the Render dashboard — never commit real values:
-      - key: MONGO_URI
-        sync: false
-      - key: JWT_SECRET
-        sync: false
-      - key: ENCRYPTION_KEY
-        sync: false
-      - key: ENCRYPTION_SALT
-        sync: false
-      - key: FRONTEND_URL
-        sync: false
-      - key: EMAIL_USER
-        sync: false
-      - key: EMAIL_PASS
-        sync: false
-    healthCheckPath: /
+# render.yaml — place this file inside the /backend folder
+# On Render: New → Web Service → connect repo → set root dir to "backend"
+# No blueprint / paid plan needed — this is just documentation for manual setup.
+#
+# Manual setup steps on render.com:
+#   1. New → Web Service
+#   2. Connect your GitHub repo
+#   3. Root Directory: backend
+#   4. Build Command: npm install
+#   5. Start Command: node server.js
+#   6. Add the environment variables listed below in the dashboard
+
+# Environment variables to add in Render dashboard:
+# (Never put real values here — set them in the Render UI)
+#
+# NODE_ENV         = production
+# PORT             = 3000
+# MONGO_URI        = (your Atlas connection string)
+# JWT_SECRET       = (64-char random hex)
+# ENCRYPTION_KEY   = (32-char random hex)
+# ENCRYPTION_SALT  = (32-char random hex)
+# FRONTEND_URL     = (your Vercel frontend URL, e.g. https://passman.vercel.app)
+# EMAIL_USER       = (your Gmail address)
+# EMAIL_PASS       = (your Gmail App Password)
