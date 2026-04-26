@@ -15,8 +15,8 @@ export const refreshToken = async (req, res) => {
         const newToken = jwt.sign({ _id }, process.env.JWT_SECRET, { expiresIn: "1d" });
         res.cookie("token", newToken, {
             httpOnly: true,
-            secure: isProd,
-            sameSite: isProd ? "none" : "lax",
+            secure: true,
+            sameSite: "none",
             maxAge: 24 * 60 * 60 * 1000,
         });
         res.json({ success: true });
