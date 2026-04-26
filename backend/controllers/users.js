@@ -10,8 +10,8 @@ const isProd = process.env.NODE_ENV === "production";
 const setAuthCookie = (res, token) => {
     res.cookie("token", token, {
         httpOnly: true,
-        secure: true,          // always true — Render is always HTTPS
-        sameSite: "none",      // always "none" for cross-origin
+        secure: isProd,           // HTTPS only in production
+        sameSite: isProd ? "none" : "lax",  // "none" required for cross-origin in prod
         maxAge: 24 * 60 * 60 * 1000,
     });
 };
@@ -103,8 +103,8 @@ const loggedin = async (req, res) => {
 const logoutuser = (req, res) => {
     res.clearCookie("token", {
         httpOnly: true,
-        secure: true,
-        sameSite: "none",
+        secure: isProd,
+        sameSite: isProd ? "none" : "lax",
     });
     res.json({ message: "Logged out successfully" });
 };
@@ -156,8 +156,8 @@ const deleteAccount = async (req, res) => {
         await user.findByIdAndDelete(userId);
         res.clearCookie("token", {
             httpOnly: true,
-            secure: true,
-            sameSite: "none",
+            secure: isProd,
+            sameSite: isProd ? "none" : "lax",
         });
         res.json({ message: "Account deleted." });
     } catch {
