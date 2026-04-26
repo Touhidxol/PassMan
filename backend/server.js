@@ -41,6 +41,8 @@ const app = express();
 const port = process.env.PORT || 3000;
 const isProd = process.env.NODE_ENV === "production";
 
+if (isProd) app.set("trust proxy", 1);
+
 // ── Security headers ─────────────────────────────────────────────────────────
 app.use(helmet());
 
