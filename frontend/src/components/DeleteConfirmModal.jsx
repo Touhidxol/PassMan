@@ -1,40 +1,46 @@
-import React from "react";
-import { motion } from "framer-motion";
+import Modal from "./layout/Modal";
 
-const DeleteConfirmModal = ({ onCancel, onConfirm}) => {
+const DeleteConfirmModal = ({ onCancel, onConfirm }) => {
     return (
-        <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 0 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 0 }}
-            transition={{ duration: 0.2 }}
-            className="z-50 w-8/10 max-w-md p-6 flex flex-col items-center justify-center gap-6 rounded-xl fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#1a1a1a] text-white border border-gray-700 shadow-xl shadow-black/50"
+        <Modal
+            isOpen={true}
+            onClose={onCancel}
+            maxWidth="max-w-sm"
         >
-            <div className="text-left w-full">
-                <p className="text-lg font-semibold">
-                    Are you sure you want to delete this?
+            {/* Body */}
+            <div className="p-6">
+                {/* Icon */}
+                <div className="w-11 h-11 rounded-full flex items-center justify-center mb-4 bg-danger-subtle border border-danger-subtle">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        className="text-danger"
+                        stroke="currentColor" strokeWidth="1.8"
+                        strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="3 6 5 6 21 6" />
+                        <path d="M19 6l-1 14H6L5 6" />
+                        <path d="M10 11v6M14 11v6" />
+                        <path d="M9 6V4h6v2" />
+                    </svg>
+                </div>
+
+                {/* Text */}
+                <p className="font-semibold text-base mb-1 text-primary">
+                    Delete this password?
                 </p>
-                <p className="text-sm text-gray-400 mt-1">
-                    This action cannot be undone.
+                <p className="text-sm text-secondary">
+                    This action cannot be undone. The password will be permanently removed from your vault.
                 </p>
             </div>
 
-            <div className="flex gap-4 mt-2 justify-end items-centre w-full">
-                <button
-                    className="px-4 py-2 rounded-full border border-gray-500 text-gray-300 hover:bg-[#343434] transition"
-                    onClick={onCancel}
-                >
+            {/* Footer */}
+            <div className="flex justify-end gap-2 px-6 py-4 border-t border-subtle">
+                <button className="btn-ghost text-sm" onClick={onCancel}>
                     Cancel
                 </button>
-
-                <button
-                    className="px-4 py-2 rounded-full bg-red-600 hover:bg-red-700 text-white transition"
-                    onClick={onConfirm}
-                >
+                <button className="btn-danger text-sm" onClick={onConfirm}>
                     Delete
                 </button>
             </div>
-        </motion.div>
+        </Modal>
     );
 };
 

@@ -5,11 +5,18 @@ const SearchBar = ({ value, onChange, placeholder = "Search passwords…", class
 
     return (
         <div
-            className={`flex items-center gap-2 px-3 h-10 rounded-full border border-white/15 bg-white/5 hover:border-white/25 focus-within:border-blue-400/60 transition-colors ${className}`}
+            className={`flex items-center gap-2 px-3 h-10 rounded-full cursor-text transition-colors ${className}`}
+            style={{
+                background: "var(--bg-surface-3)",
+                border: "1px solid var(--border-default)",
+            }}
             onClick={() => inputRef.current?.focus()}
+            onFocus={(e) => e.currentTarget.style.borderColor = "var(--border-focus)"}
+            onBlur={(e) => e.currentTarget.style.borderColor = "var(--border-default)"}
         >
             {/* Search icon */}
-            <svg width="15" height="15" viewBox="0 0 20 20" fill="none" className="shrink-0 text-white/40">
+            <svg width="15" height="15" viewBox="0 0 20 20" fill="none"
+                style={{ color: "var(--text-muted)", flexShrink: 0 }}>
                 <circle cx="8.5" cy="8.5" r="5.75" stroke="currentColor" strokeWidth="1.5" />
                 <path d="M13 13l3.5 3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
@@ -20,14 +27,21 @@ const SearchBar = ({ value, onChange, placeholder = "Search passwords…", class
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
                 placeholder={placeholder}
-                className="flex-1 bg-transparent text-sm text-white placeholder-white/30 outline-none"
+                className="flex-1 bg-transparent text-sm outline-none"
+                style={{
+                    color: "var(--text-primary)",
+                    caretColor: "var(--brand-lime)",
+                }}
             />
 
             {/* Clear button */}
             {value && (
                 <button
                     onClick={(e) => { e.stopPropagation(); onChange(""); }}
-                    className="shrink-0 text-white/30 hover:text-white/60 transition-colors"
+                    className="shrink-0 transition-colors"
+                    style={{ color: "var(--text-muted)" }}
+                    onMouseEnter={(e) => e.currentTarget.style.color = "var(--text-primary)"}
+                    onMouseLeave={(e) => e.currentTarget.style.color = "var(--text-muted)"}
                     aria-label="Clear search"
                 >
                     <svg width="13" height="13" viewBox="0 0 16 16" fill="none">

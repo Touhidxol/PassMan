@@ -1,23 +1,20 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useAddSiteModal } from "../hooks/useAddSiteModal";
 import { usePasswords } from "../hooks/usePasswords";
 import { createPassword } from "../api/passwords";
-import show from "../assets/icons/show.svg";
-import hiide from "../assets/icons/hide.svg";
+import Modal from "./layout/Modal";
 import PasswordStrengthBar from "./PasswordStrengthBar";
 import GenerateButton from "./GenerateButton";
+import ShowPasswordIcon from "../assets/icons/show.svg";
+import HidePasswordIcon from "../assets/icons/hide.svg";
 
 const AddSiteModal = () => {
-    const { closeWindow } = useAddSiteModal();
+    const { isOpen, closeWindow } = useAddSiteModal();
     const { passwords, loadPasswords } = usePasswords();
+
     const [showPassword, setShowPassword] = useState(false);
     const [errors, setErrors] = useState({});
-    const [form, setForm] = useState({
-        site: "",
-        username: "",
-        password: "",
-        note: "",
-    });
+    const [form, setForm] = useState({ site: "", username: "", password: "", note: "" });
 
     const passwordInputRef = useRef();
 
@@ -32,6 +29,12 @@ const AddSiteModal = () => {
         setShowPassword(true);
     };
 
+    const handleClose = () => {
+        setForm({ site: "", username: "", password: "", note: "" });
+        setErrors({});
+        closeWindow();
+    };
+
     const savePassword = async () => {
         const { site, username, password } = form;
         const siteRegex = /^(?!:\/\/)([a-zA-Z0-9-_]+\.)+[a-zA-Z]{2,}$/;
@@ -44,123 +47,128 @@ const AddSiteModal = () => {
         if (!username) newErrors.username = "Username cannot be empty.";
         if (!password) newErrors.password = "Password cannot be empty.";
 
-        if (Object.keys(newErrors).length > 0) {
-            setErrors(newErrors);
-            return;
-        }
+        if (Object.keys(newErrors).length > 0) { setErrors(newErrors); return; }
 
         await createPassword(form);
-        closeWindow();
+        handleClose();
         await loadPasswords();
     };
 
+    /* ── Field label — shows error or normal label ── */
     const FieldLabel = ({ name, label }) => (
-        <label htmlFor={name} className="text-xs mt-5 mb-2 mx-1 flex items-center gap-2">
-            {errors[name]
-                ? <span className="text-red-300">{errors[name]}</span>
-                : <span className="text-white/70">{label}</span>}
+        <label
+            htmlFor={name}
+            className={`text-xs mt-5 mb-1.5 mx-0.5 flex items-center gap-2 font-medium ${errors[name] ? "text-danger" : "text-secondary"
+                }`}
+        >
+            {errors[name] ? errors[name] : label}
         </label>
     );
 
     return (
-        <div className="fixed inset-0 z-[999] flex items-center justify-center p-2">
-            <div
-                className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-                onClick={closeWindow}
-            />
+        <Modal
+            isOpen={isOpen}
+            onClose={handleClose}
+            maxWidth="max-w-lg"
+            className="flex flex-col"
+        >
+            {/* Header */}
+            <div className="flex items-center justify-between px-5 py-4 border-b border-subtle">
+                <p className="font-semibold text-sm text-secondary">
+                    Add new password
+                </p>
+                <button
+                    onClick={handleClose}
+                    className="icon-btn"
+                    aria-label="Close"
+                >
+                    <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+                        <path d="M2 2l12 12M14 2L2 14" />
+                    </svg>
+                </button>
+            </div>
 
-            <div className="relative bg-[#1a1a1a] w-full max-w-[550px] max-h-[90vh] overflow-y-auto rounded-xl border border-white/20 shadow-lg flex flex-col z-[1000]">
-                <div className="flex-1 p-4 px-6">
-                    <div className="h-10 text-sm font-medium text-white/70">Add new password</div>
+            {/* Body */}
+            <div className="p-5 space-y-1 flex-1">
 
-                    {/* SITE */}
-                    <div className="w-full flex flex-col">
-                        <FieldLabel name="site" label="Site" />
-                        <input
-                            onChange={handleChange}
-                            type="text"
-                            name="site"
-                            id="site"
-                            placeholder="example.com"
-                            className={`w-full h-10 px-4 text-sm text-white placeholder-gray-400 bg-[#202020] rounded-t-lg border-b-2 focus:outline-none focus:border-b-blue-500 ${errors.site ? "border-red-400" : "border-b-[#444]"
-                                }`}
-                        />
-                    </div>
-
-                    {/* USERNAME */}
-                    <div className="w-full flex flex-col">
-                        <FieldLabel name="username" label="Username" />
-                        <input
-                            onChange={handleChange}
-                            type="text"
-                            name="username"
-                            id="username"
-                            className={`w-full h-10 px-4 text-sm text-white placeholder-gray-400 bg-[#202020] rounded-t-lg border-b-2 focus:outline-none focus:border-b-blue-500 ${errors.username ? "border-red-400" : "border-b-[#444]"
-                                }`}
-                        />
-                    </div>
-
-                    {/* PASSWORD — GenerateButton + show/hide in the same icon cluster */}
-                    <div className="w-full flex flex-col">
-                        <FieldLabel name="password" label="Password" />
-                        <div className="relative">
-                            <input
-                                ref={passwordInputRef}
-                                onChange={handleChange}
-                                value={form.password}
-                                type={showPassword ? "text" : "password"}
-                                name="password"
-                                id="password"
-                                className={`w-full h-10 px-4 pr-20 text-sm text-white placeholder-gray-400 bg-[#202020] rounded-t-lg border-b-2 focus:outline-none focus:border-b-blue-500 ${errors.password ? "border-red-400" : "border-b-[#444]"
-                                    }`}
-                            />
-                            <div className="absolute right-1 top-1 flex items-center gap-0.5">
-                                <GenerateButton onGenerate={handleGenerate}/>
-                                <button
-                                    type="button"
-                                    onClick={() => setShowPassword((v) => !v)}
-                                    className="flex items-center justify-center w-8 h-8"
-                                >
-                                    <img src={showPassword ? show : hiide} alt="toggle" className="w-5" />
-                                </button>
-                            </div>
-                        </div>
-                        <PasswordStrengthBar password={form.password} className="mt-2 mb-1" />
-                    </div>
-
-                    <div className="text-xs h-10 flex items-center border-b border-[#2f2f2f] text-white/30">
-                        Make sure you&apos;re saving your current password for this site
-                    </div>
-
-                    {/* NOTE */}
-                    <div className="w-full flex flex-col">
-                        <FieldLabel name="note" label="Note" />
-                        <textarea
-                            onChange={handleChange}
-                            name="note"
-                            id="note"
-                            className="w-full h-[90px] px-4 py-2 text-sm text-white placeholder-gray-400 bg-[#202020] rounded-t-lg border-b-2 border-b-[#444] focus:outline-none focus:border-b-blue-500 resize-none"
-                        />
-                    </div>
+                {/* SITE */}
+                <div>
+                    <FieldLabel name="site" label="Site" />
+                    <input
+                        name="site"
+                        id="site"
+                        type="text"
+                        placeholder="example.com"
+                        value={form.site}
+                        onChange={handleChange}
+                        className={`input-dashboard ${errors.site ? "error" : ""}`}
+                    />
                 </div>
 
-                <div className="flex gap-2 my-4 px-4 sticky bottom-0 bg-[#1a1a1a] pt-2">
-                    <div className="flex-1" />
-                    <button
-                        onClick={closeWindow}
-                        className="border border-gray-600 rounded-full text-sm py-[0.6em] px-[1.2em] text-white/70 hover:bg-white/8 transition"
-                    >
-                        Cancel
-                    </button>
-                    <button
-                        onClick={savePassword}
-                        className="bg-blue-700 hover:bg-blue-600 rounded-full text-sm py-[0.6em] px-[1.2em] transition"
-                    >
-                        Save
-                    </button>
+                {/* USERNAME */}
+                <div>
+                    <FieldLabel name="username" label="Username / Email" />
+                    <input
+                        name="username"
+                        id="username"
+                        type="text"
+                        value={form.username}
+                        onChange={handleChange}
+                        className={`input-dashboard ${errors.username ? "error" : ""}`}
+                    />
+                </div>
+
+                {/* PASSWORD */}
+                <div>
+                    <FieldLabel name="password" label="Password" />
+                    <div className="relative">
+                        <input
+                            ref={passwordInputRef}
+                            name="password"
+                            id="password"
+                            type={showPassword ? "text" : "password"}
+                            value={form.password}
+                            onChange={handleChange}
+                            className={`input-dashboard pr-20 ${errors.password ? "error" : ""}`}
+                        />
+                        <div className="absolute right-1.5 top-1 flex items-center gap-0">
+                            <GenerateButton onGenerate={handleGenerate} />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword((v) => !v)}
+                                className="flex items-center justify-center w-8 h-8"
+                            >
+                                <img src={showPassword ? ShowPasswordIcon : HidePasswordIcon} alt="toggle" className="w-5" />
+                            </button>
+                        </div>
+                    </div>
+                    <PasswordStrengthBar password={form.password} className="mt-2 mb-1" />
+                </div>
+
+                {/* NOTE */}
+                <div>
+                    <FieldLabel name="note" label="Note (optional)" />
+                    <textarea
+                        name="note"
+                        id="note"
+                        value={form.note}
+                        onChange={handleChange}
+                        rows={3}
+                        className="textarea-dashboard"
+                    />
                 </div>
             </div>
-        </div>
+
+            {/* Footer */}
+            <div className="flex justify-end gap-2 px-5 py-4 border-t border-subtle bg-modal">
+                <button className="btn-ghost text-sm" onClick={handleClose}>
+                    Cancel
+                </button>
+                <button className="btn-primary text-sm" onClick={savePassword}>
+                    Save password
+                </button>
+            </div>
+        </Modal>
     );
 };
 
