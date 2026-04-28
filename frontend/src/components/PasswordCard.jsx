@@ -27,12 +27,12 @@ const PasswordCard = ({ item, onDelete, onClose, onChange }) => {
     };
 
     const handleToggleFavorite = async () => {
-        const newValue = !isFavorite;
-        setIsFavorite(newValue);
+        const next = !isFavorite;
+        setIsFavorite(next);
         try {
-            await onChange({ ...formData, favorite: newValue });
+            await onChange({ ...formData, favorite: next });
         } catch {
-            setIsFavorite(!newValue);
+            setIsFavorite(!next);
             toast.error("Failed to update favorite.");
         }
     };
@@ -50,67 +50,64 @@ const PasswordCard = ({ item, onDelete, onClose, onChange }) => {
     return (
         <Modal isOpen={true} onClose={onClose} maxWidth="max-w-lg">
 
-            {/* ── Header ── */}
-            <div className="flex items-center gap-2 px-5 py-4 border-b border-subtle">
+            {/* ── Header ─────────────────────────────────── */}
+            <div className="modal-header">
                 <img src={WebIcon} className="w-5 shrink-0" alt="" />
-                <p className="font-semibold flex-1 truncate text-primary">{item.site}</p>
+                <p className="font-semibold flex-1 truncate ml-2">{item.site}</p>
 
-                {/* Favorite toggle */}
+                {/* Favourite toggle */}
                 <button
                     onClick={handleToggleFavorite}
                     title={isFavorite ? "Remove from favorites" : "Add to favorites"}
-                    className="icon-btn"
+                    className="card-icon-btn"
                 >
-                    <img src={isFavorite ? FavoriteFilledIcon : FavoriteEmptyIcon} alt="favorite" className="w-5" />
+                    <img
+                        src={isFavorite ? FavoriteFilledIcon : FavoriteEmptyIcon}
+                        alt="favorite"
+                        className="w-5"
+                    />
                 </button>
 
-                {/* Edit / Save toggle */}
+                {/* Edit / Save */}
                 {isEditable ? (
-                    <button
-                        onClick={handleSave}
-                        title="Save changes"
-                        className="w-8 h-8 flex items-center justify-center rounded-full bg-success/20"
-                    >
+                    <button onClick={handleSave} title="Save" className="card-save-btn">
                         <img src={SaveIcon} className="w-4" alt="save" />
                     </button>
                 ) : (
-                    <button
-                        onClick={() => setIsEditable(true)}
-                        title="Edit"
-                        className="icon-btn"
-                    >
+                    <button onClick={() => setIsEditable(true)} title="Edit" className="card-icon-btn">
                         <img src={EditIcon} className="w-4" alt="edit" />
                     </button>
                 )}
 
                 {/* Close */}
-                <button onClick={onClose} className="icon-btn">
-                    <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+                <button onClick={onClose} className="card-icon-btn ml-1">
+                    <svg width="13" height="13" viewBox="0 0 16 16" fill="none"
+                        stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
                         <path d="M2 2l12 12M14 2L2 14" />
                     </svg>
                 </button>
             </div>
 
-            {/* ── Edit mode indicator ── */}
+            {/* ── Edit-mode banner ─────────────────────── */}
             {isEditable && (
-                <div className="px-5 py-1.5 text-xs font-medium edit-banner">
+                <div className="modal-edit-banner">
                     ✎ Editing — click Save when done
                 </div>
             )}
 
-            {/* ── Body ── */}
-            <div className="p-5 space-y-4">
+            {/* ── Body ────────────────────────────────── */}
+            <div className="modal-body space-y-4">
 
                 {/* USERNAME */}
                 <div>
-                    <p className="text-xs font-medium mb-1.5 text-secondary">Username</p>
+                    <p className="card-field-label">Username</p>
                     <div className="relative">
                         <input
                             type="text"
                             value={formData.username}
                             disabled={!isEditable}
                             onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-                            className="input-dashboard pr-10"
+                            className="card-field pr-10 w-full"
                         />
                         <button
                             type="button"
@@ -124,48 +121,65 @@ const PasswordCard = ({ item, onDelete, onClose, onChange }) => {
 
                 {/* PASSWORD */}
                 <div>
-                    <p className="text-xs font-medium mb-1.5 text-secondary">Password</p>
+                    <p className="card-field-label">Password</p>
                     <div className="relative">
                         <input
                             type={showPassword ? "text" : "password"}
                             value={formData.password}
                             disabled={!isEditable}
                             onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                            className="input-dashboard pr-26"
+                            className="card-field pr-24 w-full"
                         />
                         <div className="absolute right-1.5 top-1 flex items-center gap-0">
                             {isEditable && <GenerateButton onGenerate={handleGenerate} />}
-                            <button type="button" onClick={() => setShowPassword(!showPassword)}
-                                className="w-8 h-8 flex items-center justify-center">
-                                <img src={showPassword ? ShowIcon : HideIcon} className="w-5" alt="toggle" />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="w-8 h-8 flex items-center justify-center"
+                            >
+                                <img
+                                    src={showPassword ? ShowIcon : HideIcon}
+                                    className="w-5"
+                                    alt="toggle"
+                                />
                             </button>
-                            <button type="button" onClick={() => copyText(formData.password)}
-                                className="w-8 h-8 flex items-center justify-center opacity-40 hover:opacity-90 transition-opacity">
+                            <button
+                                type="button"
+                                onClick={() => copyText(formData.password)}
+                                className="w-8 h-8 flex items-center justify-center opacity-40 hover:opacity-90 transition-opacity"
+                            >
                                 <img src={CopyIcon} className="w-4" alt="copy" />
                             </button>
                         </div>
                     </div>
-                    <PasswordStrengthBar password={formData.password} showTips={isEditable} className="mt-2" />
+
+                    {/* Strength bar — always visible */}
+                    <PasswordStrengthBar
+                        password={formData.password}
+                        showTips={isEditable}
+                        className="mt-2"
+                    />
                 </div>
 
                 {/* NOTE */}
                 <div>
-                    <p className="text-xs font-medium mb-1.5 text-secondary">Note</p>
+                    <p className="card-field-label">Note</p>
                     <textarea
                         value={formData.note}
                         disabled={!isEditable}
                         onChange={(e) => setFormData({ ...formData, note: e.target.value })}
                         rows={3}
-                        className="textarea-dashboard"
+                        className="card-field w-full resize-none"
                     />
                 </div>
+
             </div>
 
-            {/* ── Footer ── */}
-            <div className="flex items-center gap-2 px-5 py-4 border-t border-subtle">
+            {/* ── Footer ──────────────────────────────── */}
+            <div className="modal-footer">
                 <button
                     onClick={() => onDelete(item._id)}
-                    className="btn-ghost text-sm flex items-center gap-1.5 text-danger border-danger-subtle"
+                    className="btn-ghost-danger flex items-center gap-1.5"
                 >
                     <img src={DeleteIcon} className="w-4" alt="" />
                     Delete
@@ -173,21 +187,25 @@ const PasswordCard = ({ item, onDelete, onClose, onChange }) => {
 
                 <div className="flex-1" />
 
-                {!isEditable ? (
+                {isEditable ? (
+                    <button
+                        onClick={handleSave}
+                        className="btn-success flex items-center gap-1.5"
+                    >
+                        <img src={SaveIcon} className="w-4" alt="" />
+                        Save
+                    </button>
+                ) : (
                     <button
                         onClick={() => setIsEditable(true)}
-                        className="btn-primary text-sm flex items-center gap-1.5"
+                        className="btn-primary flex items-center gap-1.5"
                     >
                         <img src={EditIcon} className="w-4" alt="" />
                         Edit
                     </button>
-                ) : (
-                    <button onClick={handleSave} className="btn-save text-sm">
-                        <img src={SaveIcon} className="w-4" alt="" />
-                        Save
-                    </button>
                 )}
             </div>
+
         </Modal>
     );
 };

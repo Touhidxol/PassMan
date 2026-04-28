@@ -18,44 +18,50 @@ const MobileSidebar = ({ closeSidebar }) => {
     const { openGeneratorModal } = useGeneratorModal();
 
     return (
-        <div className="h-screen w-full max-w-xs flex flex-col bg-sidebar border-r border-sidebar">
+        <div className="sidebar sidebar-mobile">
 
             {/* Header */}
-            <div className="px-5 py-5 shrink-0 flex items-center gap-3 border-b border-sidebar">
-                <img src={LogoIcon} className="w-10" alt="PassMan logo" />
+            <div className="sidebar-logo-row lg:justify-start px-5 py-5">
+                <img src={LogoIcon} className="w-10 shrink-0" alt="PassMan logo" />
                 <div>
-                    <p className="font-bold text-base text-primary">PassMan</p>
-                    <p className="text-xs text-muted">Manage your passwords securely</p>
+                    <p className="font-bold text-base sidebar-logo-label !block">
+                        PassMan
+                    </p>
+                    <p className="text-xs sidebar-item-label !block opacity-60">
+                        Manage your passwords securely
+                    </p>
                 </div>
             </div>
 
             {/* Nav */}
-            <nav className="flex-1 p-3 space-y-0.5">
+            <nav className="sidebar-nav">
                 {menuItems.map((item) => (
                     <NavLink
                         key={item.path}
                         to={item.path}
                         onClick={closeSidebar}
                         className={({ isActive }) =>
-                            `sidebar-item${isActive ? " active" : ""}`
+                            `sidebar-item-mobile${isActive ? " active" : ""}`
                         }
                     >
                         <img src={item.icon} alt="" className="w-5 h-5 shrink-0" />
-                        <span className="text-sm text-primary">{item.label}</span>
+                        <span className="text-sm text-gray-100">{item.label}</span>
                     </NavLink>
                 ))}
             </nav>
 
             {/* Generator button */}
-            <div className="p-3 shrink-0 border-t border-sidebar">
+            <div className="sidebar-footer">
                 <button
                     onClick={() => { closeSidebar(); openGeneratorModal(); }}
-                    className="sidebar-item w-full text-muted"
+                    className="sidebar-item-mobile w-full"
                 >
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" strokeWidth="1.6"
-                        strokeLinecap="round" strokeLinejoin="round"
-                        className="shrink-0">
+                    <svg
+                        width="20" height="20" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor"
+                        strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"
+                        className="shrink-0"
+                    >
                         <polyline points="16 3 21 3 21 8" />
                         <line x1="4" y1="20" x2="21" y2="3" />
                         <polyline points="21 16 21 21 16 21" />
@@ -65,6 +71,7 @@ const MobileSidebar = ({ closeSidebar }) => {
                     <span className="text-sm">Password generator</span>
                 </button>
             </div>
+
         </div>
     );
 };

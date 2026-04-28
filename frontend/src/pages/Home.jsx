@@ -17,7 +17,8 @@ import DevicesIcon from "../assets/icons/devices.svg";
 import WebIcon from "../assets/icons/webico.svg";
 import CopyIcon from "../assets/icons/copy.svg";
 
-/* ── Animated wave background paths ── */
+/* ── Static data ─────────────────────────────────────────────── */
+
 const WAVE_PATHS = [
   "M-500 625c0 0 125-30 250-30S0 625 0 625s125 30 250 30s250-30 250-30s125-30 250-30s250 30 250 30s125 30 250 30s250-30 250-30",
   "M-500 595c0 0 125-30 250-30S0 595 0 595s125 30 250 30s250-30 250-30s125-30 250-30s250 30 250 30s125 30 250 30s250-30 250-30",
@@ -115,10 +116,11 @@ const Home = () => {
   const [authLoading, setAuthLoading] = useState(true);
   const heroRef = useRef(null);
 
-  /* ── Parallax on radial glow ── */
+  /* Parallax on the hero glow */
   const { scrollY } = useScroll();
   const glowY = useTransform(scrollY, [0, 600], [0, 120]);
 
+  /* Auth check */
   useEffect(() => {
     checkLoggedin()
       .then((data) => setUser(data || null))
@@ -126,32 +128,39 @@ const Home = () => {
       .finally(() => setAuthLoading(false));
   }, []);
 
-  const scrollDown = () => {
+  const scrollDown = () =>
     document.getElementById("features")?.scrollIntoView({ behavior: "smooth" });
-  };
 
   const initial = user?.name?.charAt(0).toUpperCase();
 
   return (
-    <div className="font-inktrap selection:bg-lime-300 selection:text-emerald-900 overflow-x-hidden">
+    <div className="landing-root selection:bg-lime-300 selection:text-emerald-900 font-inktrap">
 
-      {/* ════════════════════════════════════════
+      {/* ════════════════════════════════════════════════
                 HERO
-        ════════════════════════════════════════ */}
-      <section
-        ref={heroRef}
-        className="relative flex flex-col min-h-screen w-screen overflow-hidden bg-lp-hero"
-      >
+                ════════════════════════════════════════════════ */}
+      <section ref={heroRef} className="landing-hero">
+
         {/* Background layers */}
         <div className="absolute inset-0 z-0 pointer-events-none">
-          {/* Radial glow with parallax */}
+          {/* Radial glow with parallax — gradient stays inline (dynamic y) */}
           <motion.div
-            className="absolute inset-0 opacity-60 lp-hero-glow"
-            style={{ y: glowY }}
+            className="absolute inset-0 opacity-60"
+            style={{
+              background: "radial-gradient(ellipse 80% 60% at 50% 40%, #065f46 0%, transparent 70%)",
+              y: glowY,
+            }}
           />
-          {/* Secondary lime glow — kept as style because it's a one-off radial */}
+          {/* Secondary glow orb */}
           <div
             className="absolute opacity-25"
+            style={{
+              width: 400, height: 400,
+              top: "60%", left: "70%",
+              borderRadius: "50%",
+              background: "radial-gradient(circle, #bef264 0%, transparent 70%)",
+              filter: "blur(60px)",
+            }}
           />
           {/* Wave lines */}
           <svg
@@ -166,60 +175,62 @@ const Home = () => {
             </g>
           </svg>
           {/* Subtle grid */}
-          <div className="absolute inset-0 opacity-[0.04] lp-grid-bg" />
+          <div
+            className="absolute inset-0 opacity-[0.04]"
+            style={{
+              backgroundImage:
+                "linear-gradient(rgba(255,255,255,.5) 1px,transparent 1px)," +
+                "linear-gradient(90deg,rgba(255,255,255,.5) 1px,transparent 1px)",
+              backgroundSize: "60px 60px",
+            }}
+          />
         </div>
 
-        {/* ── Navbar ── */}
-        <nav className="relative z-10 flex items-center justify-between px-6 md:px-10 py-5 max-w-7xl mx-auto w-full">
-          <div className="flex items-center gap-3">
+        {/* ── Navbar ──────────────────────────────────── */}
+        <nav className="landing-nav">
+          <div className="landing-nav-logo">
             <img src={LogoIcon} className="w-9" alt="PassMan" />
-            <span className="hidden sm:block text-white text-xl font-bold tracking-tight">PassMan</span>
+            <span className="landing-nav-brand">PassMan</span>
           </div>
 
-          {/* Nav links — desktop */}
-          <div className="hidden lg:flex items-center gap-8">
+          <div className="landing-nav-links">
             {["Features", "How It Works", "Security", "Tech Stack"].map((item) => (
               <a
                 key={item}
                 href={`#${item.toLowerCase().replace(/\s+/g, "")}`}
-                className="text-sm !text-white/65 hover:!text-white transition-colors font-medium"
+                className="landing-nav-link"
               >
                 {item}
               </a>
             ))}
           </div>
 
-          {/* CTA — auth aware */}
+          {/* Auth-aware CTA */}
           {authLoading ? (
             <div className="w-28 h-9 rounded-full bg-white/10 animate-pulse" />
           ) : user ? (
             <div className="flex items-center gap-3">
-              <div
-                className="w-9 h-9 rounded-full flex items-center justify-center font-semibold text-sm text-white bg-brand-green-light"
-                title={user.name}
-              >
+              <div className="landing-nav-avatar" title={user.name}>
                 {initial}
               </div>
               <Link
                 to="/dashboard"
-                className="flex items-center gap-2 btn-lp-lime px-5 py-2 text-sm"
+                className="btn-lime flex items-center gap-2 px-5 py-2 text-sm"
               >
-                Dashboard
-                <ArrowRight size={15} className="shrink-0" />
+                Dashboard <ArrowRight size={15} className="shrink-0" />
               </Link>
             </div>
           ) : (
             <Link
               to="/login"
-              className="flex items-center gap-2 border border-white/35 !text-white px-5 py-2 rounded-full hover:bg-white/10 transition-all text-sm font-medium"
+              className="flex items-center gap-2 border border-white/35 text-white px-5 py-2 rounded-full hover:bg-white/10 transition-all text-sm font-medium"
             >
-              Login
-              <ArrowRight size={15} className="shrink-0" />
+              Login <ArrowRight size={15} className="shrink-0" />
             </Link>
           )}
         </nav>
 
-        {/* ── Hero content ── */}
+        {/* ── Hero content ─────────────────────────────── */}
         <main className="relative z-10 flex-1 flex items-center justify-center px-4">
           <div className="flex flex-col items-center text-center max-w-3xl">
 
@@ -228,10 +239,10 @@ const Home = () => {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="flex items-center gap-2 px-4 py-1.5 rounded-full mb-8 text-xs font-medium lp-badge"
+              className="landing-eyebrow"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              AES-256 Encrypted · MERN Stack · Open source
+              <span className="landing-eyebrow-dot" />
+              Open source · AES-256 Encrypted · MERN Stack
             </motion.div>
 
             {/* Headline */}
@@ -243,7 +254,7 @@ const Home = () => {
             >
               All Your Passwords.
               <br />
-              <span className="inline-block text-gradient-lime">
+              <span className="landing-headline-gradient">
                 One Secure Vault.
               </span>
             </motion.h1>
@@ -270,7 +281,8 @@ const Home = () => {
               {user ? (
                 <Link
                   to="/dashboard"
-                  className="btn-lp-lime px-8 py-3.5 text-base shadow-lime"
+                  className="btn-lime px-8 py-3.5 text-base"
+                  style={{ boxShadow: "0 8px 32px rgba(190,242,100,0.25)" }}
                 >
                   Go to Dashboard →
                 </Link>
@@ -278,13 +290,14 @@ const Home = () => {
                 <>
                   <Link
                     to="/register"
-                    className="btn-lp-lime px-8 py-3.5 text-base shadow-lime"
+                    className="btn-lime px-8 py-3.5 text-base"
+                    style={{ boxShadow: "0 8px 32px rgba(190,242,100,0.25)" }}
                   >
                     Get Started — it's free
                   </Link>
                   <Link
                     to="/login"
-                    className="!text-white/70 hover:!text-white text-sm underline underline-offset-4 transition-colors"
+                    className="text-white/70 hover:text-white text-sm underline underline-offset-4 transition-colors"
                   >
                     Already have an account?
                   </Link>
@@ -298,24 +311,29 @@ const Home = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.2 }}
-              className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-white/30 hover:text-white/60 transition-colors"
+              className="landing-scroll-hint"
               aria-label="Scroll down"
             >
-              <span className="text-xs tracking-widest uppercase">Explore</span>
-              <motion.div animate={{ y: [0, 5, 0] }} transition={{ repeat: Infinity, duration: 1.6 }}>
+              <span className="landing-scroll-hint-label">Explore</span>
+              <motion.div
+                animate={{ y: [0, 5, 0] }}
+                transition={{ repeat: Infinity, duration: 1.6 }}
+              >
                 <ChevronDown size={18} />
               </motion.div>
             </motion.button>
+
           </div>
         </main>
       </section>
 
 
-      {/* ════════════════════════════════════════
+      {/* ════════════════════════════════════════════════
                 FEATURES
-                ════════════════════════════════════════ */}
-      <section id="features" className="w-screen py-24 px-4 md:px-8 bg-lp-hero">
+                ════════════════════════════════════════════════ */}
+      <section id="features" className="landing-section landing-section-dark">
         <div className="max-w-6xl mx-auto">
+
           <motion.div
             className="text-center mb-14"
             initial={{ opacity: 0, y: 20 }}
@@ -323,11 +341,9 @@ const Home = () => {
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.5 }}
           >
-            <p className="text-xs font-semibold uppercase tracking-widest text-emerald-400/60 mb-3">
-              What you get
-            </p>
-            <h2 className="text-3xl md:text-5xl font-bold text-emerald-100 mb-4">Features</h2>
-            <p className="text-emerald-100/60 max-w-xl mx-auto text-sm md:text-base leading-relaxed">
+            <p className="landing-section-eyebrow">What you get</p>
+            <h2 className="landing-section-heading">Features</h2>
+            <p className="landing-section-body max-w-xl mx-auto">
               Everything you need to manage passwords safely — encryption,
               search, generator, statistics and more.
             </p>
@@ -338,15 +354,17 @@ const Home = () => {
               <FeatureCard key={f.title} {...f} delay={i * 0.07} />
             ))}
           </div>
+
         </div>
       </section>
 
 
-      {/* ════════════════════════════════════════
+      {/* ════════════════════════════════════════════════
                 HOW IT WORKS
-                ════════════════════════════════════════ */}
-      <section id="howitworks" className="w-screen py-24 px-4 md:px-8 bg-lp-alt">
+                ════════════════════════════════════════════════ */}
+      <section id="howitworks" className="landing-section landing-section-darker">
         <div className="max-w-3xl mx-auto">
+
           <motion.div
             className="text-center mb-14"
             initial={{ opacity: 0, y: 20 }}
@@ -354,63 +372,75 @@ const Home = () => {
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.5 }}
           >
-            <p className="text-xs font-semibold uppercase tracking-widest text-emerald-400/60 mb-3">
-              Getting started
-            </p>
-            <h2 className="text-3xl md:text-5xl font-bold text-emerald-100 mb-4">How It Works</h2>
-            <p className="text-emerald-100/60 text-sm md:text-base leading-relaxed">
-              Up and running in under a minute.
-            </p>
+            <p className="landing-section-eyebrow">Getting started</p>
+            <h2 className="landing-section-heading">How It Works</h2>
+            <p className="landing-section-body">Up and running in under a minute.</p>
           </motion.div>
 
+          {/* Steps with connecting line */}
           <div className="relative flex flex-col gap-10">
-            {/* Vertical connector line */}
-            <div className="absolute left-5 top-10 bottom-10 w-px lp-step-line" />
+            {/* Vertical connector — gradient stays inline (decorative only) */}
+            <div
+              className="absolute left-5 top-10 bottom-10 w-px"
+              style={{ background: "linear-gradient(to bottom, #065f46, transparent)" }}
+            />
             {STEPS.map((s, i) => (
               <StepCard key={s.title} number={i + 1} {...s} delay={i * 0.1} />
             ))}
           </div>
+
         </div>
       </section>
 
 
-      {/* ════════════════════════════════════════
+      {/* ════════════════════════════════════════════════
                 SECURITY
-                ════════════════════════════════════════ */}
-      <section id="security" className="w-screen py-24 px-4 md:px-8 bg-lp-hero">
+                ════════════════════════════════════════════════ */}
+      <section id="security" className="landing-section landing-section-dark">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-14 items-center">
 
-            {/* Left: text */}
+            {/* Left: checklist */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.6 }}
             >
-              <p className="text-xs font-semibold uppercase tracking-widest text-emerald-400/60 mb-3">
-                Built to be trusted
-              </p>
-              <h2 className="text-3xl md:text-5xl font-bold text-emerald-100 mb-6">Security</h2>
+              <p className="landing-section-eyebrow">Built to be trusted</p>
+              <h2 className="landing-section-heading">Security</h2>
 
               <div className="space-y-5">
                 {SECURITY_POINTS.map(([title, desc], i) => (
                   <motion.div
                     key={title}
+                    className="flex gap-3"
                     initial={{ opacity: 0, y: 12 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.08 }}
-                    className="flex gap-3"
                   >
-                    <div className="w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5 lp-check-wrap">
+                    {/* Check icon — colour is brand-specific, stays inline */}
+                    <div
+                      className="w-5 h-5 rounded-full flex items-center
+                                                       justify-center shrink-0 mt-0.5"
+                      style={{
+                        background: "rgba(16,185,129,0.18)",
+                        border: "1px solid rgba(16,185,129,0.3)",
+                      }}
+                    >
                       <svg width="9" height="9" viewBox="0 0 12 12" fill="none">
-                        <path d="M2 6l3 3 5-5" stroke="#10b981" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                        <path
+                          d="M2 6l3 3 5-5"
+                          stroke="#10b981" strokeWidth="1.6"
+                          strokeLinecap="round" strokeLinejoin="round"
+                        />
                       </svg>
                     </div>
+
                     <div>
                       <p className="text-white text-sm font-medium">{title}</p>
-                      <p className="text-emerald-100/55 text-xs leading-relaxed mt-0.5">{desc}</p>
+                      <p className="landing-section-body text-xs mt-0.5">{desc}</p>
                     </div>
                   </motion.div>
                 ))}
@@ -425,56 +455,72 @@ const Home = () => {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="relative hidden md:block"
             >
-              {/* Glow overlay */}
-              <div className="absolute inset-0 rounded-3xl lp-security-glow" />
+              {/* Glow behind card — decorative, stays inline */}
+              <div
+                className="absolute inset-0 rounded-3xl"
+                style={{
+                  background: "radial-gradient(ellipse at 50% 50%, rgba(16,185,129,0.18), transparent 70%)",
+                  filter: "blur(30px)",
+                }}
+              />
 
-              {/* Card */}
-              <div className="relative rounded-3xl p-8 flex flex-col gap-5 lp-card">
+              <div className="feature-card rounded-3xl p-8 gap-5">
                 <img
                   src={ShieldIcon}
-                  className="w-14 h-14 lp-shield-glow"
+                  className="w-14 h-14"
                   alt=""
+                  style={{ filter: "drop-shadow(0 0 20px rgba(16,185,129,0.6))" }}
                 />
                 <p className="text-white text-xl font-semibold">
                   Your data is yours alone.
                 </p>
-                <p className="text-emerald-100/60 text-sm leading-relaxed">
+                <p className="landing-section-body text-sm leading-relaxed">
                   PassMan never sends your raw passwords anywhere. All
                   encryption and decryption happens server-side with keys
                   you configure — not us.
                 </p>
-                {/* Mini security badges */}
+
+                {/* Mini security badge pills */}
                 <div className="flex flex-wrap gap-2 mt-2">
                   {["AES-256", "bcrypt", "HTTP-only", "Rate limited", "Helmet.js"].map((b) => (
-                    <span key={b} className="text-xs px-2.5 py-1 rounded-full lp-mini-badge">
+                    <span
+                      key={b}
+                      className="text-xs px-2.5 py-1 rounded-full"
+                      style={{
+                        background: "rgba(16,185,129,0.10)",
+                        border: "1px solid rgba(16,185,129,0.22)",
+                        color: "#6ee7b7",
+                      }}
+                    >
                       {b}
                     </span>
                   ))}
                 </div>
               </div>
             </motion.div>
+
           </div>
         </div>
       </section>
 
-      {/* ════════════════════════════════════════
+
+      {/* ════════════════════════════════════════════════
                 TECH STACK
-        ════════════════════════════════════════ */}
-      <section id="techstack" className="w-screen py-24 px-4 md:px-8 bg-lp-alt">
+                ════════════════════════════════════════════════ */}
+      <section id="techstack" className="landing-section landing-section-darker">
         <div className="max-w-4xl mx-auto text-center">
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.5 }}
           >
-            <p className="text-xs font-semibold uppercase tracking-widest text-emerald-400/60 mb-3">
-              Under the hood
-            </p>
-            <h2 className="text-3xl md:text-5xl font-bold text-emerald-100 mb-4">Tech Stack</h2>
-            <p className="text-emerald-100/60 text-sm md:text-base leading-relaxed mb-12 max-w-lg mx-auto">
-              Modern, battle-tested tools chosen for performance, security and
-              developer experience.
+            <p className="landing-section-eyebrow">Under the hood</p>
+            <h2 className="landing-section-heading">Tech Stack</h2>
+            <p className="landing-section-body mb-12 max-w-lg mx-auto">
+              Modern, battle-tested tools chosen for performance, security
+              and developer experience.
             </p>
           </motion.div>
 
@@ -483,14 +529,15 @@ const Home = () => {
               <TechBadge key={t.label} {...t} delay={i * 0.04} />
             ))}
           </div>
+
         </div>
       </section>
 
 
-      {/* ════════════════════════════════════════
-                BOTTOM CTA BANNER
-                ════════════════════════════════════════ */}
-      <section className="w-screen py-24 px-4 md:px-8 bg-lp-hero">
+      {/* ════════════════════════════════════════════════
+                BOTTOM CTA
+                ════════════════════════════════════════════════ */}
+      <section className="landing-section landing-section-dark">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -501,30 +548,30 @@ const Home = () => {
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-5">
             Ready to take control of your passwords?
           </h2>
-          <p className="text-emerald-100/60 mb-10 text-sm md:text-base leading-relaxed">
+          <p className="landing-section-body mb-10">
             Join PassMan for free. No ads, no tracking, no nonsense.
           </p>
 
           {user ? (
             <Link
               to="/dashboard"
-              className="inline-flex items-center gap-2 btn-lp-lime px-10 py-4 text-lg shadow-lime-sm"
+              className="btn-lime inline-flex items-center gap-2 px-10 py-4 text-lg"
+              style={{ boxShadow: "0 8px 32px rgba(190,242,100,0.2)" }}
             >
-              Open Dashboard
-              <ArrowRight size={20} />
+              Open Dashboard <ArrowRight size={20} />
             </Link>
           ) : (
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 to="/register"
-                className="inline-flex items-center gap-2 btn-lp-lime px-10 py-4 text-lg shadow-lime-sm"
+                className="btn-lime inline-flex items-center gap-2 px-10 py-4 text-lg"
+                style={{ boxShadow: "0 8px 32px rgba(190,242,100,0.2)" }}
               >
-                Create Free Account
-                <ArrowRight size={20} />
+                Create Free Account <ArrowRight size={20} />
               </Link>
               <Link
                 to="/login"
-                className="!text-emerald-200/70 hover:!text-emerald-100 transition-colors text-sm underline underline-offset-4"
+                className="text-emerald-200/70 hover:text-emerald-100 transition-colors text-sm underline underline-offset-4"
               >
                 Sign in instead
               </Link>
@@ -534,6 +581,7 @@ const Home = () => {
       </section>
 
       <Footer />
+
     </div>
   );
 };

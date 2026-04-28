@@ -1,22 +1,24 @@
 @import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap");
 @import "tailwindcss";
 
-@tailwind utilities;
-
 /* ═══════════════════════════════════════════════════════════════
-   CSS CUSTOM PROPERTIES — Design tokens for the whole app
+   DESIGN TOKENS
+   Single source of truth for every colour, spacing and shadow.
+   Components use these vars — never raw hex values.
    ═══════════════════════════════════════════════════════════════ */
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   color-scheme: dark;
 
+  /* ── Brand ───────────────────────────────────────────────── */
   --brand-green: #065f46;
   --brand-green-light: #10b981;
   --brand-lime: #bef264;
   --brand-lime-hover: #a3e635;
   --brand-lime-text: #1a2e05;
 
+  /* ── Surfaces ────────────────────────────────────────────── */
   --bg-base: #141414;
   --bg-surface: #1e1e1e;
   --bg-surface-2: #242424;
@@ -24,75 +26,76 @@
   --bg-surface-hover: #333333;
   --bg-input: #202020;
 
+  /* ── Borders ─────────────────────────────────────────────── */
   --border-subtle: rgba(255, 255, 255, 0.08);
   --border-default: rgba(255, 255, 255, 0.14);
   --border-strong: rgba(255, 255, 255, 0.22);
   --border-focus: #84cc16;
 
+  /* ── Text ────────────────────────────────────────────────── */
   --text-primary: rgba(255, 255, 255, 0.92);
-  --text-secondary: rgba(255, 255, 255, 0.6);
+  --text-secondary: rgba(255, 255, 255, 0.60);
   --text-muted: rgba(255, 255, 255, 0.35);
   --text-placeholder: rgba(255, 255, 255, 0.28);
 
+  /* ── Semantic colours ────────────────────────────────────── */
   --color-danger: #ef4444;
   --color-danger-bg: rgba(239, 68, 68, 0.12);
   --color-danger-border: rgba(239, 68, 68, 0.28);
   --color-warning: #f97316;
+  --color-warning-bg: rgba(245, 158, 11, 0.10);
+  --color-warning-border: rgba(245, 158, 11, 0.20);
   --color-success: #22c55e;
+  --color-success-bg: rgba(34, 197, 94, 0.12);
   --color-info: #3b82f6;
   --color-info-hover: #2563eb;
 
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  /* ── Shadows ─────────────────────────────────────────────── */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.40);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.45);
   --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.55);
   --shadow-xl: 0 16px 56px rgba(0, 0, 0, 0.65);
 
-  --overlay-bg: rgba(0, 0, 0, 0.6);
+  /* ── Overlay ─────────────────────────────────────────────── */
+  --overlay-bg: rgba(0, 0, 0, 0.60);
 
+  /* ── Modal ───────────────────────────────────────────────── */
   --modal-bg: var(--bg-surface);
   --modal-border: var(--border-default);
   --modal-shadow: var(--shadow-xl);
   --modal-radius: 1rem;
 
+  /* ── Sidebar ─────────────────────────────────────────────── */
   --sidebar-bg: var(--bg-surface-2);
   --sidebar-border: var(--border-subtle);
-  --sidebar-active-bg: rgba(82, 255, 54, 0.1);
+  --sidebar-active-bg: rgba(82, 255, 54, 0.10);
 
+  /* ── Navbar ──────────────────────────────────────────────── */
   --navbar-bg: var(--bg-surface-2);
   --navbar-border: var(--border-subtle);
   --navbar-height: 4rem;
 
+  /* ── Dashboard ───────────────────────────────────────────── */
   --dashboard-bg: var(--bg-base);
+
+  /* ── Auth pages ──────────────────────────────────────────── */
   --auth-bg: #002e22;
+  --auth-bg-gradient: linear-gradient(135deg, #065f46, #014d38);
 
-  /* ── Landing page ────────────────────────────────────────────── */
-  --lp-bg-hero: #011a14;
-  --lp-bg-alt: #00150f;
-  --lp-card-bg: rgba(255, 255, 255, 0.03);
-  --lp-card-border: rgba(255, 255, 255, 0.08);
-  --lp-glow-bg: rgba(16, 185, 129, 0.18);
-  --lp-glow-border: rgba(16, 185, 129, 0.3);
-  --lp-badge-bg: rgba(16, 185, 129, 0.12);
-  --lp-badge-border: rgba(16, 185, 129, 0.28);
-  --lp-badge-text: #6ee7b7;
-  --lp-check-bg: rgba(16, 185, 129, 0.18);
-  --lp-check-border: rgba(16, 185, 129, 0.3);
-  --lp-mini-badge-bg: rgba(16, 185, 129, 0.1);
-  --lp-mini-badge-border: rgba(16, 185, 129, 0.22);
-  --lp-lime-shadow: 0 8px 32px rgba(190, 242, 100, 0.25);
-  --lp-lime-shadow-sm: 0 8px 32px rgba(190, 242, 100, 0.2);
-
+  /* ── Inputs ──────────────────────────────────────────────── */
   --input-bg: var(--bg-input);
   --input-border: var(--border-default);
   --input-border-focus: var(--border-focus);
   --input-text: var(--text-primary);
   --input-label-bg: var(--auth-bg);
 
+  /* ── Transitions ─────────────────────────────────────────── */
   --transition-fast: 150ms ease;
   --transition-base: 250ms ease;
   --transition-slow: 400ms ease;
 }
 
+/* ── Light mode overrides ────────────────────────────────────── */
 @media (prefers-color-scheme: light) {
   :root {
     color-scheme: light;
@@ -106,7 +109,7 @@
 
     --border-subtle: rgba(0, 0, 0, 0.07);
     --border-default: rgba(0, 0, 0, 0.12);
-    --border-strong: rgba(0, 0, 0, 0.2);
+    --border-strong: rgba(0, 0, 0, 0.20);
     --border-focus: #16a34a;
 
     --text-primary: #0f172a;
@@ -115,12 +118,14 @@
     --text-placeholder: #9ca3af;
 
     --color-danger-bg: rgba(239, 68, 68, 0.08);
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --color-warning-bg: rgba(245, 158, 11, 0.08);
+
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.10);
     --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
     --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.15);
     --shadow-xl: 0 16px 56px rgba(0, 0, 0, 0.18);
 
-    --overlay-bg: rgba(0, 0, 0, 0.4);
+    --overlay-bg: rgba(0, 0, 0, 0.40);
 
     --modal-bg: #ffffff;
     --modal-border: rgba(0, 0, 0, 0.12);
@@ -133,13 +138,16 @@
     --navbar-border: rgba(0, 0, 0, 0.08);
 
     --dashboard-bg: #f0fdf4;
+
+    /* Auth pages stay dark intentionally */
     --auth-bg: #002e22;
-    --input-label-bg: var(--auth-bg);
+    --input-label-bg: #002e22;
   }
 }
 
+
 /* ═══════════════════════════════════════════════════════════════
-   BASE RESETS & GLOBAL STYLES
+   BASE RESETS
    ═══════════════════════════════════════════════════════════════ */
 
 *,
@@ -147,22 +155,18 @@
 *::after {
   box-sizing: border-box;
 }
+
 html {
   scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
   background-color: var(--bg-base);
   color: var(--text-primary);
   overflow-x: hidden;
-  transition:
-    background-color var(--transition-base),
-    color var(--transition-base);
 }
 
 h1 {
@@ -170,14 +174,14 @@ h1 {
   line-height: 1.1;
 }
 
-a:not(.btn-lp-lime) {
+a:not(.btn-lime) {
   font-weight: 500;
   color: var(--brand-lime);
   text-decoration: inherit;
   transition: color var(--transition-fast);
 }
 
-a:not(.btn-lp-lime):hover {
+a:not(.btn-lime):hover {
   color: var(--brand-lime-hover);
 }
 
@@ -187,6 +191,7 @@ button {
   cursor: pointer;
   transition: var(--transition-fast);
 }
+
 button:focus-visible {
   outline: 2px solid var(--border-focus);
   outline-offset: 2px;
@@ -201,565 +206,1277 @@ button:focus-visible {
   width: 4px;
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--border-strong);
   border-radius: 999px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: var(--text-muted);
 }
 
+
 /* ═══════════════════════════════════════════════════════════════
-   THEME UTILITY CLASSES
+   FONT THEME
+   ═══════════════════════════════════════════════════════════════ */
+
+@theme {
+  --font-inktrap: "Bricolage Grotesque", sans-serif;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   UTILITY CLASSES
+   Named after what they DO, not what colour they are.
+   Every component/page class is listed here — JSX uses these,
+   never raw inline styles or undocumented Tailwind colour names.
    ═══════════════════════════════════════════════════════════════ */
 
 @layer utilities {
-  /* ── Surfaces ── */
-  .bg-surface {
-    background-color: var(--bg-surface);
-  }
-  .bg-surface-2 {
-    background-color: var(--bg-surface-2);
-  }
-  .bg-surface-3 {
-    background-color: var(--bg-surface-3);
-  }
-  .bg-surface-hover {
-    background-color: var(--bg-surface-hover);
-  }
-  .hover\:bg-surface-hover:hover {
-    background-color: var(--bg-surface-hover);
-  }
-  .bg-dashboard {
-    background-color: var(--dashboard-bg);
-  }
-  .bg-overlay {
-    background-color: var(--overlay-bg);
-  }
-  .bg-modal {
-    background-color: var(--modal-bg);
-  }
-  .bg-navbar {
-    background-color: var(--navbar-bg);
-  }
-  .bg-sidebar {
-    background-color: var(--sidebar-bg);
-  }
-  .bg-danger-subtle {
-    background-color: var(--color-danger-bg);
-  }
-  .bg-success {
-    background-color: var(--color-success);
-  }
-  .bg-info {
-    background-color: var(--color-info);
-  }
-  .hover\:bg-info-hover:hover {
-    background-color: var(--color-info-hover);
-  }
-  .bg-brand-green-light {
-    background-color: var(--brand-green-light);
-  }
-  .bg-sidebar-active {
-    background-color: var(--sidebar-active-bg);
-  }
-  .bg-warning-subtle {
-    background-color: rgba(245, 158, 11, 0.1);
-  }
 
-  /* ── Text ── */
-  .text-primary {
-    color: var(--text-primary);
-  }
-  .text-secondary {
-    color: var(--text-secondary);
-  }
-  .text-muted {
-    color: var(--text-muted);
-  }
-  .text-danger {
-    color: var(--color-danger);
-  }
-  .text-info {
-    color: var(--color-info);
-  }
-  .text-success {
-    color: var(--color-success);
-  }
-  .text-warning {
-    color: #f59e0b;
-  }
-  .text-brand-lime {
-    color: var(--brand-lime);
-  }
+  /* ─────────────────────────────────────────────────────────────
+     ANIMATIONS
+     App.css re-exports these; you can also use the class directly.
+     ───────────────────────────────────────────────────────────── */
 
-  /* ── Borders ── */
-  .border-subtle {
-    border-color: var(--border-subtle);
-  }
-  .border-default {
-    border-color: var(--border-default);
-  }
-  .border-strong {
-    border-color: var(--border-strong);
-  }
-  .border-focus {
-    border-color: var(--border-focus);
-  }
-  .border-danger {
-    border-color: var(--color-danger);
-  }
-  .border-danger-subtle {
-    border-color: var(--color-danger-border);
-  }
-  .border-modal {
-    border-color: var(--modal-border);
-  }
-  .border-navbar {
-    border-color: var(--navbar-border);
-  }
-  .border-sidebar {
-    border-color: var(--sidebar-border);
-  }
-  .border-warning-subtle {
-    border-color: rgba(245, 158, 11, 0.2);
-  }
-
-  /* Focus-visible border swap for inputs */
-  .focus\:border-focus:focus {
-    border-color: var(--border-focus);
-  }
-  .focus\:border-default:focus {
-    border-color: var(--border-default);
-  }
-
-  /* ── Shadows ── */
-  .shadow-theme-sm {
-    box-shadow: var(--shadow-sm);
-  }
-  .shadow-theme-md {
-    box-shadow: var(--shadow-md);
-  }
-  .shadow-theme-lg {
-    box-shadow: var(--shadow-lg);
-  }
-  .shadow-theme-xl {
-    box-shadow: var(--shadow-xl);
-  }
-  .shadow-modal {
-    box-shadow: var(--modal-shadow);
-  }
-
-  /* ── Modal specific ── */
-  .rounded-modal {
-    border-radius: var(--modal-radius);
-  }
-
-  /* ── Backdrop blur overlay ── */
-  .backdrop-modal {
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-  }
-  .backdrop-sidebar {
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-  }
-
-  /* ── Navbar height ── */
-  .h-navbar {
-    height: var(--navbar-height);
-  }
-
-  /* ── Fade mask ── */
   .fade-mask {
-    overflow: hidden;
-    white-space: nowrap;
+    @apply overflow-hidden whitespace-nowrap;
     mask-image: linear-gradient(to right, black 80%, transparent);
     -webkit-mask-image: linear-gradient(to right, black 80%, transparent);
   }
 
-  /* ── Transition helpers ── */
-  .transition-fast {
-    transition: var(--transition-fast);
-  }
-  .transition-base {
-    transition: var(--transition-base);
-  }
-  .transition-max-height {
-    transition: max-height 0.4s ease-in-out;
-  }
-  .transition-border-fast {
-    transition: border-color var(--transition-fast);
+
+  /* ─────────────────────────────────────────────────────────────
+     LAYOUT — DashboardLayout.jsx
+     ───────────────────────────────────────────────────────────── */
+
+  /* Root shell — full viewport, flex row, no overflow */
+  .dashboard-shell {
+    @apply flex w-screen h-screen overflow-hidden;
+    background-color: var(--dashboard-bg);
   }
 
-  /* ── Pill / rounded-full buttons ── */
-  .btn-ghost {
-    border: 1px solid var(--border-default);
+  /* Main column next to sidebar */
+  .dashboard-main {
+    @apply relative flex flex-col flex-1 h-screen overflow-hidden min-w-0;
+  }
+
+  /* Scrollable page area below navbar */
+  .dashboard-outlet {
+    @apply flex-1 overflow-y-auto min-h-0 pt-8;
+  }
+
+  /* Error fallback card inside dashboard */
+  .dashboard-error-card {
+    @apply flex flex-col items-center justify-center h-full p-12 text-center;
+  }
+
+  .dashboard-error-icon {
+    @apply w-12 h-12 rounded-full flex items-center justify-center text-xl mb-4;
+    background-color: var(--color-danger-bg);
+    border: 1px solid var(--color-danger-border);
+  }
+
+  .dashboard-error-title {
+    @apply font-medium mb-1;
+    color: var(--text-primary);
+  }
+
+  .dashboard-error-body {
+    @apply text-sm mb-4;
+    color: var(--text-muted);
+  }
+
+
+  /* ─────────────────────────────────────────────────────────────
+     NAVBAR — DashboardNavbar.jsx
+     ───────────────────────────────────────────────────────────── */
+
+  .navbar {
+    @apply flex items-center gap-3 px-4 md:px-6 shrink-0 absolute w-full top-0 backdrop-blur-sm z-40;
+    height: var(--navbar-height);
+  }
+
+  .navbar-brand {
+    @apply font-bold text-xl tracking-tight;
+    color: var(--text-primary);
+  }
+
+  .navbar-hamburger {
+    @apply md:hidden flex items-center justify-center w-9 h-9 rounded-lg transition-colors;
     color: var(--text-secondary);
-    background: transparent;
-    border-radius: 999px;
-    padding: 0.4em 1.1em;
-    transition:
-      background-color var(--transition-fast),
-      color var(--transition-fast);
   }
-  .btn-ghost:hover {
+
+  .navbar-hamburger:hover {
     background-color: var(--bg-surface-hover);
+  }
+
+  .navbar-logout-btn {
+    @apply hidden sm:block text-xs transition-colors px-3 py-1.5 rounded-full;
+    color: var(--text-muted);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .navbar-logout-btn:hover {
+    color: var(--text-primary);
+    border-color: var(--border-default);
+  }
+
+  .navbar-avatar {
+    @apply w-9 h-9 rounded-full flex items-center justify-center font-semibold text-sm text-white cursor-pointer shrink-0;
+    background-color: var(--brand-green-light);
+  }
+
+
+  /* ─────────────────────────────────────────────────────────────
+     SIDEBAR — Sidebar.jsx + MobileSidebar.jsx
+     ───────────────────────────────────────────────────────────── */
+
+  .sidebar {
+    @apply h-screen flex flex-col shrink-0;
+    background-color: var(--sidebar-bg);
+    border-right: 1px solid var(--sidebar-border);
+  }
+
+  /* Desktop sidebar widths */
+  .sidebar-desktop {
+    @apply w-20 lg:w-64;
+  }
+
+  /* Mobile sidebar widths */
+  .sidebar-mobile {
+    @apply w-full max-w-xs;
+  }
+
+  .sidebar-logo-row {
+    @apply h-16 flex items-center justify-center lg:justify-start gap-3 px-3 lg:px-5 shrink-0;
+    border-bottom: 1px solid var(--sidebar-border);
+  }
+
+  .sidebar-logo-label {
+    @apply hidden lg:block font-bold text-lg tracking-tight;
     color: var(--text-primary);
   }
 
-  .btn-danger {
-    background-color: var(--color-danger);
-    color: #fff;
-    border-radius: 999px;
-    padding: 0.4em 1.1em;
-    border: none;
-  }
-  .btn-danger:hover {
-    filter: brightness(1.1);
+  .sidebar-nav {
+    @apply flex-1 p-2 space-y-0.5;
   }
 
-  .btn-primary {
-    background-color: var(--color-info);
-    color: #fff;
-    border-radius: 999px;
-    padding: 0.4em 1.1em;
-    border: none;
-  }
-  .btn-primary:hover {
-    background-color: var(--color-info-hover);
-  }
-
-  /* ── Sidebar nav item ── */
+  /* Each nav link — active state toggled by NavLink className fn */
   .sidebar-item {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.75rem;
-    height: 3rem;
-    border-radius: 0.375rem;
+    @apply flex items-center justify-center lg:justify-start gap-3 p-0 lg:p-3 h-12 rounded-md transition-colors;
     color: var(--text-primary);
-    transition:
-      background-color var(--transition-fast),
-      color var(--transition-fast);
   }
+
   .sidebar-item:hover {
     background-color: var(--bg-surface-hover);
   }
+
   .sidebar-item.active {
     background-color: var(--sidebar-active-bg);
   }
 
-  /* ── Stat card ── */
-  .stat-card {
-    background-color: var(--bg-surface);
-    border: 1px solid var(--border-subtle);
-    border-radius: 0.75rem;
-    padding: 1rem;
+  /* Mobile sidebar — always shows labels */
+  .sidebar-item-mobile {
+    @apply flex items-center gap-3 p-3 h-12 rounded-md transition-colors;
     color: var(--text-primary);
   }
 
-  /* ── Password list item ── */
+  .sidebar-item-mobile:hover {
+    background-color: var(--bg-surface-hover);
+  }
+
+  .sidebar-item-mobile.active {
+    background-color: var(--sidebar-active-bg);
+  }
+
+  .sidebar-item-label {
+    @apply hidden lg:block text-sm;
+    color: var(--text-primary);
+  }
+
+  .sidebar-footer {
+    @apply p-2 shrink-0;
+    border-top: 1px solid var(--sidebar-border);
+  }
+
+  /* Generator button in sidebar footer */
+  .sidebar-generator-btn {
+    @apply flex items-center justify-center lg:justify-start gap-3 p-0 lg:p-3 h-12 rounded-md transition-colors w-full;
+    color: var(--text-muted);
+  }
+
+  .sidebar-generator-btn:hover {
+    background-color: var(--bg-surface-hover);
+  }
+
+
+  /* ─────────────────────────────────────────────────────────────
+     MODAL BASE — Modal.jsx
+     ───────────────────────────────────────────────────────────── */
+
+  .modal-backdrop {
+    @apply fixed inset-0;
+    z-index: 900;
+    background-color: var(--overlay-bg);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+
+  .modal-box {
+    @apply fixed overflow-y-auto;
+    z-index: 901;
+    left: 50%;
+    top: 50%;
+    width: calc(100% - 2rem);
+    max-height: 90vh;
+    background-color: var(--modal-bg);
+    border: 1px solid var(--modal-border);
+    border-radius: var(--modal-radius);
+    box-shadow: var(--modal-shadow);
+    color: var(--text-primary);
+  }
+
+  .modal-header {
+    @apply flex items-center justify-between px-5 py-4;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .modal-header-title {
+    @apply font-semibold text-sm;
+    color: var(--text-secondary);
+  }
+
+  .modal-close-btn {
+    @apply w-7 h-7 flex items-center justify-center rounded-full transition-colors;
+    color: var(--text-muted);
+  }
+
+  .modal-close-btn:hover {
+    background-color: var(--bg-surface-hover);
+  }
+
+  .modal-body {
+    @apply p-5;
+  }
+
+  .modal-footer {
+    @apply flex justify-end gap-2 px-5 py-4;
+    border-top: 1px solid var(--border-subtle);
+    background-color: var(--modal-bg);
+  }
+
+  /* Edit-mode warning banner inside PasswordCard */
+  .modal-edit-banner {
+    @apply px-5 py-1.5 text-xs font-medium;
+    background-color: var(--color-warning-bg);
+    border-bottom: 1px solid var(--color-warning-border);
+    color: var(--color-warning);
+  }
+
+
+  /* ─────────────────────────────────────────────────────────────
+     DELETE CONFIRM MODAL — DeleteConfirmModal.jsx
+     ───────────────────────────────────────────────────────────── */
+
+  .delete-modal-icon {
+    @apply w-11 h-11 rounded-full flex items-center justify-center mb-4;
+    background-color: var(--color-danger-bg);
+    border: 1px solid var(--color-danger-border);
+  }
+
+  .delete-modal-title {
+    @apply font-semibold text-base mb-1;
+    color: var(--text-primary);
+  }
+
+  .delete-modal-body {
+    @apply text-sm;
+    color: var(--text-secondary);
+  }
+
+
+  /* ─────────────────────────────────────────────────────────────
+     ADD SITE MODAL — AddSiteModal.jsx
+     ───────────────────────────────────────────────────────────── */
+
+  .addsite-field-label {
+    @apply text-xs mt-5 mb-1.5 mx-0.5 flex items-center gap-2 font-medium;
+    color: var(--text-secondary);
+  }
+
+  .addsite-field-label-error {
+    color: var(--color-danger);
+  }
+
+  /* Text input inside the add-site modal */
+  .addsite-input {
+    @apply w-full h-10 rounded-lg text-sm outline-none transition-colors;
+    padding: 0 0.75rem;
+    background-color: var(--bg-surface-3);
+    color: var(--text-primary);
+    border: 1px solid var(--border-default);
+  }
+
+  .addsite-input:focus {
+    border-color: var(--border-focus);
+  }
+
+  .addsite-input-error {
+    border-color: var(--color-danger);
+  }
+
+  .addsite-textarea {
+    @apply w-full rounded-lg text-sm outline-none resize-none;
+    padding: 0.5rem 0.75rem;
+    background-color: var(--bg-surface-3);
+    color: var(--text-primary);
+    border: 1px solid var(--border-default);
+    font-family: inherit;
+  }
+
+  .addsite-textarea:focus {
+    border-color: var(--border-focus);
+  }
+
+
+  /* ─────────────────────────────────────────────────────────────
+     PASSWORD CARD — PasswordCard.jsx
+     ───────────────────────────────────────────────────────────── */
+
+  /* Shared read-only / editable field */
+  .card-field {
+    @apply w-full rounded-lg text-sm outline-none transition-colors;
+    padding: 0.625rem 0.75rem;
+    background-color: var(--bg-surface-3);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-primary);
+    font-family: inherit;
+  }
+
+  .card-field:focus {
+    border-color: var(--border-focus);
+  }
+
+  .card-field:disabled {
+    color: var(--text-muted);
+    cursor: default;
+  }
+
+  .card-field-label {
+    @apply text-xs font-medium mb-1.5;
+    color: var(--text-secondary);
+  }
+
+  /* Icon buttons inside the card header */
+  .card-icon-btn {
+    @apply w-8 h-8 flex items-center justify-center rounded-full transition-colors;
+  }
+
+  .card-icon-btn:hover {
+    background-color: var(--bg-surface-hover);
+  }
+
+  /* Save button variant */
+  .card-save-btn {
+    @apply w-8 h-8 flex items-center justify-center rounded-full transition-colors;
+    background-color: var(--color-success-bg);
+  }
+
+
+  /* ─────────────────────────────────────────────────────────────
+     PASSWORD GENERATOR MODAL — PasswordGeneratorModal.jsx
+     ───────────────────────────────────────────────────────────── */
+
+  .generator-modal-wrap {
+    @apply rounded-2xl overflow-hidden;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-default);
+  }
+
+  .generator-header {
+    @apply flex items-center justify-between px-5 py-4;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .generator-header-icon {
+    @apply w-7 h-7 rounded-lg flex items-center justify-center;
+    background-color: rgba(59, 130, 246, 0.12);
+  }
+
+  .generator-password-display {
+    @apply flex items-center gap-2 rounded-xl px-4 py-3;
+    background-color: var(--bg-base);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .generator-password-text {
+    @apply flex-1 font-mono text-base break-all select-all leading-relaxed;
+    color: var(--text-primary);
+  }
+
+  /* Small icon-only button used inside the generator display */
+  .generator-icon-btn {
+    @apply p-2 rounded-lg transition-colors;
+    color: var(--text-muted);
+  }
+
+  .generator-icon-btn:hover {
+    color: var(--text-secondary);
+    background-color: var(--bg-surface-hover);
+  }
+
+  .generator-icon-btn-copied {
+    color: var(--color-success);
+    background-color: var(--color-success-bg);
+  }
+
+  .generator-track {
+    @apply flex-1 h-1.5 rounded-full overflow-hidden;
+    background-color: var(--bg-surface-hover);
+  }
+
+  /* Toggle switch inside the generator */
+  .generator-toggle-track {
+    @apply relative w-9 h-5 rounded-full transition-colors duration-200 cursor-pointer;
+  }
+
+  .generator-toggle-track-on {
+    background-color: var(--color-info);
+  }
+
+  .generator-toggle-track-off {
+    background-color: var(--border-default);
+  }
+
+  .generator-toggle-thumb {
+    @apply absolute top-0.5 w-4 h-4 rounded-full bg-white transition-all duration-200;
+  }
+
+  .generator-toggle-label {
+    @apply text-sm transition-colors;
+    color: var(--text-muted);
+  }
+
+  .generator-action-outline {
+    @apply flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm transition-colors;
+    border: 1px solid var(--border-default);
+    color: var(--text-muted);
+  }
+
+  .generator-action-outline:hover {
+    background-color: var(--bg-surface-hover);
+    color: var(--text-primary);
+  }
+
+  .generator-action-primary {
+    @apply flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm text-white transition-colors;
+    background-color: var(--color-info);
+  }
+
+  .generator-action-primary:hover {
+    background-color: var(--color-info-hover);
+  }
+
+
+  /* ─────────────────────────────────────────────────────────────
+     SEARCH BAR — SearchBar.jsx
+     ───────────────────────────────────────────────────────────── */
+
+  .search-bar {
+    @apply flex items-center gap-2 px-3 h-10 rounded-full cursor-text transition-colors;
+    background-color: var(--bg-surface-3);
+    border: 1px solid var(--border-default);
+  }
+
+  .search-bar:focus-within {
+    border-color: var(--border-focus);
+  }
+
+  .search-bar-icon {
+    color: var(--text-muted);
+  }
+
+  .search-bar-input {
+    @apply flex-1 bg-transparent text-sm outline-none;
+    color: var(--text-primary);
+    caret-color: var(--brand-lime);
+  }
+
+  .search-bar-input::placeholder {
+    color: var(--text-placeholder);
+  }
+
+  .search-bar-clear {
+    @apply shrink-0 transition-colors;
+    color: var(--text-muted);
+  }
+
+  .search-bar-clear:hover {
+    color: var(--text-primary);
+  }
+
+
+  /* ─────────────────────────────────────────────────────────────
+     PASSWORD LIST ITEM — Passwords.jsx + Favorites.jsx
+     ───────────────────────────────────────────────────────────── */
+
   .password-list {
-    display: flex;
-    align-items: center;
-    padding: 0.75rem 1rem;
-    margin: 0.5rem 0;
-    border-radius: 0.5rem;
+    @apply flex items-center px-4 py-3 my-1.5 rounded-lg cursor-pointer transition-colors;
     background-color: var(--bg-surface-3);
     border: 1px solid transparent;
-    cursor: pointer;
-    transition:
-      background-color var(--transition-fast),
-      border-color var(--transition-fast);
   }
+
   .password-list:hover {
     background-color: var(--bg-surface-hover);
     border-color: var(--border-default);
   }
 
-  /* ── Dashboard inputs ── */
-  .input-dashboard {
-    width: 100%;
-    height: 2.5rem;
-    padding: 0 0.75rem;
-    border-radius: 0.5rem;
-    background-color: var(--bg-surface-3);
-    border: 1px solid var(--border-default);
-    color: var(--text-primary);
-    font-size: 0.875rem;
-    transition: border-color var(--transition-fast);
-    outline: none;
-  }
-  .input-dashboard:focus {
-    border-color: var(--border-focus);
-  }
-  .input-dashboard.error {
-    border-color: var(--color-danger);
-  }
-  .input-dashboard:disabled {
-    color: var(--text-muted);
-    cursor: not-allowed;
+  .password-list-badge {
+    @apply w-9 h-9 flex items-center justify-center rounded-md text-sm font-semibold shrink-0;
+    background-color: var(--bg-surface-hover);
+    color: var(--text-secondary);
   }
 
-  /* ── Dashboard textarea ── */
-  .textarea-dashboard {
-    width: 100%;
-    padding: 0.5rem 0.75rem;
-    border-radius: 0.5rem;
-    background-color: var(--bg-surface-3);
-    border: 1px solid var(--border-default);
+  .password-list-site {
+    @apply text-sm font-medium truncate;
     color: var(--text-primary);
-    font-size: 0.875rem;
-    transition: border-color var(--transition-fast);
-    outline: none;
-    resize: none;
-    font-family: inherit;
-  }
-  .textarea-dashboard:focus {
-    border-color: var(--border-focus);
-  }
-  .textarea-dashboard:disabled {
-    color: var(--text-muted);
-    cursor: not-allowed;
   }
 
-  /* ── Auth input ── */
-  .input-template {
-    width: 100%;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    border-radius: 0.375rem;
-    padding: 0.75rem;
-    font-size: 0.875rem;
-    color: #fff;
+  .password-list-username {
+    @apply text-xs truncate;
+    color: var(--text-muted);
+  }
+
+  .password-list-chevron {
+    color: var(--text-muted);
+  }
+
+
+  /* ─────────────────────────────────────────────────────────────
+     SORT SELECT — Passwords.jsx
+     ───────────────────────────────────────────────────────────── */
+
+  .sort-select {
+    @apply h-10 px-3 rounded-full text-sm outline-none cursor-pointer transition-colors;
+    background-color: var(--bg-surface-3);
+    color: var(--text-primary);
+    border: 1px solid var(--border-default);
+  }
+
+  .sort-select:focus {
+    border-color: var(--border-focus);
+  }
+
+
+  /* ─────────────────────────────────────────────────────────────
+     PAGE HEADERS — Passwords.jsx, Favorites.jsx, Stats.jsx, Settings.jsx
+     ───────────────────────────────────────────────────────────── */
+
+  .page-root {
+    @apply flex flex-col w-full p-4 md:p-6 max-w-4xl mx-auto;
+  }
+
+  .page-heading {
+    @apply !text-3xl sm:!text-5xl font-semibold my-3 mb-4;
+    color: var(--text-primary);
+  }
+
+  .page-subtitle {
+    @apply text-sm mb-4;
+    color: var(--text-muted);
+  }
+
+  .page-header-row {
+    @apply flex items-center my-3 mb-4;
+  }
+
+  .result-count-hint {
+    @apply text-xs mb-3;
+    color: var(--text-muted);
+  }
+
+  .empty-state {
+    @apply text-sm;
+    color: var(--text-muted);
+  }
+
+
+  /* ─────────────────────────────────────────────────────────────
+     BUTTONS — used everywhere
+     ───────────────────────────────────────────────────────────── */
+
+  .btn-ghost {
+    @apply rounded-full text-sm transition-colors;
+    padding: 0.4em 1.1em;
+    border: 1px solid var(--border-default);
+    color: var(--text-secondary);
     background: transparent;
-    outline: none;
+  }
+
+  .btn-ghost:hover {
+    background-color: var(--bg-surface-hover);
+    color: var(--text-primary);
+  }
+
+  .btn-primary {
+    @apply rounded-full text-sm text-white transition-colors;
+    padding: 0.4em 1.1em;
+    background-color: var(--color-info);
+    border: none;
+  }
+
+  .btn-primary:hover {
+    background-color: var(--color-info-hover);
+  }
+
+  .btn-danger {
+    @apply rounded-full text-sm text-white transition-colors;
+    padding: 0.4em 1.1em;
+    background-color: var(--color-danger);
+    border: none;
+  }
+
+  .btn-danger:hover {
+    filter: brightness(1.1);
+  }
+
+  .btn-success {
+    @apply rounded-full text-sm text-white transition-colors;
+    padding: 0.4em 1.1em;
+    background-color: var(--color-success);
+    border: none;
+  }
+
+  /* Outline-only add button (Passwords page) */
+  .btn-add {
+    @apply rounded-full text-sm transition-colors;
+    padding: 0.4em 1.1em;
+    border: 1px solid var(--border-default);
+    background: transparent;
+    color: var(--color-info);
+    border-color: var(--color-info);
+  }
+
+  .btn-add:hover {
+    background-color: rgba(59, 130, 246, 0.10);
+    color: var(--color-info);
+  }
+
+  /* Danger-tinted ghost (delete in card footer) */
+  .btn-ghost-danger {
+    @apply rounded-full text-sm transition-colors;
+    padding: 0.4em 1.1em;
+    border: 1px solid var(--border-default);
+    background: transparent;
+    color: var(--color-danger);
+    border-color: var(--color-danger-border);
+  }
+
+  .btn-ghost-danger:hover {
+    background-color: var(--color-danger-bg);
+  }
+
+  /* CTA lime button (landing page) */
+  .btn-lime {
+    @apply font-bold rounded-full transition-all hover:scale-105 active:scale-95;
+    background-color: var(--brand-lime);
+    color: var(--brand-lime-text);
+  }
+
+  .btn-lime:hover {
+    background-color: var(--brand-lime-hover);
+  }
+
+
+  /* ─────────────────────────────────────────────────────────────
+     STATS PAGE — Stats.jsx
+     ───────────────────────────────────────────────────────────── */
+
+  .stat-card {
+    @apply rounded-xl p-4;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .stat-card-value {
+    @apply text-2xl font-semibold;
+    color: var(--text-primary);
+  }
+
+  .stat-card-label {
+    @apply text-xs mb-1;
+    color: var(--text-muted);
+  }
+
+  .stat-card-sub {
+    @apply text-xs mt-1;
+    color: var(--text-muted);
+  }
+
+  .stat-section {
+    @apply rounded-xl p-5 mb-6;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .stat-section-title {
+    @apply text-base font-medium mb-4;
+    color: var(--text-primary);
+  }
+
+  .stat-bar-track {
+    @apply flex-1 h-2 rounded-full overflow-hidden;
+    background-color: var(--border-subtle);
+  }
+
+  .stat-bar-count {
+    @apply text-xs w-8 text-right;
+    color: var(--text-muted);
+  }
+
+  .stat-warning-banner {
+    @apply rounded-xl p-4 mb-6 flex items-start gap-3;
+    background-color: rgba(234, 88, 12, 0.10);
+    border: 1px solid rgba(234, 88, 12, 0.25);
+  }
+
+  .stat-warning-title {
+    @apply text-sm font-medium;
+    color: #fb923c;
+  }
+
+  .stat-warning-body {
+    @apply text-xs mt-0.5;
+    color: rgba(251, 146, 60, 0.65);
+  }
+
+  .stat-success-banner {
+    @apply rounded-xl p-4 mb-6 flex items-start gap-3;
+    background-color: rgba(16, 185, 129, 0.08);
+    border: 1px solid rgba(16, 185, 129, 0.22);
+  }
+
+  .stat-success-title {
+    @apply text-sm font-medium;
+    color: #6ee7b7;
+  }
+
+  .stat-success-body {
+    @apply text-xs mt-0.5;
+    color: rgba(110, 231, 183, 0.60);
+  }
+
+
+  /* ─────────────────────────────────────────────────────────────
+     SETTINGS PAGE — Settings.jsx
+     ───────────────────────────────────────────────────────────── */
+
+  .settings-section {
+    @apply rounded-xl p-5;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .settings-section-danger {
+    @apply rounded-xl p-5;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--color-danger-border);
+  }
+
+  .settings-section-label {
+    @apply text-xs uppercase tracking-widest mb-4;
+    color: var(--text-muted);
+  }
+
+  .settings-section-label-danger {
+    @apply text-xs uppercase tracking-widest mb-4;
+    color: #f87171;
+  }
+
+  .settings-row {
+    @apply flex items-center justify-between gap-3 py-3;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .settings-row:last-child {
+    border-bottom: none;
+  }
+
+  .settings-row-label {
+    @apply text-sm min-w-[140px];
+    color: var(--text-muted);
+  }
+
+  .settings-row-value {
+    @apply text-sm flex-1;
+    color: var(--text-primary);
+  }
+
+  .settings-avatar-row {
+    @apply flex items-center gap-4 mb-4 pb-4;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .settings-avatar {
+    @apply w-11 h-11 rounded-full flex items-center justify-center font-semibold text-lg text-white shrink-0;
+    background-color: var(--brand-green-light);
+  }
+
+  .settings-avatar-name {
+    @apply font-medium text-sm;
+    color: var(--text-primary);
+  }
+
+  .settings-avatar-email {
+    @apply text-xs;
+    color: var(--text-muted);
+  }
+
+  /* Editable input inside settings rows */
+  .settings-input {
+    @apply w-full h-10 px-3 rounded-lg text-sm outline-none transition-colors;
+    background-color: var(--bg-surface-3);
+    border: 1px solid var(--border-default);
+    color: var(--text-primary);
+  }
+
+  .settings-input:focus {
+    border-color: var(--border-focus);
+  }
+
+  .settings-label-small {
+    @apply text-xs mb-1 block;
+    color: var(--text-muted);
+  }
+
+  .settings-stat-mini {
+    @apply rounded-lg p-4;
+    background-color: var(--bg-surface-3);
+  }
+
+  .settings-stat-mini-value {
+    @apply text-2xl font-semibold;
+    color: var(--text-primary);
+  }
+
+  .settings-stat-mini-label {
+    @apply text-xs mt-1;
+    color: var(--text-muted);
+  }
+
+  /* Disabled "coming soon" data button */
+  .settings-coming-soon-badge {
+    @apply text-xs px-2.5 py-0.5 rounded-full;
+    background-color: rgba(161, 120, 0, 0.20);
+    color: #facc15;
+    border: 1px solid rgba(250, 204, 21, 0.22);
+  }
+
+  .settings-locked-note {
+    @apply text-xs hidden sm:block;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+
+  /* ─────────────────────────────────────────────────────────────
+     AUTH PAGES — Login.jsx, Register.jsx, ForgotPassword.jsx
+     Auth pages intentionally stay dark even in light OS mode.
+     ───────────────────────────────────────────────────────────── */
+
+  /* Full-page centering shell */
+  .auth-shell {
+    @apply min-h-screen w-screen flex items-center justify-center;
+    background-color: var(--auth-bg);
+  }
+
+  /* Card (responsive: edge-to-edge on mobile, rounded on sm+) */
+  .auth-card {
+    @apply w-full sm:max-w-md p-8 sm:rounded-xl;
+    background-color: var(--auth-bg);
+    color: #fff;
+    /* Subtle depth on larger screens */
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06);
+  }
+
+  .auth-card-title {
+    @apply text-2xl font-bold text-center mb-6;
+  }
+
+  .auth-card-subtitle {
+    @apply text-center text-sm mb-10;
+    color: rgba(255, 255, 255, 0.60);
+  }
+
+  /* Floating-label input wrapper */
+  .auth-field-wrap {
+    @apply relative w-full my-5;
+  }
+
+  /* The actual input — always dark background on auth pages */
+  .input-template {
+    @apply w-full border rounded-md px-3 pt-3 pb-3 text-sm focus:outline-none;
+    border-color: rgba(255, 255, 255, 0.25);
+    background: transparent;
+    color: #fff;
     transition: border-color var(--transition-fast);
   }
+
   .input-template:focus {
     border-color: var(--brand-lime);
   }
 
-  /* ── Section cards (Settings page) ── */
-  .section-card {
-    background-color: var(--bg-surface);
-    border: 1px solid var(--border-subtle);
-    border-radius: 0.75rem;
-    padding: 1.25rem;
-  }
-  .section-card-danger {
-    background-color: var(--bg-surface);
-    border: 1px solid var(--color-danger-border);
-    border-radius: 0.75rem;
-    padding: 1.25rem;
+  /* Floating label that sits inside the wrapper */
+  .auth-label {
+    @apply absolute left-3 top-0 px-2 text-gray-400 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-focus:-top-3 peer-focus:text-sm peer-focus:text-lime-300 peer-not-placeholder-shown:-top-3 peer-not-placeholder-shown:text-sm;
+    background-color: var(--input-label-bg);
   }
 
-  /* ── Icon button (close, edit, etc.) ── */
-  .icon-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 9999px;
-    background: transparent;
-    color: var(--text-muted);
-    transition: background-color var(--transition-fast);
-  }
-  .icon-btn:hover {
-    background-color: var(--bg-surface-hover);
+  /* Primary submit button on auth pages */
+  .auth-submit-btn {
+    @apply w-full p-3 rounded-lg text-white transition-colors;
+    background-color: #16a34a;
   }
 
-  /* ── Save button variant (green) ── */
-  .btn-save {
-    background-color: var(--color-success);
-    color: #fff;
-    border-radius: 9999px;
-    padding: 0.4em 1.1em;
-    border: none;
-    display: flex;
-    align-items: center;
-    gap: 0.375rem;
-    transition: filter var(--transition-fast);
-  }
-  .btn-save:hover {
-    filter: brightness(1.1);
+  .auth-submit-btn:hover {
+    background-color: #15803d;
   }
 
-  /* ── Edit mode banner ── */
-  .edit-banner {
-    background-color: rgba(245, 158, 11, 0.1);
-    border-bottom: 1px solid rgba(245, 158, 11, 0.2);
-    color: #f59e0b;
+  .auth-submit-btn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
   }
 
-  /* ═══════════════════════════════════════════════════════════════
-     LANDING PAGE UTILITIES
-     ═══════════════════════════════════════════════════════════════ */
-
-  /* ── Backgrounds ── */
-  .bg-lp-hero {
-    background-color: var(--lp-bg-hero);
-  }
-  .bg-lp-alt {
-    background-color: var(--lp-bg-alt);
-  }
-  .bg-lp-card {
-    background-color: var(--lp-card-bg);
+  /* "Forgot password" / secondary link */
+  .auth-link-muted {
+    @apply text-xs;
+    color: rgba(255, 255, 255, 0.50);
   }
 
-  /* ── Borders ── */
-  .border-lp-card {
-    border-color: var(--lp-card-border);
+  .auth-link-brand {
+    color: var(--brand-lime);
   }
 
-  /* ── Eyebrow badge ── */
-  .lp-badge {
-    background-color: var(--lp-badge-bg);
-    border: 1px solid var(--lp-badge-border);
-    color: var(--lp-badge-text);
-  }
-
-  /* ── Feature / security card ── */
-  .lp-card {
-    background-color: var(--lp-card-bg);
-    border: 1px solid var(--lp-card-border);
+  /* Profile-short card shown when already logged in */
+  .auth-profile-card {
+    @apply absolute top-6 left-1/2 -translate-x-1/2 rounded-xl px-4 py-3 shadow-lg flex items-center gap-4;
+    background-color: rgba(6, 95, 70, 0.80);
     backdrop-filter: blur(8px);
+    border: 1px solid rgba(16, 185, 129, 0.30);
   }
 
-  /* ── Icon glow container (feature cards) ── */
-  /* Accent colour passed via CSS custom prop set inline on the element */
-  .lp-icon-wrap {
-    background-color: var(--lp-glow-bg);
-    border: 1px solid var(--lp-glow-border);
+  .auth-profile-avatar {
+    @apply w-10 h-10 rounded-full flex items-center justify-center font-semibold text-white;
+    background-color: var(--brand-green-light);
   }
 
-  /* ── Top accent line on feature card ── */
-  .lp-accent-line {
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(16, 185, 129, 0.33),
-      transparent
-    );
-  }
-
-  /* ── Step number badge ── */
-  .lp-step-badge {
-    background: linear-gradient(135deg, #065f46, #10b981);
+  .auth-profile-name {
+    @apply font-semibold text-sm;
     color: #fff;
-    box-shadow: 0 0 16px rgba(16, 185, 129, 0.35);
   }
 
-  /* ── Vertical step connector line ── */
-  .lp-step-line {
-    background: linear-gradient(to bottom, #065f46, transparent);
+  .auth-profile-email {
+    @apply text-xs;
+    color: rgba(255, 255, 255, 0.55);
   }
 
-  /* ── Security check icon wrap ── */
-  .lp-check-wrap {
-    background-color: var(--lp-check-bg);
-    border: 1px solid var(--lp-check-border);
+
+  /* ─────────────────────────────────────────────────────────────
+     LANDING PAGE — Home.jsx
+     ───────────────────────────────────────────────────────────── */
+
+  /* Root wrapper — dark always, no theme switch on marketing pages */
+  .landing-root {
+    @apply overflow-x-hidden;
+    font-family: var(--font-inktrap, system-ui);
+    /* explicit selection override for green branding */
   }
 
-  /* ── Mini security badge (pill inside security card) ── */
-  .lp-mini-badge {
-    background-color: var(--lp-mini-badge-bg);
-    border: 1px solid var(--lp-mini-badge-border);
-    color: var(--lp-badge-text);
+  /* Full-height hero section */
+  .landing-hero {
+    @apply relative flex flex-col min-h-screen w-screen overflow-hidden;
+    background-color: #011a14;
   }
 
-  /* ── Security card glow overlay ── */
-  .lp-security-glow {
-    background: radial-gradient(
-      ellipse at 50% 50%,
-      rgba(16, 185, 129, 0.18),
-      transparent 70%
-    );
-    filter: blur(30px);
+  /* Landing navbar */
+  .landing-nav {
+    @apply relative z-10 flex items-center justify-between px-6 md:px-10 py-5 max-w-7xl mx-auto w-full;
   }
 
-  /* ── Radial hero glow ── */
-  .lp-hero-glow {
-    background: radial-gradient(
-      ellipse 80% 60% at 50% 40%,
-      #065f46 0%,
-      transparent 70%
-    );
+  .landing-nav-logo {
+    @apply flex items-center gap-3;
   }
 
-  /* ── Lime CTA button ── */
-  .btn-lp-lime {
-    background-color: #bef264;
-    color: #052e16;
-    font-weight: 700;
-    border-radius: 9999px;
-    transition:
-      background-color 150ms ease,
-      transform 150ms ease;
-  }
-  .btn-lp-lime:hover {
-    background-color: #a3e635;
-    transform: scale(1.05);
-  }
-  .btn-lp-lime:active {
-    transform: scale(0.95);
+  .landing-nav-brand {
+    @apply hidden sm:block text-white text-xl font-bold tracking-tight;
   }
 
-  /* ── Lime shadow ── */
-  .shadow-lime {
-    box-shadow: var(--lp-lime-shadow);
-  }
-  .shadow-lime-sm {
-    box-shadow: var(--lp-lime-shadow-sm);
+  .landing-nav-links {
+    @apply hidden lg:flex items-center gap-8;
   }
 
-  /* ── Gradient headline text ── */
-  .text-gradient-lime {
-    background: linear-gradient(135deg, #bef264, #34d399);
+  .landing-nav-link {
+    @apply text-sm font-medium transition-colors;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  .landing-nav-link:hover {
+    color: #fff;
+  }
+
+  /* Eyebrow pill badge in hero */
+  .landing-eyebrow {
+    @apply flex items-center gap-2 px-4 py-1.5 rounded-full mb-8 text-xs font-medium;
+    background-color: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.28);
+    color: #6ee7b7;
+  }
+
+  .landing-eyebrow-dot {
+    @apply w-1.5 h-1.5 rounded-full animate-pulse;
+    background-color: #34d399;
+  }
+
+  /* Gradient headline text */
+  .landing-headline-gradient {
+    background: linear-gradient(135deg, var(--brand-lime), #34d399);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  /* ── Shield icon glow ── */
-  .lp-shield-glow {
-    filter: drop-shadow(0 0 20px rgba(16, 185, 129, 0.6));
+  /* Section shell used by all landing sections */
+  .landing-section {
+    @apply w-screen py-24 px-4 md:px-8;
   }
 
-  /* ── Footer ── */
-  .bg-lp-footer {
+  .landing-section-dark {
     background-color: #011a14;
   }
-  .border-lp-footer {
-    border-color: rgba(255, 255, 255, 0.08);
-  }
-  .border-lp-divider {
-    border-color: rgba(255, 255, 255, 0.06);
+
+  .landing-section-darker {
+    background-color: #00150f;
   }
 
-  /* ── Subtle grid overlay ── */
-  .lp-grid-bg {
-    background-image:
-      linear-gradient(rgba(255, 255, 255, 0.5) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.5) 1px, transparent 1px);
-    background-size: 60px 60px;
+  /* Section eyebrow/label */
+  .landing-section-eyebrow {
+    @apply text-xs font-semibold uppercase tracking-widest mb-3;
+    color: rgba(52, 211, 153, 0.55);
   }
 
-  /* ── TechBadge — base structure (color set per-instance via style) ── */
+  /* Section main heading */
+  .landing-section-heading {
+    @apply text-3xl md:text-5xl font-bold mb-4;
+    color: #d1fae5;
+  }
+
+  /* Section body text */
+  .landing-section-body {
+    @apply text-sm md:text-base leading-relaxed;
+    color: rgba(236, 253, 245, 0.60);
+  }
+
+  /* User avatar in landing navbar when logged in */
+  .landing-nav-avatar {
+    @apply w-9 h-9 rounded-full flex items-center justify-center font-semibold text-sm text-white;
+    background-color: var(--brand-green-light);
+  }
+
+  /* Scroll hint at bottom of hero */
+  .landing-scroll-hint {
+    @apply absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 transition-colors;
+    color: rgba(255, 255, 255, 0.25);
+  }
+
+  .landing-scroll-hint:hover {
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  .landing-scroll-hint-label {
+    @apply text-xs tracking-widest uppercase;
+  }
+
+
+  /* ─────────────────────────────────────────────────────────────
+     FEATURE CARD — FeatureCard.jsx
+     ───────────────────────────────────────────────────────────── */
+
+  .feature-card {
+    @apply relative flex flex-col gap-4 p-6 rounded-2xl cursor-default;
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(8px);
+  }
+
+  .feature-card-title {
+    @apply font-semibold text-white mb-2 text-base;
+  }
+
+  .feature-card-body {
+    @apply text-sm leading-relaxed;
+    color: rgba(236, 253, 245, 0.60);
+  }
+
+
+  /* ─────────────────────────────────────────────────────────────
+     STEP CARD — StepCard.jsx
+     ───────────────────────────────────────────────────────────── */
+
+  .step-card {
+    @apply flex gap-5 items-start;
+  }
+
+  .step-number {
+    @apply w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm shrink-0 mt-0.5 text-white;
+    background: linear-gradient(135deg, #065f46, #10b981);
+    box-shadow: 0 0 16px rgba(16, 185, 129, 0.35);
+  }
+
+  .step-title {
+    @apply text-white font-semibold text-base mb-1.5;
+  }
+
+  .step-body {
+    @apply text-sm leading-relaxed;
+    color: rgba(236, 253, 245, 0.60);
+  }
+
+
+  /* ─────────────────────────────────────────────────────────────
+     TECH BADGE — TechBadge.jsx
+     ───────────────────────────────────────────────────────────── */
+
+  /* Colour is set per-badge via inline style (only the accent) */
   .tech-badge {
-    border-radius: 9999px;
-    padding: 0.5rem 1rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    cursor: default;
-    user-select: none;
+    @apply px-4 py-2 rounded-full text-sm font-medium cursor-default select-none;
   }
+
+
+  /* ─────────────────────────────────────────────────────────────
+     FOOTER — Footer.jsx
+     ───────────────────────────────────────────────────────────── */
+
+  .footer-root {
+    @apply w-full;
+    background-color: #011a14;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .footer-grid {
+    @apply max-w-6xl mx-auto px-6 py-16 grid grid-cols-2 md:grid-cols-4 gap-10;
+  }
+
+  .footer-brand-col {
+    @apply col-span-2 md:col-span-2;
+  }
+
+  .footer-brand-tagline {
+    @apply text-sm leading-relaxed max-w-xs;
+    color: rgba(236, 253, 245, 0.55);
+  }
+
+  .footer-group-label {
+    @apply text-xs font-semibold uppercase tracking-widest mb-4;
+    color: rgba(52, 211, 153, 0.55);
+  }
+
+  .footer-link {
+    @apply text-sm transition-colors;
+    color: rgba(236, 253, 245, 0.55);
+  }
+
+  .footer-link:hover {
+    color: #d1fae5;
+  }
+
+  .footer-bottom {
+    @apply max-w-6xl mx-auto px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-2;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .footer-copy {
+    @apply text-xs;
+    color: rgba(255, 255, 255, 0.25);
+  }
+
+
+  /* ─────────────────────────────────────────────────────────────
+     PASSWORD STRENGTH BAR — PasswordStrengthBar.jsx
+     ───────────────────────────────────────────────────────────── */
+
+  .strength-track {
+    @apply flex-1 h-1.5 rounded-full overflow-hidden;
+    background-color: var(--border-subtle);
+  }
+
+  .strength-label {
+    @apply text-xs font-medium min-w-[72px] text-right transition-colors duration-300;
+  }
+
+  .strength-tip-item {
+    @apply text-xs flex items-start gap-1;
+    color: var(--text-muted);
+  }
+
+
+  /* ─────────────────────────────────────────────────────────────
+     PROTECTED ROUTE — loading spinner
+     ───────────────────────────────────────────────────────────── */
+
+  .protected-loading {
+    @apply flex items-center justify-center h-screen w-screen;
+    background-color: var(--bg-surface-2);
+  }
+
+  .protected-spinner {
+    @apply w-8 h-8 rounded-full border-4 border-t-transparent animate-spin;
+    border-color: var(--brand-green-light);
+    border-top-color: transparent;
+  }
+
+
+  /* ─────────────────────────────────────────────────────────────
+     ERROR BOUNDARY — ErrorBoundary.jsx
+     ───────────────────────────────────────────────────────────── */
+
+  .error-boundary-root {
+    @apply flex items-center justify-center p-8;
+    min-height: 100vh;
+    min-width: 100vw;
+    background-color: var(--bg-surface);
+  }
+
+  .error-boundary-card {
+    @apply w-full max-w-md rounded-2xl p-8 text-center;
+    background-color: var(--bg-surface-2);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-primary);
+  }
+
+  .error-boundary-icon {
+    @apply w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-5 text-2xl;
+    background-color: var(--color-danger-bg);
+    border: 1px solid var(--color-danger-border);
+  }
+
+  .error-boundary-title {
+    @apply text-lg font-medium mb-2;
+    color: var(--text-primary);
+  }
+
+  .error-boundary-body {
+    @apply text-sm leading-relaxed mb-6;
+    color: var(--text-muted);
+  }
+
+  .error-boundary-pre {
+    @apply rounded-lg p-3 text-xs text-left overflow-x-auto mb-6 whitespace-pre-wrap break-words;
+    background-color: rgba(0, 0, 0, 0.35);
+    color: #f87171;
+  }
+
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   FONT THEME
-   ═══════════════════════════════════════════════════════════════ */
-@theme {
-  --font-inktrap: "Bricolage Grotesque", sans-serif;
-}
+/* end @layer utilities */

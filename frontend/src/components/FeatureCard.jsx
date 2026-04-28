@@ -4,12 +4,9 @@ import { motion } from "framer-motion";
 /**
  * FeatureCard
  * ───────────
- * Props:
- *   icon        {string}  — SVG img src
- *   title       {string}
- *   description {string}
- *   accent      {string}  — CSS hex color for the icon glow / border accent
- *   delay       {number}  — animation stagger delay in seconds
+ * Scroll-triggered fade-in-up, hover lift.
+ * accent colour is the only inline style — it's dynamic per-card
+ * and cannot be expressed as a static CSS class.
  */
 const FeatureCard = ({ icon, title, description, accent = "#10b981", delay = 0 }) => {
     const ref = useRef(null);
@@ -31,15 +28,15 @@ const FeatureCard = ({ icon, title, description, accent = "#10b981", delay = 0 }
             animate={visible ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
             whileHover={{ y: -4, transition: { duration: 0.2 } }}
-            className="relative flex flex-col gap-4 p-6 rounded-2xl cursor-default lp-card"
+            className="feature-card"
         >
-            {/* Top accent line — colour driven by accent prop */}
+            {/* Top accent line — colour is dynamic, must stay inline */}
             <div
                 className="absolute top-0 left-6 right-6 h-px rounded-full"
                 style={{ background: `linear-gradient(90deg, transparent, ${accent}55, transparent)` }}
             />
 
-            {/* Icon container — colour driven by accent prop */}
+            {/* Icon container — accent colour is dynamic */}
             <div
                 className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
                 style={{
@@ -57,8 +54,8 @@ const FeatureCard = ({ icon, title, description, accent = "#10b981", delay = 0 }
 
             {/* Text */}
             <div>
-                <h3 className="font-semibold text-white mb-2 text-base">{title}</h3>
-                <p className="text-sm leading-relaxed text-emerald-100/60">{description}</p>
+                <h3 className="feature-card-title">{title}</h3>
+                <p className="feature-card-body">{description}</p>
             </div>
         </motion.div>
     );

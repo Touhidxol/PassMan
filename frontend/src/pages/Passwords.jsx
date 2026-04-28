@@ -29,8 +29,10 @@ const Passwords = () => {
 
     return (
         <>
+            {/* AddSiteModal manages its own open state via context */}
             <AddSiteModal />
 
+            {/* Password detail card */}
             <PresenceWrapper>
                 {cardOpen && (
                     <Fade>
@@ -44,29 +46,26 @@ const Passwords = () => {
                 )}
             </PresenceWrapper>
 
+            {/* Delete confirmation */}
             {showDeleteConfirm && (
                 <DeleteConfirmModal onCancel={cancelDelete} onConfirm={confirmDelete} />
             )}
 
-            {/* ── Page content ── */}
-            <div className="flex flex-col w-full p-4 md:p-6 max-w-4xl mx-auto">
+            {/* ── Page ─────────────────────────────────────── */}
+            <div className="page-root">
 
-                {/* Header */}
-                <div className="flex items-center my-3 mb-4">
-                    <h1 className="text-3xl sm:text-5xl font-semibold text-primary">
-                        Passwords
-                    </h1>
+                {/* Header row */}
+                <div className="page-header-row">
+                    <h1 className="page-heading">Passwords</h1>
                     <div className="flex-1" />
-                    <button
-                        onClick={openWindow}
-                        className="btn-ghost text-sm text-info border-info"
-                    >
+                    <button onClick={openWindow} className="btn-add">
                         Add
                     </button>
                 </div>
 
-                <p className="text-sm mb-4 text-muted">
-                    Create, save, and manage your passwords so you can easily sign in to sites and apps.
+                <p className="page-subtitle">
+                    Create, save, and manage your passwords so you can easily sign in
+                    to sites and apps.
                 </p>
 
                 {/* Search + Sort */}
@@ -79,10 +78,10 @@ const Passwords = () => {
                     <select
                         value={sortBy}
                         onChange={(e) => setSortBy(e.target.value)}
-                        className="h-10 px-3 rounded-full text-sm outline-none cursor-pointer bg-surface-3 text-primary border border-default"
+                        className="sort-select"
                     >
                         {SORT_OPTIONS.map((o) => (
-                            <option key={o.value} value={o.value} className="bg-surface-2">
+                            <option key={o.value} value={o.value}>
                                 {o.label}
                             </option>
                         ))}
@@ -91,7 +90,7 @@ const Passwords = () => {
 
                 {/* Result count */}
                 {query && (
-                    <p className="text-xs mb-3 text-muted">
+                    <p className="result-count-hint">
                         {results.length === 0
                             ? `No results for "${query}"`
                             : `${results.length} result${results.length !== 1 ? "s" : ""} for "${query}"`
@@ -102,9 +101,9 @@ const Passwords = () => {
                 {/* List */}
                 <div className="flex-1">
                     {loading && !passwords.length ? (
-                        <p className="text-sm text-muted">Loading…</p>
+                        <p className="empty-state">Loading…</p>
                     ) : results.length === 0 && !query ? (
-                        <p className="text-sm text-muted">
+                        <p className="empty-state">
                             No passwords saved yet. Click Add to get started.
                         </p>
                     ) : (
@@ -116,29 +115,25 @@ const Passwords = () => {
                                     className="password-list"
                                 >
                                     <div className="flex items-center gap-3 w-full">
-                                        {/* Site initial badge */}
-                                        <div className="w-9 h-9 flex items-center justify-center rounded-md text-sm font-semibold shrink-0 bg-surface-hover text-secondary">
+                                        <div className="password-list-badge">
                                             {item.site.charAt(0).toUpperCase()}
                                         </div>
-
                                         <div className="flex-1 min-w-0">
-                                            <p className="text-sm font-medium truncate text-primary">
-                                                {item.site}
-                                            </p>
+                                            <p className="password-list-site">{item.site}</p>
                                             {item.username && (
-                                                <p className="text-xs truncate text-muted">
+                                                <p className="password-list-username">
                                                     {item.username}
                                                 </p>
                                             )}
                                         </div>
-
-                                        <span className="text-muted">›</span>
+                                        <span className="password-list-chevron">›</span>
                                     </div>
                                 </li>
                             ))}
                         </ul>
                     )}
                 </div>
+
             </div>
         </>
     );

@@ -3,10 +3,9 @@ import { motion } from "framer-motion";
 /**
  * TechBadge
  * ─────────
- * Pill chip for the Tech Stack section.
- * The `color` prop is per-instance, so we keep it as a style
- * for the text + border/background tints — everything structural
- * uses the `tech-badge` utility class.
+ * Animated pill for the Tech Stack section.
+ * The per-badge accent colour cannot be a static class, so it
+ * stays as an inline style — everything else uses the class.
  */
 const TechBadge = ({ label, color = "#10b981", delay = 0 }) => (
     <motion.div

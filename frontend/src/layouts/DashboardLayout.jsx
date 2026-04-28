@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
-import { AnimatePresence } from "framer-motion";
 import Navbar from "../components/DashboardNavbar";
 import Sidebar from "../components/Sidebar";
 import MobileSidebar from "../components/MobileSidebar";
@@ -8,12 +7,10 @@ import ErrorBoundary from "../components/ErrorBoundary";
 import { Fade, SlideLeft, PresenceWrapper } from "../animations";
 
 const PageErrorFallback = (
-    <div className="flex flex-col items-center justify-center h-full p-12 text-center">
-        <div className="w-12 h-12 rounded-full flex items-center justify-center text-xl mb-4 bg-danger-subtle border border-danger-subtle">
-            ⚠
-        </div>
-        <p className="font-medium mb-1 text-primary">This page crashed</p>
-        <p className="text-sm mb-4 text-muted">
+    <div className="dashboard-error-card">
+        <div className="dashboard-error-icon">⚠</div>
+        <p className="dashboard-error-title">This page crashed</p>
+        <p className="dashboard-error-body">
             The rest of the app is fine. Try refreshing this page.
         </p>
         <button
@@ -29,20 +26,20 @@ const DashboardLayout = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     return (
-        <div className="flex w-screen h-screen overflow-hidden bg-dashboard">
+        <div className="dashboard-shell">
 
-            {/* ── Desktop Sidebar ── */}
-            <div className="hidden md:block shrink-0">
+            {/* ── Desktop Sidebar ─────────────────────────── */}
+            <div className="hidden md:block">
                 <Sidebar />
             </div>
 
-            {/* ── Mobile Sidebar Overlay ── */}
+            {/* ── Mobile Sidebar Overlay ───────────────────── */}
             <PresenceWrapper>
                 {sidebarOpen && (
                     <Fade>
                         <div
                             onClick={() => setSidebarOpen(false)}
-                            className="md:hidden fixed inset-0 z-50 bg-overlay backdrop-sidebar"
+                            className="md:hidden fixed inset-0 z-50 modal-backdrop"
                         >
                             <SlideLeft>
                                 <MobileSidebar
@@ -55,16 +52,14 @@ const DashboardLayout = () => {
                 )}
             </PresenceWrapper>
 
-            {/* ── Main column ── */}
-            <div className="flex flex-col flex-1 h-screen overflow-hidden min-w-0">
+            {/* ── Main column ──────────────────────────────── */}
+            <div className="dashboard-main">
 
                 {/* Navbar */}
-                <div className="shrink-0 bg-navbar border-b border-navbar">
-                    <Navbar openSidebar={() => setSidebarOpen(true)} />
-                </div>
+                <Navbar openSidebar={() => setSidebarOpen(true)} />
 
                 {/* Page content */}
-                <div className="flex-1 overflow-y-auto min-h-0">
+                <div className="dashboard-outlet">
                     <ErrorBoundary fallback={PageErrorFallback}>
                         <Outlet />
                     </ErrorBoundary>

@@ -54,8 +54,8 @@ const PasswordGeneratorModal = ({ isOpen, onClose }) => {
                     }`}
             >
                 <span
-                    className="absolute top-0.5 w-4 h-4 rounded-full bg-white shadow-sm transition-all duration-200"
-                    style={{ left: checked ? "calc(100% - 18px)" : "2px" }}
+                    className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white shadow-sm transform transition-transform duration-200 ${checked ? "translate-x-4" : "translate-x-0"
+                        }`}
                 />
             </div>
             <span className="text-sm text-white/60 group-hover:text-white/80 transition-colors">
@@ -137,8 +137,8 @@ const PasswordGeneratorModal = ({ isOpen, onClose }) => {
                                                 onClick={handleCopy}
                                                 title="Copy"
                                                 className={`p-2 rounded-lg transition-colors ${copied
-                                                        ? "text-emerald-400 bg-emerald-500/10"
-                                                        : "text-white/30 hover:text-white/70 hover:bg-white/8"
+                                                    ? "text-emerald-400 bg-emerald-500/10"
+                                                    : "text-white/30 hover:text-white/70 hover:bg-white/8"
                                                     }`}
                                             >
                                                 {copied ? (
