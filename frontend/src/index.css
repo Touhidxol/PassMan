@@ -1218,12 +1218,11 @@ button:focus-visible {
   }
 
   .landing-nav-link {
-    @apply text-sm font-medium transition-colors;
-    color: rgba(255, 255, 255, 0.55);
+    @apply text-sm font-medium transition-colors !text-[#ffffffaa];
   }
 
   .landing-nav-link:hover {
-    color: #fff;
+    @apply !text-[#ffff];
   }
 
   /* Eyebrow pill badge in hero */
