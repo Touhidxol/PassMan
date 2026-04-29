@@ -1,31 +1,21 @@
-import React from 'react'
+/**
+ * InputTemplate
+ * ─────────────
+ * Floating-label wrapper used on all auth pages.
+ * The label rises above the input when focused or filled.
+ *
+ * Props:
+ *   id       {string}  — matches the <input id> and <label htmlFor>
+ *   title    {string}  — label text
+ *   children           — the <input> element (must include className="input-template peer")
+ */
+const InputTemplate = ({ id, title, children }) => (
+    <div className="auth-field-wrap">
+        {children}
+        <label htmlFor={id} className="auth-label">
+            {title}
+        </label>
+    </div>
+);
 
-const InputTemplate = ({ id, title, children }) => {
-    return (
-        <div className='relative w-full my-5'>
-            {children}
-            <label
-                htmlFor={id}
-                className="
-                    absolute left-3 top-0
-                    bg-[#002e22] px-2
-                    text-gray-400 text-sm
-                    transition-all
-
-                    peer-placeholder-shown:top-3
-                    peer-placeholder-shown:text-base
-
-                    peer-focus:-top-3
-                    peer-focus:text-sm
-                    peer-focus:text-lime-300
-
-                    peer-not-placeholder-shown:-top-3
-                    peer-not-placeholder-shown:text-sm"
-            >
-                {title}
-            </label>
-        </div>
-    )
-}
-
-export default InputTemplate
+export default InputTemplate;

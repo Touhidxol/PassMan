@@ -2,109 +2,98 @@ import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { checkLoggedin, login, logout } from "../api/users";
 import InputTemplate from "../components/InputTemplate";
-import ProfileShort from "../components/ProfileShort";
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
 
 const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
-    const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
-
     const [user, setUser] = useState(null);
+
+    /* Check if already logged in */
+    useEffect(() => {
+        checkLoggedin()
+            .then((data) => setUser(data || null))
+            .catch(() => { });
+    }, []);
 
     const handleLogout = async () => {
         await logout();
         setUser(null);
     };
-    //------------check if any account is already logged in------------
-    useEffect(() => {
-        const checkUser = async () => {
-
-            try {
-                const data = await checkLoggedin();
-                setUser(data || null);
-            } catch (err) {
-                console.log(err);
-            }
-        };
-
-        checkUser();
-    }, []);
-    //-----------------------------------------------------------------
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         setLoading(true);
-        setError(null);
-
         try {
-            const credentials = JSON.stringify({
-                "email": email,
-                "password": password
-            });
-
-            const data = await login(credentials);
-
+            const data = await login(JSON.stringify({ email, password }));
             setEmail("");
             setPassword("");
-            toast.success(data.message || "Successfully Logged in");
+            toast.success(data.message || "Successfully logged in");
             navigate("/dashboard");
-
         } catch (err) {
-            const message = err.message || "Something went wrong";
-            setError(message);
-            toast.error(message);
+            toast.error(err.message || "Something went wrong");
         } finally {
             setLoading(false);
         }
-
     };
 
     return (
-        <div className="min-h-screen w-screen flex items-center justify-center bg-[#002e22] sm:bg-gradient-to-br from-emerald-800 to-emerald-950">
-            {user && <div className="[@media(max-height:725px)]:hidden">
-                <ProfileShort user={user} onLogout={handleLogout} />
-            </div>}
+        <div className="auth-shell sm:bg-gradient-to-br sm:from-emerald-800 sm:to-emerald-950">
 
-            <div className="bg-[#002e22] text-white p-8 sm:rounded-xl sm:shadow-xl w-full sm:max-w-md">
+            {/* Profile card — shown when a session already exists */}
+            {user && (
+                <div className="auth-profile-card">
+                    <div className="auth-profile-avatar">
+                        {user.name?.charAt(0).toUpperCase()}
+                    </div>
+                    <div className="flex flex-col text-sm">
+                        <span className="auth-profile-name">{user.name}</span>
+                        <span className="auth-profile-email">{user.email}</span>
+                    </div>
+                    <button
+                        onClick={handleLogout}
+                        className="btn-danger ml-4 text-xs"
+                    >
+                        Logout
+                    </button>
+                </div>
+            )}
 
-                <h2 className="text-2xl font-bold text-center mb-6">
-                    Login to your Account
-                </h2>
-                <p className="text-center text-gray-200 px-8 mb-10">
+            <div className="auth-card">
+                <h2 className="auth-card-title">Login to your Account</h2>
+                <p className="auth-card-subtitle">
                     Sign in to securely access your stored passwords.
                 </p>
 
                 {user ? (
+                    /* Already logged in — offer to continue or switch */
                     <>
                         <button
                             onClick={handleLogout}
                             disabled={loading}
-                            className="w-full bg-green-600 text-white p-3 rounded-lg hover:bg-green-700 transition my-3"
+                            className="auth-submit-btn my-3"
                         >
-                            {loading ? "Please wait..." : "Login to another Account"}
+                            {loading ? "Please wait…" : "Login to another Account"}
                         </button>
 
-                        <p className="text-center">or</p>
+                        <p className="text-center text-white/50 text-sm">or</p>
 
-                        <Link to="/dashboard" >
+                        <Link to="/dashboard">
                             <button
                                 disabled={loading}
-                                className="w-full bg-orange-600 text-white p-3 rounded-lg hover:bg-orange-700 transition my-3"
+                                className="w-full p-3 rounded-lg text-white transition-colors my-3"
+                                style={{ backgroundColor: "#c2410c" }}
                             >
                                 Continue as {user.name}
                             </button>
                         </Link>
                     </>
                 ) : (
-
                     <form onSubmit={handleSubmit} className="relative">
 
-                        <InputTemplate title="Email" id='email'>
+                        <InputTemplate title="Email" id="email">
                             <input
                                 type="email"
                                 id="email"
@@ -116,7 +105,7 @@ const Login = () => {
                             />
                         </InputTemplate>
 
-                        <InputTemplate title="Password" id='password'>
+                        <InputTemplate title="Password" id="password">
                             <input
                                 type="password"
                                 id="password"
@@ -128,26 +117,29 @@ const Login = () => {
                             />
                         </InputTemplate>
 
-                        <Link className="!text-white/70 text-right text-xs absolute right-2 -translate-y-4" to="/forgot-password">Forgot password?</Link>
+                        <Link
+                            to="/forgot-password"
+                            className="auth-link-muted absolute right-2 -translate-y-4 hover:text-white transition-colors"
+                        >
+                            Forgot password?
+                        </Link>
 
                         <button
                             disabled={loading}
-                            className="w-full bg-green-600 text-white p-3 rounded-lg hover:bg-green-700 transition my-3"
+                            className="auth-submit-btn my-3"
                         >
-                            {loading ? "Please wait..." : "Login"}
+                            {loading ? "Please wait…" : "Login"}
                         </button>
 
                     </form>
-                )
-                }
+                )}
 
-                <p className="text-center text-sm mt-4">
+                <p className="text-center text-sm mt-4 text-white/60">
                     Don't have an account?{" "}
-                    <a href="/register" className="!text-lime-300 hover:underline">
+                    <Link to="/register" className="auth-link-brand hover:underline">
                         Register
-                    </a>
+                    </Link>
                 </p>
-
             </div>
 
         </div>

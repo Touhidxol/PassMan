@@ -8,65 +8,45 @@ import PasswordStrengthBar from "../components/PasswordStrengthBar";
 const Register = () => {
     const navigate = useNavigate();
 
-    const [username, setUsername] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [username,        setUsername]        = useState("");
+    const [email,           setEmail]           = useState("");
+    const [password,        setPassword]        = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(false);
+    const [loading,         setLoading]         = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (password !== confirmPassword) {
-            setError("Passwords do not match");
             toast.error("Passwords do not match");
-            return; // stop execution
+            return;
         }
 
         setLoading(true);
-        setError(null);
-
         try {
-            const credentials = JSON.stringify({
-                "name": username,
-                "email": email,
-                "password": password
-            });
-
-            await register(credentials);
-
-            setEmail("");
-            setPassword("");
-            setConfirmPassword("");
-            setUsername("");
+            await register(JSON.stringify({ name: username, email, password }));
+            setEmail(""); setPassword(""); setConfirmPassword(""); setUsername("");
             toast.success("Successfully Registered");
             navigate("/dashboard");
-
         } catch (err) {
-            const message = err.message || "Something went wrong";
-            setError(message);
-            toast.error(message);
+            toast.error(err.message || "Something went wrong");
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <div className="min-h-screen w-screen flex items-center justify-center bg-[#002e22] sm:bg-gradient-to-br from-emerald-800 to-emerald-950">
+        <div className="auth-shell sm:bg-gradient-to-br sm:from-emerald-800 sm:to-emerald-950">
+            <div className="auth-card">
 
-            <div className="bg-[#002e22] text-white p-8 sm:rounded-xl sm:shadow-xl w-full sm:max-w-md">
-
-                <h2 className="text-2xl font-bold text-center mb-6">
-                    Create Account
-                </h2>
-                <p className="text-center text-gray-200 px-8 mb-10">
+                <h2 className="auth-card-title">Create Account</h2>
+                <p className="auth-card-subtitle">
                     Create a secure account to store and manage all your passwords in one place.
                 </p>
 
-                <form onSubmit={handleSubmit} className="">
-                    <InputTemplate title="Username" id='username'>
+                <form onSubmit={handleSubmit}>
+
+                    <InputTemplate title="Username" id="username">
                         <input
                             type="text"
                             id="username"
@@ -78,7 +58,7 @@ const Register = () => {
                         />
                     </InputTemplate>
 
-                    <InputTemplate title="Email" id='email'>
+                    <InputTemplate title="Email" id="email">
                         <input
                             type="email"
                             id="email"
@@ -90,7 +70,7 @@ const Register = () => {
                         />
                     </InputTemplate>
 
-                    <InputTemplate title="Password" id='password'>
+                    <InputTemplate title="Password" id="password">
                         <input
                             type="password"
                             id="password"
@@ -101,15 +81,14 @@ const Register = () => {
                             required
                         />
                     </InputTemplate>
-                    
+
                     <PasswordStrengthBar
                         password={password}
                         showTips
                         className="-mt-3 mb-4 px-1"
                     />
 
-
-                    <InputTemplate title="Confirm Password" id='confirmPassword'>
+                    <InputTemplate title="Confirm Password" id="confirmPassword">
                         <input
                             type="password"
                             id="confirmPassword"
@@ -123,26 +102,21 @@ const Register = () => {
 
                     <button
                         disabled={loading}
-                        className="w-full bg-green-600 text-white p-3 rounded-lg hover:bg-green-700 transition my-5"
+                        className="auth-submit-btn my-5"
                     >
-                        {loading ? "Creating account..." : "Register"}
+                        {loading ? "Creating account…" : "Register"}
                     </button>
-
-                    {error && (
-                        <p className="text-red-500 text-sm text-center">{error}</p>
-                    )}
 
                 </form>
 
-                <p className="text-center text-sm mt-4">
+                <p className="text-center text-sm mt-4 text-white/60">
                     Already have an account?{" "}
-                    <a href="/login" className="!text-lime-300 hover:underline">
+                    <Link to="/login" className="auth-link-brand hover:underline">
                         Login
-                    </a>
+                    </Link>
                 </p>
 
             </div>
-
         </div>
     );
 };

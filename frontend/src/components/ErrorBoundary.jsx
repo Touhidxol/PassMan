@@ -11,7 +11,6 @@ class ErrorBoundary extends Component {
     }
 
     componentDidCatch(error, info) {
-        // In production send this to a service like Sentry
         console.error("ErrorBoundary caught:", error, info.componentStack);
     }
 
@@ -26,104 +25,37 @@ class ErrorBoundary extends Component {
         if (fallback) return fallback;
 
         return (
-            <div
-                style={{
-                    minHeight: "100vh",
-                    minWidth: "100vw",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    background: "#1a1a1a",
-                    padding: "2rem",
-                }}
-            >
-                <div
-                    style={{
-                        maxWidth: 460,
-                        width: "100%",
-                        background: "#242424",
-                        border: "1px solid rgba(255,255,255,0.1)",
-                        borderRadius: 16,
-                        padding: "2rem",
-                        textAlign: "center",
-                        color: "#fff",
-                    }}
-                >
-                    <div
-                        style={{
-                            width: 56,
-                            height: 56,
-                            borderRadius: "50%",
-                            background: "rgba(239,68,68,0.15)",
-                            border: "1px solid rgba(239,68,68,0.3)",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            margin: "0 auto 1.25rem",
-                            fontSize: 24,
-                        }}
-                    >
-                        ⚠
-                    </div>
+            <div className="error-boundary-root">
+                <div className="error-boundary-card">
 
-                    <h2 style={{ fontSize: 18, fontWeight: 500, marginBottom: 8 }}>
-                        Something went wrong
-                    </h2>
-                    <p style={{ fontSize: 13, color: "rgba(255,255,255,0.5)", marginBottom: "1.5rem", lineHeight: 1.6 }}>
+                    <div className="error-boundary-icon">⚠</div>
+
+                    <h2 className="error-boundary-title">Something went wrong</h2>
+
+                    <p className="error-boundary-body">
                         An unexpected error occurred in this part of the app.
                         Your passwords are safe — this is just a UI crash.
                     </p>
 
-                    {/* Show error detail in development */}
+                    {/* Dev-only error detail */}
                     {import.meta.env.DEV && this.state.error && (
-                        <pre
-                            style={{
-                                background: "rgba(0,0,0,0.4)",
-                                borderRadius: 8,
-                                padding: "0.75rem",
-                                fontSize: 11,
-                                color: "#f87171",
-                                textAlign: "left",
-                                overflowX: "auto",
-                                marginBottom: "1.5rem",
-                                whiteSpace: "pre-wrap",
-                                wordBreak: "break-word",
-                            }}
-                        >
+                        <pre className="error-boundary-pre">
                             {this.state.error.message}
                         </pre>
                     )}
 
-                    <div style={{ display: "flex", gap: 8, justifyContent: "center" }}>
-                        <button
-                            onClick={this.handleReset}
-                            style={{
-                                padding: "0.5rem 1.25rem",
-                                borderRadius: 999,
-                                background: "rgba(255,255,255,0.08)",
-                                border: "1px solid rgba(255,255,255,0.2)",
-                                color: "#fff",
-                                fontSize: 13,
-                                cursor: "pointer",
-                            }}
-                        >
+                    <div className="flex gap-2 justify-center">
+                        <button onClick={this.handleReset} className="btn-ghost text-sm">
                             Try again
                         </button>
                         <button
                             onClick={() => (window.location.href = "/dashboard")}
-                            style={{
-                                padding: "0.5rem 1.25rem",
-                                borderRadius: 999,
-                                background: "#16a34a",
-                                border: "none",
-                                color: "#fff",
-                                fontSize: 13,
-                                cursor: "pointer",
-                            }}
+                            className="btn-success text-sm"
                         >
                             Go to dashboard
                         </button>
                     </div>
+
                 </div>
             </div>
         );
