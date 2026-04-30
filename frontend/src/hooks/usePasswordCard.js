@@ -1,8 +1,7 @@
-// hooks/usePasswordCard.js
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 
-export const usePasswordCard = ({ passwords, removePassword, editPassword }) => { // 👈 accept as params
+export const usePasswordCard = ({ passwords, removePassword, editPassword }) => {
 
     const [cardOpen, setCardOpen] = useState(null);
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
