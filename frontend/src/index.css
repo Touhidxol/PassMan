@@ -1082,32 +1082,116 @@ button:focus-visible {
 
 
   /* ─────────────────────────────────────────────────────────────
-     AUTH PAGES — Login.jsx, Register.jsx, ForgotPassword.jsx
-     Auth pages intentionally stay dark even in light OS mode.
-     ───────────────────────────────────────────────────────────── */
+   AUTH PAGES — Login.jsx, Register.jsx, ForgotPassword.jsx
+   Auth pages intentionally stay dark even in light OS mode.
+   ───────────────────────────────────────────────────────────── */
 
-  /* Full-page centering shell */
+  /* Full-page shell */
   .auth-shell {
-    @apply min-h-screen w-screen flex items-center justify-center;
-    background-color: var(--auth-bg);
+    @apply relative min-h-screen w-screen flex items-center justify-center overflow-hidden;
+    background-color: #020f0a;
   }
 
-  /* Card (responsive: edge-to-edge on mobile, rounded on sm+) */
+  /* Subtle dot grid */
+  .auth-bg-grid {
+    @apply absolute inset-0 pointer-events-none;
+    background-image: radial-gradient(rgba(52, 211, 153, 0.12) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  /* Radial emerald glow */
+  .auth-bg-glow {
+    @apply absolute pointer-events-none;
+    width: 600px;
+    height: 600px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+    background: radial-gradient(ellipse at center, rgba(16, 185, 129, 0.18) 0%, transparent 65%);
+    filter: blur(32px);
+  }
+
+  /* Card */
   .auth-card {
-    @apply w-full sm:max-w-md p-8 sm:rounded-xl;
-    background-color: var(--auth-bg);
+    @apply relative z-10 w-full mx-4 px-7 py-8 rounded-2xl;
+    max-width: 400px;
+    background: rgba(255, 255, 255, 0.035);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow:
+      0 0 0 1px rgba(52, 211, 153, 0.08),
+      0 24px 64px rgba(0, 0, 0, 0.7),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
     color: #fff;
-    /* Subtle depth on larger screens */
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06);
   }
 
-  .auth-card-title {
-    @apply text-2xl font-bold text-center mb-6;
+  /* Logo mark circle */
+  .auth-logo-mark {
+    @apply w-11 h-11 rounded-xl flex items-center justify-center mx-auto mb-5;
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(52, 211, 153, 0.25);
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
   }
 
-  .auth-card-subtitle {
-    @apply text-center text-sm mb-10;
-    color: rgba(255, 255, 255, 0.60);
+  .auth-heading {
+    @apply !text-2xl font-bold text-center text-white mb-1;
+  }
+
+  .auth-subheading {
+    @apply text-center text-sm mb-5;
+    color: rgba(255, 255, 255, 0.45);
+    font-size: 0.82rem;
+  }
+
+  /* Primary CTA button */
+  .auth-btn-primary {
+    @apply w-full py-3 rounded-xl text-sm font-semibold text-white transition-all duration-200;
+    background: linear-gradient(135deg, #059669, #047857);
+    border: 1px solid rgba(52, 211, 153, 0.25);
+    box-shadow: 0 4px 16px rgba(5, 150, 105, 0.35);
+    letter-spacing: 0.01em;
+  }
+
+  .auth-btn-primary:hover:not(:disabled) {
+    background: linear-gradient(135deg, #10b981, #059669);
+    box-shadow: 0 6px 24px rgba(16, 185, 129, 0.45);
+    transform: translateY(-1px);
+  }
+
+  .auth-btn-primary:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  .auth-btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* Ghost/secondary button */
+  .auth-btn-ghost {
+    @apply w-full py-3 rounded-xl text-sm font-medium transition-all duration-200;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  .auth-btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.16);
+    color: rgba(255, 255, 255, 0.80);
+  }
+
+  /* Show/hide password eye icon */
+  .auth-eye-btn {
+    @apply absolute right-3 flex items-center justify-center h-full;
+    top: 0;
+    color: rgba(255, 255, 255, 0.30);
+    transition: color 0.15s;
+  }
+
+  .auth-eye-btn:hover {
+    color: rgba(255, 255, 255, 0.65);
   }
 
   /* Floating-label input wrapper */
@@ -1115,73 +1199,195 @@ button:focus-visible {
     @apply relative w-full my-5;
   }
 
-  /* The actual input — always dark background on auth pages */
+  /* The actual input */
   .input-template {
-    @apply w-full border rounded-md px-3 pt-3 pb-3 text-sm focus:outline-none;
-    border-color: rgba(255, 255, 255, 0.25);
-    background: transparent;
+    @apply w-full rounded-xl px-4 pt-5 pb-3 text-sm focus:outline-none transition-all duration-200;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.04);
     color: #fff;
-    transition: border-color var(--transition-fast);
+    caret-color: #34d399;
   }
 
   .input-template:focus {
-    border-color: var(--brand-lime);
+    border-color: rgba(52, 211, 153, 0.55);
+    background: rgba(255, 255, 255, 0.06);
+    box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.08);
   }
 
-  /* Floating label that sits inside the wrapper */
+  /* Floating label */
   .auth-label {
-    @apply absolute left-3 top-0 px-2 text-gray-400 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-focus:-top-3 peer-focus:text-sm peer-focus:text-lime-300 peer-not-placeholder-shown:-top-3 peer-not-placeholder-shown:text-sm;
-    background-color: var(--input-label-bg);
+    @apply absolute left-4 text-sm transition-all duration-200 pointer-events-none;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255, 255, 255, 0.35);
+
+    /* When input has content or is focused — rise above */
+    .peer:focus~&,
+    .peer:not(:placeholder-shown)~& {
+      top: 7px;
+      transform: translateY(0);
+      font-size: 0.65rem;
+      color: rgba(52, 211, 153, 0.75);
+      letter-spacing: 0.03em;
+    }
   }
 
-  /* Primary submit button on auth pages */
-  .auth-submit-btn {
-    @apply w-full p-3 rounded-lg text-white transition-colors;
-    background-color: #16a34a;
+  /* Tailwind v4 peer variant fallback (the above nested syntax works in v4) */
+  .peer:focus~.auth-label,
+  .peer:not(:placeholder-shown)~.auth-label {
+    top: 7px;
+    transform: translateY(0);
+    font-size: 0.65rem;
+    color: rgba(52, 211, 153, 0.75);
+    letter-spacing: 0.03em;
   }
 
-  .auth-submit-btn:hover {
-    background-color: #15803d;
+  /* Small muted link (forgot password) */
+  .auth-link-small {
+    @apply text-xs transition-colors;
+    color: rgba(255, 255, 255, 0.35);
   }
 
-  .auth-submit-btn:disabled {
-    opacity: 0.65;
-    cursor: not-allowed;
+  .auth-link-small:hover {
+    color: rgba(255, 255, 255, 0.70);
   }
 
-  /* "Forgot password" / secondary link */
-  .auth-link-muted {
-    @apply text-xs;
-    color: rgba(255, 255, 255, 0.50);
+  /* Accent link (register / login) */
+  .auth-link-accent {
+    @apply font-medium transition-colors;
+    color: #34d399;
   }
 
-  .auth-link-brand {
-    color: var(--brand-lime);
+  .auth-link-accent:hover {
+    color: #6ee7b7;
   }
 
-  /* Profile-short card shown when already logged in */
-  .auth-profile-card {
-    @apply absolute top-6 left-1/2 -translate-x-1/2 rounded-xl px-4 py-3 shadow-lg flex items-center gap-4;
-    background-color: rgba(6, 95, 70, 0.80);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(16, 185, 129, 0.30);
+  /* Footer text under form */
+  .auth-footer-text {
+    @apply text-center text-xs pt-4;
+    color: rgba(255, 255, 255, 0.35);
   }
 
-  .auth-profile-avatar {
-    @apply w-10 h-10 rounded-full flex items-center justify-center font-semibold text-white;
-    background-color: var(--brand-green-light);
+  /* Loading spinner inside button */
+  .auth-spinner {
+    @apply inline-block w-4 h-4 rounded-full border-2 border-t-transparent animate-spin;
+    border-color: rgba(255, 255, 255, 0.4);
+    border-top-color: transparent;
   }
 
-  .auth-profile-name {
-    @apply font-semibold text-sm;
+  /* Session pill (login page when already signed in) */
+  .auth-session-pill {
+    @apply absolute top-5 left-1/2 flex items-center gap-3 px-4 py-2.5 rounded-full z-20;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    backdrop-filter: blur(12px);
+  }
+
+  .auth-session-avatar {
+    @apply w-7 h-7 rounded-full flex items-center justify-center font-semibold text-sm text-white shrink-0;
+    background: linear-gradient(135deg, #059669, #047857);
+  }
+
+  .auth-session-logout {
+    @apply text-xs px-3 py-1 rounded-full transition-colors;
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    color: #fca5a5;
+  }
+
+  .auth-session-logout:hover {
+    background: rgba(239, 68, 68, 0.25);
+  }
+
+
+  /* ─────────────────────────────────────────────────────────────
+     OTP INPUT — ForgotPassword.jsx
+     ───────────────────────────────────────────────────────────── */
+
+  .otp-row {
+    @apply flex items-center justify-center gap-3 my-2;
+  }
+
+  .otp-row-error .otp-box {
+    border-color: rgba(239, 68, 68, 0.55);
+    animation: shake 0.45s ease;
+  }
+
+  .otp-box {
+    @apply w-11 h-14 rounded-xl text-center text-xl font-bold text-white outline-none transition-all duration-150 select-none;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
+    caret-color: #34d399;
+  }
+
+  .otp-box:focus {
+    border-color: rgba(52, 211, 153, 0.60);
+    background: rgba(52, 211, 153, 0.06);
+    box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.10);
+  }
+
+  .otp-box-filled {
+    border-color: rgba(52, 211, 153, 0.40);
+    background: rgba(52, 211, 153, 0.07);
+    color: #6ee7b7;
+  }
+
+
+  /* ─────────────────────────────────────────────────────────────
+     STEP INDICATOR — ForgotPassword.jsx
+     ───────────────────────────────────────────────────────────── */
+
+  .auth-steps {
+    @apply flex items-center justify-center gap-0 mb-6 mt-1;
+  }
+
+  .auth-step-item {
+    @apply flex items-center gap-0;
+  }
+
+  .auth-step-dot {
+    @apply w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold transition-all duration-300 shrink-0;
+  }
+
+  .auth-step-active {
+    background: linear-gradient(135deg, #059669, #047857);
     color: #fff;
+    box-shadow: 0 0 12px rgba(16, 185, 129, 0.5);
   }
 
-  .auth-profile-email {
-    @apply text-xs;
-    color: rgba(255, 255, 255, 0.55);
+  .auth-step-done {
+    background: rgba(52, 211, 153, 0.15);
+    border: 1px solid rgba(52, 211, 153, 0.4);
+    color: #34d399;
   }
 
+  .auth-step-idle {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    color: rgba(255, 255, 255, 0.30);
+  }
+
+  .auth-step-label {
+    @apply text-xs mx-1.5;
+    color: rgba(255, 255, 255, 0.30);
+    white-space: nowrap;
+  }
+
+  .auth-step-label-active {
+    color: rgba(255, 255, 255, 0.80);
+    font-weight: 500;
+  }
+
+  .auth-step-line {
+    @apply h-px w-6 mx-1;
+    background: rgba(255, 255, 255, 0.10);
+    transition: background 0.3s;
+  }
+
+  .auth-step-line-done {
+    background: rgba(52, 211, 153, 0.35);
+  }
 
   /* ─────────────────────────────────────────────────────────────
      LANDING PAGE — Home.jsx

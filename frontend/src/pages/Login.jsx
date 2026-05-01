@@ -10,8 +10,8 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const [user, setUser] = useState(null);
+    const [showPassword, setShowPassword] = useState(false);
 
-    /* Check if already logged in */
     useEffect(() => {
         checkLoggedin()
             .then((data) => setUser(data || null))
@@ -40,60 +40,54 @@ const Login = () => {
     };
 
     return (
-        <div className="auth-shell sm:bg-gradient-to-br sm:from-emerald-800 sm:to-emerald-950">
+        <div className="auth-shell">
+            {/* Background grid + glow */}
+            <div className="auth-bg-grid" />
+            <div className="auth-bg-glow" />
 
-            {/* Profile card — shown when a session already exists */}
+            {/* Already-logged-in pill */}
             {user && (
-                <div className="auth-profile-card">
-                    <div className="auth-profile-avatar">
+                <div className="auth-session-pill">
+                    <div className="auth-session-avatar">
                         {user.name?.charAt(0).toUpperCase()}
                     </div>
-                    <div className="flex flex-col text-sm">
-                        <span className="auth-profile-name">{user.name}</span>
-                        <span className="auth-profile-email">{user.email}</span>
+                    <div className="flex flex-col text-sm leading-tight">
+                        <span className="font-semibold text-white">{user.name}</span>
+                        <span style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.72rem" }}>{user.email}</span>
                     </div>
-                    <button
-                        onClick={handleLogout}
-                        className="btn-danger ml-4 text-xs"
-                    >
-                        Logout
+                    <button onClick={handleLogout} className="auth-session-logout">
+                        Sign out
                     </button>
                 </div>
             )}
 
             <div className="auth-card">
-                <h2 className="auth-card-title">Login to your Account</h2>
-                <p className="auth-card-subtitle">
-                    Sign in to securely access your stored passwords.
-                </p>
+                {/* Logo mark */}
+                <div className="auth-logo-mark">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#34d399" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" />
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                    </svg>
+                </div>
+
+                <h1 className="auth-heading">Welcome back</h1>
+                <p className="auth-subheading">Sign in to your secure vault</p>
 
                 {user ? (
-                    /* Already logged in — offer to continue or switch */
-                    <>
+                    <div className="space-y-3 mt-6">
                         <button
-                            onClick={handleLogout}
-                            disabled={loading}
-                            className="auth-submit-btn my-3"
+                            onClick={() => navigate("/dashboard")}
+                            className="auth-btn-primary"
                         >
-                            {loading ? "Please wait…" : "Login to another Account"}
+                            Continue as {user.name}
                         </button>
-
-                        <p className="text-center text-white/50 text-sm">or</p>
-
-                        <Link to="/dashboard">
-                            <button
-                                disabled={loading}
-                                className="w-full p-3 rounded-lg text-white transition-colors my-3"
-                                style={{ backgroundColor: "#c2410c" }}
-                            >
-                                Continue as {user.name}
-                            </button>
-                        </Link>
-                    </>
+                        <button onClick={handleLogout} className="auth-btn-ghost">
+                            Use a different account
+                        </button>
+                    </div>
                 ) : (
-                    <form onSubmit={handleSubmit} className="relative">
-
-                        <InputTemplate title="Email" id="email">
+                    <form onSubmit={handleSubmit} className="mt-6 space-y-1">
+                        <InputTemplate title="Email address" id="email">
                             <input
                                 type="email"
                                 id="email"
@@ -102,46 +96,69 @@ const Login = () => {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
+                                autoComplete="email"
                             />
                         </InputTemplate>
 
-                        <InputTemplate title="Password" id="password">
-                            <input
-                                type="password"
-                                id="password"
-                                placeholder=" "
-                                className="input-template peer"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                            />
-                        </InputTemplate>
+                        <div className="relative">
+                            <InputTemplate title="Password" id="password">
+                                <input
+                                    type={showPassword ? "text" : "password"}
+                                    id="password"
+                                    placeholder=" "
+                                    className="input-template peer pr-12"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required
+                                    autoComplete="current-password"
+                                />
+                            </InputTemplate>
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(v => !v)}
+                                className="auth-eye-btn"
+                                tabIndex={-1}
+                            >
+                                {showPassword ? (
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+                                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+                                        <line x1="1" y1="1" x2="23" y2="23" />
+                                    </svg>
+                                ) : (
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                        <circle cx="12" cy="12" r="3" />
+                                    </svg>
+                                )}
+                            </button>
+                        </div>
 
-                        <Link
-                            to="/forgot-password"
-                            className="auth-link-muted absolute right-2 -translate-y-4 hover:text-white transition-colors"
-                        >
-                            Forgot password?
-                        </Link>
+                        <div className="flex justify-end pt-1 pb-2">
+                            <Link to="/forgot-password" className="auth-link-small">
+                                Forgot password?
+                            </Link>
+                        </div>
 
                         <button
+                            type="submit"
                             disabled={loading}
-                            className="auth-submit-btn my-3"
+                            className="auth-btn-primary"
                         >
-                            {loading ? "Please wait…" : "Login"}
+                            {loading ? (
+                                <span className="flex items-center justify-center gap-2">
+                                    <span className="auth-spinner" />
+                                    Signing in…
+                                </span>
+                            ) : "Sign in"}
                         </button>
 
+                        <p className="auth-footer-text">
+                            Don't have an account?{" "}
+                            <Link to="/register" className="auth-link-accent">Create one</Link>
+                        </p>
                     </form>
                 )}
-
-                <p className="text-center text-sm mt-4 text-white/60">
-                    Don't have an account?{" "}
-                    <Link to="/register" className="auth-link-brand hover:underline">
-                        Register
-                    </Link>
-                </p>
             </div>
-
         </div>
     );
 };
