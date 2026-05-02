@@ -341,7 +341,7 @@ button:focus-visible {
 
   /* Desktop sidebar widths */
   .sidebar-desktop {
-    @apply w-20 lg:w-64;
+    @apply w-20 lg:w-56;
   }
 
   /* Mobile sidebar widths */
@@ -584,101 +584,143 @@ button:focus-visible {
     background-color: var(--color-success-bg);
   }
 
-
   /* ─────────────────────────────────────────────────────────────
      PASSWORD GENERATOR MODAL — PasswordGeneratorModal.jsx
      ───────────────────────────────────────────────────────────── */
 
-  .generator-modal-wrap {
-    @apply rounded-2xl overflow-hidden;
-    background-color: var(--bg-surface);
-    border: 1px solid var(--border-default);
-  }
-
-  .generator-header {
-    @apply flex items-center justify-between px-5 py-4;
-    border-bottom: 1px solid var(--border-subtle);
-  }
-
-  .generator-header-icon {
+  /* Small icon in the modal header */
+  .gen-header-icon {
     @apply w-7 h-7 rounded-lg flex items-center justify-center;
-    background-color: rgba(59, 130, 246, 0.12);
+    background-color: var(--bg-surface-hover);
+    color: var(--text-secondary);
   }
 
-  .generator-password-display {
-    @apply flex items-center gap-2 rounded-xl px-4 py-3;
-    background-color: var(--bg-base);
+  /* Password output display row */
+  .gen-display {
+    @apply flex items-center gap-2 rounded-lg px-3 py-2.5;
+    background-color: var(--bg-surface-3);
     border: 1px solid var(--border-subtle);
+    min-height: 44px;
   }
 
-  .generator-password-text {
-    @apply flex-1 font-mono text-base break-all select-all leading-relaxed;
+  .gen-display-text {
+    @apply flex-1 font-mono text-sm break-all select-all leading-relaxed;
     color: var(--text-primary);
   }
 
-  /* Small icon-only button used inside the generator display */
-  .generator-icon-btn {
-    @apply p-2 rounded-lg transition-colors;
+  /* Icon buttons inside the display row */
+  .gen-icon-btn {
+    @apply w-8 h-8 flex items-center justify-center rounded-md transition-colors;
     color: var(--text-muted);
   }
 
-  .generator-icon-btn:hover {
-    color: var(--text-secondary);
+  .gen-icon-btn:hover {
     background-color: var(--bg-surface-hover);
+    color: var(--text-secondary);
   }
 
-  .generator-icon-btn-copied {
+  .gen-icon-btn-copied {
     color: var(--color-success);
     background-color: var(--color-success-bg);
   }
 
-  .generator-track {
-    @apply flex-1 h-1.5 rounded-full overflow-hidden;
-    background-color: var(--bg-surface-hover);
-  }
-
-  /* Toggle switch inside the generator */
-  .generator-toggle-track {
-    @apply relative w-9 h-5 rounded-full transition-colors duration-200 cursor-pointer;
-  }
-
-  .generator-toggle-track-on {
-    background-color: var(--color-info);
-  }
-
-  .generator-toggle-track-off {
-    background-color: var(--border-default);
-  }
-
-  .generator-toggle-thumb {
-    @apply absolute top-0.5 w-4 h-4 rounded-full bg-white transition-all duration-200;
-  }
-
-  .generator-toggle-label {
-    @apply text-sm transition-colors;
-    color: var(--text-muted);
-  }
-
-  .generator-action-outline {
-    @apply flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm transition-colors;
-    border: 1px solid var(--border-default);
-    color: var(--text-muted);
-  }
-
-  .generator-action-outline:hover {
-    background-color: var(--bg-surface-hover);
+  /* Length badge pill */
+  .gen-length-badge {
+    @apply text-sm font-semibold tabular-nums px-2.5 py-0.5 rounded-full;
+    background-color: var(--bg-surface-3);
+    border: 1px solid var(--border-subtle);
     color: var(--text-primary);
+    min-width: 2.5rem;
+    text-align: center;
   }
 
-  .generator-action-primary {
-    @apply flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm text-white transition-colors;
+  /* Slider wrapper */
+  .gen-slider-wrap {
+    @apply w-full;
+  }
+
+  /* Custom range slider — uses CSS var --pct to fill the track */
+  .gen-slider {
+    @apply w-full h-1.5 rounded-full appearance-none cursor-pointer outline-none;
+    background: linear-gradient(to right,
+        var(--color-info) 0%,
+        var(--color-info) var(--pct, 50%),
+        var(--border-strong) var(--pct, 50%),
+        var(--border-strong) 100%);
+  }
+
+  .gen-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--color-info);
+    border: 2px solid var(--bg-surface);
+    box-shadow: 0 0 0 1px var(--color-info);
+    cursor: pointer;
+    transition: box-shadow 0.15s;
+  }
+
+  .gen-slider::-webkit-slider-thumb:hover {
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.20);
+  }
+
+  .gen-slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--color-info);
+    border: 2px solid var(--bg-surface);
+    cursor: pointer;
+  }
+
+  .gen-slider-tick {
+    @apply text-xs;
+    color: var(--text-muted);
+  }
+
+  /* Toggles grid */
+  .gen-toggles-grid {
+    @apply rounded-lg overflow-hidden;
+    border: 1px solid var(--border-subtle);
+  }
+
+  /* Each toggle row */
+  .gen-toggle-row {
+    @apply flex items-center justify-between px-3 py-3 cursor-pointer transition-colors;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .gen-toggle-row:last-child {
+    border-bottom: none;
+  }
+
+  .gen-toggle-row:hover {
+    background-color: var(--bg-surface-3);
+  }
+
+  .gen-toggle-label {
+    @apply text-sm select-none;
+    color: var(--text-secondary);
+  }
+
+  /* Toggle track */
+  .gen-toggle-track {
+    @apply relative flex-shrink-0 w-9 h-5 rounded-full transition-colors duration-200;
+  }
+
+  .gen-toggle-on {
     background-color: var(--color-info);
   }
 
-  .generator-action-primary:hover {
-    background-color: var(--color-info-hover);
+  .gen-toggle-off {
+    background-color: var(--border-strong);
   }
 
+  /* Toggle thumb */
+  .gen-toggle-thumb {
+    @apply absolute top-0.5 w-4 h-4 rounded-full bg-white transition-transform duration-200;
+  }
 
   /* ─────────────────────────────────────────────────────────────
      SEARCH BAR — SearchBar.jsx
@@ -1685,3 +1727,23 @@ button:focus-visible {
 }
 
 /* end @layer utilities */
+
+
+/* ═══════════════════════════════════════════════════════════════
+   SVG ICON THEME ADAPTATION
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (prefers-color-scheme: light) {
+  img.theme-icon {
+    filter: invert(1);
+  }
+
+  /* Icons on colored-bg buttons — un-invert */
+  .btn-primary img.theme-icon,
+  .btn-success img.theme-icon,
+  .btn-danger img.theme-icon,
+  .auth-btn-primary img.theme-icon,
+  .generator-action-primary img.theme-icon {
+    filter: none;
+  }
+}
