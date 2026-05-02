@@ -36,19 +36,17 @@ const DashboardLayout = () => {
             {/* ── Mobile Sidebar Overlay ───────────────────── */}
             <PresenceWrapper>
                 {sidebarOpen && (
-                    <Fade>
-                        <div
-                            onClick={() => setSidebarOpen(false)}
-                            className="md:hidden fixed inset-0 z-50 modal-backdrop"
-                        >
-                            <SlideLeft>
-                                <MobileSidebar
-                                    closeSidebar={() => setSidebarOpen(false)}
-                                    sidebarOpen={sidebarOpen}
-                                />
-                            </SlideLeft>
-                        </div>
-                    </Fade>
+                    <div
+                        onClick={() => setSidebarOpen(false)}
+                        className="md:hidden fixed inset-0 z-50 modal-backdrop"
+                    >
+                        <SlideLeft>
+                            <MobileSidebar
+                                closeSidebar={() => setSidebarOpen(false)}
+                                sidebarOpen={sidebarOpen}
+                            />
+                        </SlideLeft>
+                    </div>
                 )}
             </PresenceWrapper>
 
