@@ -347,6 +347,7 @@ button:focus-visible {
   /* Mobile sidebar widths */
   .sidebar-mobile {
     @apply w-full max-w-xs;
+    z-index: 901;
   }
 
   .sidebar-logo-row {

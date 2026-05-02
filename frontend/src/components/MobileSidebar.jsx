@@ -18,7 +18,7 @@ const MobileSidebar = ({ closeSidebar }) => {
     const { openGeneratorModal } = useGeneratorModal();
 
     return (
-        <div className="sidebar sidebar-mobile z-50">
+        <div className="sidebar sidebar-mobile">
 
             {/* Header */}
             <div className="sidebar-logo-row lg:justify-start px-5 py-5">

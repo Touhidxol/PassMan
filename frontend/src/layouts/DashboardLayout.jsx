@@ -38,7 +38,7 @@ const DashboardLayout = () => {
                 {sidebarOpen && (
                     <div
                         onClick={() => setSidebarOpen(false)}
-                        className="md:hidden fixed inset-0 z-50 modal-backdrop"
+                        className="md:hidden fixed inset-0 modal-backdrop"
                     >
                         <SlideLeft>
                             <MobileSidebar
