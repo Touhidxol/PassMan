@@ -4,16 +4,9 @@ import Modal from "./layout/Modal";
 import PasswordStrengthBar from "./PasswordStrengthBar";
 import toast from "react-hot-toast";
 
-/**
- * PasswordGeneratorModal
- *
- * Uses the shared <Modal> base so backdrop, animation, escape-key
- * and scroll-lock are all handled consistently.
- *
- * Props:
- *   isOpen   {boolean}
- *   onClose  {() => void}
- */
+import bolt from "../assets/icons/bolt.svg";
+
+
 const PasswordGeneratorModal = ({ isOpen, onClose }) => {
     const [length, setLength] = useState(16);
     const [uppercase, setUppercase] = useState(true);
@@ -29,7 +22,6 @@ const PasswordGeneratorModal = ({ isOpen, onClose }) => {
         setCopied(false);
     }, [length, uppercase, lowercase, digits, symbols]);
 
-    /* Regenerate whenever options change or modal opens */
     useEffect(() => { if (isOpen) generate(); }, [isOpen, generate]);
 
     const handleCopy = async () => {
@@ -40,21 +32,18 @@ const PasswordGeneratorModal = ({ isOpen, onClose }) => {
         setTimeout(() => setCopied(false), 2000);
     };
 
-    /* ── Toggle switch ── */
     const Toggle = ({ label, checked, onChange }) => (
-        <label className="flex items-center gap-2.5 cursor-pointer select-none group">
-            <div
+        <label className="gen-toggle-row">
+            <span className="gen-toggle-label">{label}</span>
+            <button
+                type="button"
+                role="switch"
+                aria-checked={checked}
                 onClick={() => onChange(!checked)}
-                className={`generator-toggle-track ${checked ? "generator-toggle-track-on" : "generator-toggle-track-off"}`}
+                className={`gen-toggle-track ${checked ? "gen-toggle-on" : "gen-toggle-off"}`}
             >
-                <span
-                    className="generator-toggle-thumb"
-                    style={{ left: checked ? "calc(100% - 18px)" : "2px" }}
-                />
-            </div>
-            <span className="generator-toggle-label group-hover:text-theme-primary">
-                {label}
-            </span>
+                <span className={`gen-toggle-thumb ${checked ? "translate-x-0" : "-translate-x-4"}`} />
+            </button>
         </label>
     );
 
@@ -64,19 +53,10 @@ const PasswordGeneratorModal = ({ isOpen, onClose }) => {
             {/* ── Header ─────────────────────────────────── */}
             <div className="modal-header">
                 <div className="flex items-center gap-2.5">
-                    <div className="generator-header-icon">
-                        {/* Shuffle icon */}
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
-                            stroke="#60a5fa" strokeWidth="1.8"
-                            strokeLinecap="round" strokeLinejoin="round">
-                            <polyline points="16 3 21 3 21 8" />
-                            <line x1="4" y1="20" x2="21" y2="3" />
-                            <polyline points="21 16 21 21 16 21" />
-                            <line x1="15" y1="15" x2="21" y2="21" />
-                            <line x1="4" y1="4" x2="9" y2="9" />
-                        </svg>
+                    <div className="gen-header-icon">
+                        <img src={bolt} alt="" className="w-4 theme-icon"/>
                     </div>
-                    <span className="modal-header-title">Password generator</span>
+                    <p className="modal-header-title">Password generator</p>
                 </div>
 
                 <button onClick={onClose} className="modal-close-btn">
@@ -92,17 +72,17 @@ const PasswordGeneratorModal = ({ isOpen, onClose }) => {
 
                 {/* Generated password display */}
                 <div>
-                    <div className="generator-password-display">
-                        <p className="generator-password-text">
-                            {generated || "Select options below"}
+                    <p className="card-field-label">Generated password</p>
+                    <div className="gen-display">
+                        <p className="gen-display-text">
+                            {generated || <span style={{ color: "var(--text-muted)" }}>Select options below…</span>}
                         </p>
-
-                        <div className="flex items-center gap-1 shrink-0">
+                        <div className="flex items-center gap-0.5 shrink-0">
                             {/* Regenerate */}
                             <button
                                 onClick={generate}
                                 title="Regenerate"
-                                className="generator-icon-btn"
+                                className="gen-icon-btn"
                             >
                                 <svg width="14" height="14" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor"
@@ -111,12 +91,11 @@ const PasswordGeneratorModal = ({ isOpen, onClose }) => {
                                     <path d="M3 3v5h5" />
                                 </svg>
                             </button>
-
                             {/* Copy */}
                             <button
                                 onClick={handleCopy}
                                 title="Copy"
-                                className={copied ? "generator-icon-btn-copied" : "generator-icon-btn"}
+                                className={`gen-icon-btn ${copied ? "gen-icon-btn-copied" : ""}`}
                             >
                                 {copied ? (
                                     <svg width="14" height="14" viewBox="0 0 24 24"
@@ -135,56 +114,59 @@ const PasswordGeneratorModal = ({ isOpen, onClose }) => {
                             </button>
                         </div>
                     </div>
-
-                    <PasswordStrengthBar password={generated} className="mt-2 px-1" />
+                    <PasswordStrengthBar password={generated} className="mt-2" />
                 </div>
 
                 {/* Length slider */}
-                <div className="space-y-2">
-                    <div className="flex justify-between items-center">
-                        <span className="text-xs text-theme-muted">Length</span>
-                        <span className="text-sm font-medium tabular-nums text-theme-primary">
-                            {length}
-                        </span>
+                <div>
+                    <div className="flex items-center justify-between mb-2">
+                        <p className="card-field-label mb-0">Length</p>
+                        <span className="gen-length-badge">{length}</span>
                     </div>
-                    <input
-                        type="range"
-                        min={8} max={64} step={1}
-                        value={length}
-                        onChange={(e) => setLength(Number(e.target.value))}
-                        onMouseUp={generate}
-                        onTouchEnd={generate}
-                        className="w-full accent-blue-500 cursor-pointer"
-                    />
-                    <div className="flex justify-between text-[10px] text-theme-muted">
-                        <span>8</span>
-                        <span>64</span>
+                    <div className="gen-slider-wrap">
+                        <input
+                            type="range"
+                            min={8} max={64} step={1}
+                            value={length}
+                            onChange={(e) => setLength(Number(e.target.value))}
+                            onMouseUp={generate}
+                            onTouchEnd={generate}
+                            className="gen-slider"
+                            style={{ "--pct": `${((length - 8) / (64 - 8)) * 100}%` }}
+                        />
+                        <div className="flex justify-between mt-1">
+                            <span className="gen-slider-tick">8</span>
+                            <span className="gen-slider-tick">64</span>
+                        </div>
                     </div>
                 </div>
 
                 {/* Toggles */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <Toggle label="Uppercase A–Z" checked={uppercase} onChange={setUppercase} />
-                    <Toggle label="Lowercase a–z" checked={lowercase} onChange={setLowercase} />
-                    <Toggle label="Numbers 0–9" checked={digits} onChange={setDigits} />
-                    <Toggle label="Symbols !@#…" checked={symbols} onChange={setSymbols} />
+                <div>
+                    <p className="card-field-label">Character types</p>
+                    <div className="gen-toggles-grid">
+                        <Toggle label="Uppercase A–Z" checked={uppercase} onChange={setUppercase} />
+                        <Toggle label="Lowercase a–z" checked={lowercase} onChange={setLowercase} />
+                        <Toggle label="Numbers 0–9" checked={digits} onChange={setDigits} />
+                        <Toggle label="Symbols !@#…" checked={symbols} onChange={setSymbols} />
+                    </div>
                 </div>
 
             </div>
 
             {/* ── Footer ──────────────────────────────────── */}
-            <div className="modal-footer gap-2">
-                <button onClick={generate} className="generator-action-outline">
+            <div className="modal-footer">
+                <button onClick={generate} className="btn-ghost flex items-center gap-1.5">
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" strokeWidth="1.8"
                         strokeLinecap="round" strokeLinejoin="round">
                         <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
                         <path d="M3 3v5h5" />
                     </svg>
-                    New password
+                    Regenerate
                 </button>
 
-                <button onClick={handleCopy} className="generator-action-primary">
+                <button onClick={handleCopy} className="btn-primary flex items-center gap-1.5">
                     {copied ? (
                         <>
                             <svg width="13" height="13" viewBox="0 0 24 24" fill="none"

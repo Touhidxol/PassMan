@@ -52,7 +52,7 @@ const PasswordCard = ({ item, onDelete, onClose, onChange }) => {
 
             {/* ── Header ─────────────────────────────────── */}
             <div className="modal-header">
-                <img src={WebIcon} className="w-5 shrink-0" alt="" />
+                <img src={WebIcon} className="w-5 shrink-0 theme-icon" alt="" />
                 <p className="font-semibold flex-1 truncate ml-2">{item.site}</p>
 
                 {/* Favourite toggle */}
@@ -61,21 +61,17 @@ const PasswordCard = ({ item, onDelete, onClose, onChange }) => {
                     title={isFavorite ? "Remove from favorites" : "Add to favorites"}
                     className="card-icon-btn"
                 >
-                    <img
-                        src={isFavorite ? FavoriteFilledIcon : FavoriteEmptyIcon}
-                        alt="favorite"
-                        className="w-5"
-                    />
+                    <img src={isFavorite ? FavoriteFilledIcon : FavoriteEmptyIcon} alt="favorite" className="w-5" />
                 </button>
 
                 {/* Edit / Save */}
                 {isEditable ? (
                     <button onClick={handleSave} title="Save" className="card-save-btn">
-                        <img src={SaveIcon} className="w-4" alt="save" />
+                        <img src={SaveIcon} className="w-4 theme-icon" alt="save" />
                     </button>
                 ) : (
                     <button onClick={() => setIsEditable(true)} title="Edit" className="card-icon-btn">
-                        <img src={EditIcon} className="w-4" alt="edit" />
+                        <img src={EditIcon} className="w-4 theme-icon" alt="edit" />
                     </button>
                 )}
 
@@ -114,7 +110,7 @@ const PasswordCard = ({ item, onDelete, onClose, onChange }) => {
                             onClick={() => copyText(formData.username)}
                             className="absolute right-2 top-1/2 -translate-y-1/2 opacity-40 hover:opacity-90 transition-opacity"
                         >
-                            <img src={CopyIcon} className="w-4" alt="copy" />
+                            <img src={CopyIcon} className="w-4 theme-icon" alt="copy" />
                         </button>
                     </div>
                 </div>
@@ -139,7 +135,7 @@ const PasswordCard = ({ item, onDelete, onClose, onChange }) => {
                             >
                                 <img
                                     src={showPassword ? ShowIcon : HideIcon}
-                                    className="w-5"
+                                    className="w-5 theme-icon"
                                     alt="toggle"
                                 />
                             </button>
@@ -148,7 +144,7 @@ const PasswordCard = ({ item, onDelete, onClose, onChange }) => {
                                 onClick={() => copyText(formData.password)}
                                 className="w-8 h-8 flex items-center justify-center opacity-40 hover:opacity-90 transition-opacity"
                             >
-                                <img src={CopyIcon} className="w-4" alt="copy" />
+                                <img src={CopyIcon} className="w-4 theme-icon" alt="copy" />
                             </button>
                         </div>
                     </div>
@@ -181,7 +177,7 @@ const PasswordCard = ({ item, onDelete, onClose, onChange }) => {
                     onClick={() => onDelete(item._id)}
                     className="btn-ghost-danger flex items-center gap-1.5"
                 >
-                    <img src={DeleteIcon} className="w-4" alt="" />
+                    <img src={DeleteIcon} className="w-4 theme-icon" alt="" />
                     Delete
                 </button>
 

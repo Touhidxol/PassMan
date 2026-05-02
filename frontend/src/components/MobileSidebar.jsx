@@ -18,7 +18,7 @@ const MobileSidebar = ({ closeSidebar }) => {
     const { openGeneratorModal } = useGeneratorModal();
 
     return (
-        <div className="sidebar sidebar-mobile">
+        <div className="sidebar sidebar-mobile z-50">
 
             {/* Header */}
             <div className="sidebar-logo-row lg:justify-start px-5 py-5">
@@ -44,8 +44,8 @@ const MobileSidebar = ({ closeSidebar }) => {
                             `sidebar-item-mobile${isActive ? " active" : ""}`
                         }
                     >
-                        <img src={item.icon} alt="" className="w-5 h-5 shrink-0" />
-                        <span className="text-sm text-gray-100">{item.label}</span>
+                        <img src={item.icon} alt="" className="w-5 h-5 shrink-0 theme-icon" />
+                        <span className="text-sm dark:text-white/90 text-black/90">{item.label}</span>
                     </NavLink>
                 ))}
             </nav>

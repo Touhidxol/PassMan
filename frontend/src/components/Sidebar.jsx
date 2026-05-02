@@ -6,6 +6,8 @@ import PasswordsIcon from "../assets/icons/passwords.svg";
 import FavoritesIcon from "../assets/icons/favorite.svg";
 import SettingsIcon from "../assets/icons/settings.svg";
 import LogoIcon from "../assets/icons/logo.svg";
+import bolt from "../assets/icons/bolt.svg";
+
 
 const menuItems = [
     { icon: PasswordsIcon, label: "All Passwords", path: "/dashboard/passwords" },
@@ -36,7 +38,7 @@ const Sidebar = () => {
                             `sidebar-item${isActive ? " active" : ""}`
                         }
                     >
-                        <img src={item.icon} alt="" className="w-5 h-5 shrink-0" />
+                        <img src={item.icon} alt="" className="w-5 h-5 shrink-0 theme-icon" />
                         <span className="sidebar-item-label">{item.label}</span>
                     </NavLink>
                 ))}
@@ -49,18 +51,7 @@ const Sidebar = () => {
                     title="Open password generator"
                     className="sidebar-generator-btn"
                 >
-                    <svg
-                        width="20" height="20" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor"
-                        strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"
-                        className="shrink-0"
-                    >
-                        <polyline points="16 3 21 3 21 8" />
-                        <line x1="4" y1="20" x2="21" y2="3" />
-                        <polyline points="21 16 21 21 16 21" />
-                        <line x1="15" y1="15" x2="21" y2="21" />
-                        <line x1="4" y1="4" x2="9" y2="9" />
-                    </svg>
+                    <img src={bolt} alt="" className="theme-icon w-5"/>
                     <span className="sidebar-item-label">Generator</span>
                 </button>
             </div>

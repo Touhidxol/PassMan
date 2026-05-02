@@ -123,11 +123,7 @@ const AddSiteModal = () => {
                                 onClick={() => setShowPassword((v) => !v)}
                                 className="flex items-center justify-center w-8 h-8"
                             >
-                                <img
-                                    src={showPassword ? ShowPasswordIcon : HidePasswordIcon}
-                                    alt="toggle"
-                                    className="w-5"
-                                />
+                                <img src={showPassword ? ShowPasswordIcon : HidePasswordIcon} alt="toggle" className="w-5 theme-icon" />
                             </button>
                         </div>
                     </div>

@@ -1,6 +1,6 @@
 import { generatePassword } from "../utils/passwordGenerator";
 import toast from "react-hot-toast";
-import generate from "../assets/icons/generate.svg"
+import bolt from "../assets/icons/bolt.svg"
 
 /**
  * GenerateButton
@@ -33,7 +33,7 @@ const GenerateButton = ({ onGenerate, className = "" }) => {
             className={`flex items-center justify-center w-8 h-8 rounded-lg text-white/40 hover:text-white/80 hover:bg-white/10 transition-colors ${className}`}
         >
             {/* Dice / shuffle icon */}
-            <img src={generate} alt="Generate Strong Password" className="w-5"/>
+            <img src={bolt} alt="Generate Strong Password" className="w-5 theme-icon"/>
         </button>
     );
 };

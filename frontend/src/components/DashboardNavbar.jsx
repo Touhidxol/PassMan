@@ -29,7 +29,7 @@ const Navbar = ({ openSidebar }) => {
                 className="navbar-hamburger"
                 aria-label="Open sidebar"
             >
-                <img src={HamburgerIcon} alt="menu" className="w-5" />
+                <img src={HamburgerIcon} alt="menu" className="w-5 theme-icon" />
             </button>
 
             {/* Brand name */}
