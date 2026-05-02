@@ -417,13 +417,11 @@ button:focus-visible {
      MODAL BASE — Modal.jsx
      ───────────────────────────────────────────────────────────── */
 
-  .modal-backdrop {
-    @apply fixed inset-0;
-    z-index: 900;
-    background-color: var(--overlay-bg);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-  }
+.modal-backdrop {
+  @apply fixed inset-0 backdrop-blur-[6px];
+  background-color: var(--overlay-bg);
+  z-index: 900;
+}
 
   .modal-box {
     @apply fixed overflow-y-auto;
