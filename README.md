@@ -1,9 +1,11 @@
-# PassMan 🔐
+# PassMan
 
 > A production-grade, full-stack password manager built with the **MERN stack** — featuring AES-256 encryption, JWT authentication, and a clean responsive dashboard.
 
 <p align="center">
-  <img src="frontend/public/favicon.svg" alt="PassMan Logo" width="80" />
+  <a href="https://pass-man-lyart.vercel.app/">
+    <img src="frontend/public/favicon.svg" alt="PassMan Logo" width="80" />
+  </a>
 </p>
 
 <p align="center">
@@ -22,52 +24,54 @@
 
 ## ✨ Features
 
-| Category | Feature |
-|---|---|
-| 🔐 **Security** | AES-256-CBC password encryption, bcrypt master-password hashing, HTTP-only JWT cookies |
-| 🛡️ **Auth** | Registration, Login, Logout, JWT token refresh, OTP-based password reset via email |
-| 📦 **Vault** | Full CRUD for stored passwords — add, view, edit, delete |
-| ⭐ **Favorites** | Star any credential for quick access |
-| 🔍 **Search & Sort** | Real-time search + sort by date, A–Z, Z–A, password strength |
-| 💪 **Strength Meter** | Live password strength bar with actionable improvement tips |
-| 🎲 **Generator** | Cryptographically random password generator with configurable rules |
-| 📊 **Statistics** | Vault health dashboard — strength breakdown, weak-password alerts |
-| ⚙️ **Settings** | Update display name, change master password, export/import (coming soon), delete account |
-| 🌗 **Theming** | Full dark/light mode via CSS custom properties |
-| 📱 **Responsive** | Mobile-first layout with collapsible sidebar |
-| 🚦 **Rate Limiting** | Per-route rate limiting (auth: 20/15min, API: 150/15min) |
-| 🪖 **Helmet** | Security headers on every response |
+| Category              | Feature                                                                                  |
+| --------------------- | ---------------------------------------------------------------------------------------- |
+| 🔐 **Security**       | AES-256-CBC password encryption, bcrypt master-password hashing, HTTP-only JWT cookies   |
+| 🛡️ **Auth**           | Registration, Login, Logout, JWT token refresh, OTP-based password reset via email       |
+| 📦 **Vault**          | Full CRUD for stored passwords — add, view, edit, delete                                 |
+| ⭐ **Favorites**      | Star any credential for quick access                                                     |
+| 🔍 **Search & Sort**  | Real-time search + sort by date, A–Z, Z–A, password strength                             |
+| 💪 **Strength Meter** | Live password strength bar with actionable improvement tips                              |
+| 🎲 **Generator**      | Cryptographically random password generator with configurable rules                      |
+| 📊 **Statistics**     | Vault health dashboard — strength breakdown, weak-password alerts                        |
+| ⚙️ **Settings**       | Update display name, change master password, export/import (coming soon), delete account |
+| 🌗 **Theming**        | Full dark/light mode via CSS custom properties                                           |
+| 📱 **Responsive**     | Mobile-first layout with collapsible sidebar                                             |
+| 🚦 **Rate Limiting**  | Per-route rate limiting (auth: 20/15min, API: 150/15min)                                 |
+| 🪖 **Helmet**         | Security headers on every response                                                       |
 
 ---
 
 ## 🧰 Tech Stack
 
 ### Frontend
-| Package | Version | Purpose |
-|---|---|---|
-| React | 19 | UI framework |
-| Vite | 7 | Build tool & dev server |
-| Tailwind CSS | 4 | Utility-first styling |
-| Framer Motion | 12 | Animations & transitions |
-| React Router DOM | 7 | Client-side routing |
-| Lucide React | 0.576 | Icon set |
-| React Hot Toast | 2 | Toast notifications |
+
+| Package          | Version | Purpose                  |
+| ---------------- | ------- | ------------------------ |
+| React            | 19      | UI framework             |
+| Vite             | 7       | Build tool & dev server  |
+| Tailwind CSS     | 4       | Utility-first styling    |
+| Framer Motion    | 12      | Animations & transitions |
+| React Router DOM | 7       | Client-side routing      |
+| Lucide React     | 0.576   | Icon set                 |
+| React Hot Toast  | 2       | Toast notifications      |
 
 ### Backend
-| Package | Version | Purpose |
-|---|---|---|
-| Express | 5 | HTTP server & routing |
-| Mongoose | 8 | MongoDB ODM |
-| bcrypt | 5 | Password hashing |
-| jsonwebtoken | 9 | JWT auth tokens |
-| nodemailer | 8 | OTP email delivery |
-| helmet | 8 | Security headers |
-| express-rate-limit | 8 | Rate limiting |
-| morgan | 1 | HTTP request logging |
-| cors | 2 | Cross-origin resource sharing |
-| cookie-parser | 1 | HTTP-only cookie parsing |
-| validator | 13 | Input validation & sanitisation |
-| dotenv | 17 | Environment variable loading |
+
+| Package            | Version | Purpose                         |
+| ------------------ | ------- | ------------------------------- |
+| Express            | 5       | HTTP server & routing           |
+| Mongoose           | 8       | MongoDB ODM                     |
+| bcrypt             | 5       | Password hashing                |
+| jsonwebtoken       | 9       | JWT auth tokens                 |
+| nodemailer         | 8       | OTP email delivery              |
+| helmet             | 8       | Security headers                |
+| express-rate-limit | 8       | Rate limiting                   |
+| morgan             | 1       | HTTP request logging            |
+| cors               | 2       | Cross-origin resource sharing   |
+| cookie-parser      | 1       | HTTP-only cookie parsing        |
+| validator          | 13      | Input validation & sanitisation |
+| dotenv             | 17      | Environment variable loading    |
 
 ---
 
@@ -230,6 +234,7 @@ VITE_API_URL=http://localhost:3000
 ```
 
 > **Tip:** Generate secure secrets with:
+>
 > ```bash
 > node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 > ```
@@ -251,26 +256,26 @@ npm run backend
 npm run frontend
 ```
 
-| Service | URL |
-|---|---|
-| Frontend | http://localhost:5173 |
+| Service     | URL                   |
+| ----------- | --------------------- |
+| Frontend    | http://localhost:5173 |
 | Backend API | http://localhost:3000 |
 
 ---
 
 ## 🌐 Frontend Routes
 
-| Path | Page | Auth Required |
-|---|---|---|
-| `/` | Landing / marketing page | No |
-| `/login` | Sign in | No |
-| `/register` | Create account | No |
-| `/forgot-password` | 3-step OTP password reset | No |
-| `/dashboard` | Redirects to `/dashboard/passwords` | ✅ Yes |
-| `/dashboard/passwords` | All saved passwords (search, sort, CRUD) | ✅ Yes |
-| `/dashboard/favorites` | Starred passwords | ✅ Yes |
-| `/dashboard/stats` | Vault health & strength breakdown | ✅ Yes |
-| `/dashboard/settings` | Account info, password change, delete account | ✅ Yes |
+| Path                   | Page                                          | Auth Required |
+| ---------------------- | --------------------------------------------- | ------------- |
+| `/`                    | Landing / marketing page                      | No            |
+| `/login`               | Sign in                                       | No            |
+| `/register`            | Create account                                | No            |
+| `/forgot-password`     | 3-step OTP password reset                     | No            |
+| `/dashboard`           | Redirects to `/dashboard/passwords`           | ✅ Yes        |
+| `/dashboard/passwords` | All saved passwords (search, sort, CRUD)      | ✅ Yes        |
+| `/dashboard/favorites` | Starred passwords                             | ✅ Yes        |
+| `/dashboard/stats`     | Vault health & strength breakdown             | ✅ Yes        |
+| `/dashboard/settings`  | Account info, password change, delete account | ✅ Yes        |
 
 > Protected routes are guarded by `ProtectedRoute.jsx`, which calls `/api/users/me` on mount and redirects to `/login` on `401`.
 
@@ -284,38 +289,39 @@ All protected routes require a valid `token` cookie set by `/api/users/login` or
 
 ### Auth — `/api/users`
 
-| Method | Endpoint | Auth | Body | Description |
-|---|---|---|---|---|
-| `POST` | `/api/users/register` | No | `{ name, email, password }` | Create account, set cookie |
-| `POST` | `/api/users/login` | No | `{ email, password }` | Login, set cookie |
-| `POST` | `/api/users/logout` | ✅ | — | Clear cookie |
-| `GET` | `/api/users/me` | ✅ | — | Get current user info |
-| `POST` | `/api/users/refresh` | No | — | Silent token refresh |
-| `PATCH` | `/api/users/me` | ✅ | `{ name }` | Update display name |
-| `PATCH` | `/api/users/me/password` | ✅ | `{ currentPassword, newPassword }` | Change master password |
-| `DELETE` | `/api/users/me` | ✅ | — | Delete account + all passwords |
+| Method   | Endpoint                 | Auth | Body                               | Description                    |
+| -------- | ------------------------ | ---- | ---------------------------------- | ------------------------------ |
+| `POST`   | `/api/users/register`    | No   | `{ name, email, password }`        | Create account, set cookie     |
+| `POST`   | `/api/users/login`       | No   | `{ email, password }`              | Login, set cookie              |
+| `POST`   | `/api/users/logout`      | ✅   | —                                  | Clear cookie                   |
+| `GET`    | `/api/users/me`          | ✅   | —                                  | Get current user info          |
+| `POST`   | `/api/users/refresh`     | No   | —                                  | Silent token refresh           |
+| `PATCH`  | `/api/users/me`          | ✅   | `{ name }`                         | Update display name            |
+| `PATCH`  | `/api/users/me/password` | ✅   | `{ currentPassword, newPassword }` | Change master password         |
+| `DELETE` | `/api/users/me`          | ✅   | —                                  | Delete account + all passwords |
 
 ### OTP / Password Reset — `/api/auth`
 
-| Method | Endpoint | Auth | Body | Description |
-|---|---|---|---|---|
-| `POST` | `/api/auth/forgot-password` | No | `{ email }` | Send 6-digit OTP to email |
-| `POST` | `/api/auth/reset-password` | No | `{ email, otp, newPassword }` | Verify OTP and reset password |
+| Method | Endpoint                    | Auth | Body                          | Description                   |
+| ------ | --------------------------- | ---- | ----------------------------- | ----------------------------- |
+| `POST` | `/api/auth/forgot-password` | No   | `{ email }`                   | Send 6-digit OTP to email     |
+| `POST` | `/api/auth/reset-password`  | No   | `{ email, otp, newPassword }` | Verify OTP and reset password |
 
 ### Vault — `/api/passwords`
 
 > All vault routes require the `token` cookie.
 
-| Method | Endpoint | Body | Description |
-|---|---|---|---|
-| `GET` | `/api/passwords` | — | Get all passwords (decrypted) for current user |
-| `POST` | `/api/passwords` | `{ site, username, password, note? }` | Add new password (encrypted) |
-| `PUT` | `/api/passwords/:id` | Any subset of `{ site, username, password, note, favorite }` | Update a password |
-| `DELETE` | `/api/passwords/:id` | — | Delete a password |
+| Method   | Endpoint             | Body                                                         | Description                                    |
+| -------- | -------------------- | ------------------------------------------------------------ | ---------------------------------------------- |
+| `GET`    | `/api/passwords`     | —                                                            | Get all passwords (decrypted) for current user |
+| `POST`   | `/api/passwords`     | `{ site, username, password, note? }`                        | Add new password (encrypted)                   |
+| `PUT`    | `/api/passwords/:id` | Any subset of `{ site, username, password, note, favorite }` | Update a password                              |
+| `DELETE` | `/api/passwords/:id` | —                                                            | Delete a password                              |
 
 ### Response format
 
 Success:
+
 ```json
 {
   "_id": "...",
@@ -330,6 +336,7 @@ Success:
 ```
 
 Error:
+
 ```json
 {
   "success": false,
@@ -343,25 +350,25 @@ Error:
 
 ### Backend (`backend/.env`)
 
-| Variable | Required | Description |
-|---|---|---|
-| `MONGO_URI` | ✅ | MongoDB connection string |
-| `PORT` | ✅ | Server port (default `3000`) |
-| `NODE_ENV` | ✅ | `development` or `production` |
-| `JWT_SECRET` | ✅ | Secret for signing JWT tokens (64+ chars recommended) |
-| `ENCRYPTION_KEY` | ✅ | Key for AES-256-CBC encryption (32+ chars) |
-| `ENCRYPTION_SALT` | ✅ | Salt for scrypt key derivation (32+ chars) |
-| `EMAIL_USER` | ⚠️ | Gmail address for sending OTP emails |
-| `EMAIL_PASS` | ⚠️ | Gmail App Password (not your Gmail login password) |
-| `FRONTEND_URL` | ✅ | Allowed CORS origin(s), comma-separated in production |
+| Variable          | Required | Description                                           |
+| ----------------- | -------- | ----------------------------------------------------- |
+| `MONGO_URI`       | ✅       | MongoDB connection string                             |
+| `PORT`            | ✅       | Server port (default `3000`)                          |
+| `NODE_ENV`        | ✅       | `development` or `production`                         |
+| `JWT_SECRET`      | ✅       | Secret for signing JWT tokens (64+ chars recommended) |
+| `ENCRYPTION_KEY`  | ✅       | Key for AES-256-CBC encryption (32+ chars)            |
+| `ENCRYPTION_SALT` | ✅       | Salt for scrypt key derivation (32+ chars)            |
+| `EMAIL_USER`      | ⚠️       | Gmail address for sending OTP emails                  |
+| `EMAIL_PASS`      | ⚠️       | Gmail App Password (not your Gmail login password)    |
+| `FRONTEND_URL`    | ✅       | Allowed CORS origin(s), comma-separated in production |
 
 > ⚠️ `EMAIL_USER` and `EMAIL_PASS` are optional for local dev — OTP features will fail gracefully without them.
 
 ### Frontend (`frontend/.env`)
 
-| Variable | Required | Description |
-|---|---|---|
-| `VITE_API_URL` | ✅ | Backend base URL (e.g. `http://localhost:3000`) |
+| Variable       | Required | Description                                     |
+| -------------- | -------- | ----------------------------------------------- |
+| `VITE_API_URL` | ✅       | Backend base URL (e.g. `http://localhost:3000`) |
 
 ---
 
@@ -397,22 +404,23 @@ Error:
 
 ## 🔒 Security Design
 
-| Layer | Mechanism |
-|---|---|
-| Passwords at rest | AES-256-CBC with scrypt-derived key — raw passwords never stored |
-| Master password | bcrypt (cost 10) — irreversible, never recoverable |
-| Session | HTTP-only, Secure, SameSite JWT cookie — not accessible to JavaScript |
-| Transport | HTTPS enforced in production via Render/Vercel |
-| Input | `validator.js` sanitisation on every route before hitting the DB |
-| Headers | `helmet.js` sets CSP, HSTS, X-Frame-Options, etc. |
-| Brute-force | `express-rate-limit` — 20 req/15min on auth, 150 req/15min on API |
-| OTP | 6-digit numeric, 10-minute expiry, bcrypt-hashed before storage (via reset flow) |
+| Layer             | Mechanism                                                                        |
+| ----------------- | -------------------------------------------------------------------------------- |
+| Passwords at rest | AES-256-CBC with scrypt-derived key — raw passwords never stored                 |
+| Master password   | bcrypt (cost 10) — irreversible, never recoverable                               |
+| Session           | HTTP-only, Secure, SameSite JWT cookie — not accessible to JavaScript            |
+| Transport         | HTTPS enforced in production via Render/Vercel                                   |
+| Input             | `validator.js` sanitisation on every route before hitting the DB                 |
+| Headers           | `helmet.js` sets CSP, HSTS, X-Frame-Options, etc.                                |
+| Brute-force       | `express-rate-limit` — 20 req/15min on auth, 150 req/15min on API                |
+| OTP               | 6-digit numeric, 10-minute expiry, bcrypt-hashed before storage (via reset flow) |
 
 ---
 
 ## 🛣️ Roadmap
 
 ### Phase 1 — Complete ✅
+
 - [x] User registration, login, logout
 - [x] JWT authentication with HTTP-only cookies + silent refresh
 - [x] AES-256-CBC password encryption
@@ -428,11 +436,13 @@ Error:
 - [x] Landing page
 
 ### Phase 2 — In Progress 🔄
+
 - [ ] Export passwords (encrypted JSON / CSV)
 - [ ] Import passwords from CSV / JSON
 - [ ] Pagination or virtual scrolling for large vaults
 
 ### Phase 3 — Planned 📋
+
 - [ ] Two-factor authentication (TOTP / FIDO2)
 - [ ] Browser extension
 - [ ] Password breach check (Have I Been Pwned API)
